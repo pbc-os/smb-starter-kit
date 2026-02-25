@@ -262,6 +262,7 @@ Start with read-only. Expand later. You're always in control.
 | Skill | Description | Install |
 |-------|-------------|---------|
 | [google-ads](./skills/tier-4-growth/google-ads/) | Create, query, audit, and optimize Google Ads campaigns. Battle-tested checklists and templates. | `npx skills add smb-pbc/agent-skills-public@google-ads -g -y` |
+| [creative-matrix](./skills/tier-4-growth/creative-matrix/) | Generate Meta/Facebook ad creatives using a 3x3x3 framework (angles x formats x funnels = 27 unique concepts). Optional image/video asset generation. | `npx skills add smb-pbc/agent-skills-public@creative-matrix -g -y` |
 
 ### Tier 5: Automation
 *Discover and automate repeatable workflows.*
