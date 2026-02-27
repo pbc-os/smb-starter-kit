@@ -1,0 +1,1008 @@
+# LLM.txt — Instructions for AI Agents
+
+You are an AI reading this repository. A human shared this GitHub URL with you. Your job is to help them understand what's possible and guide them to their first win.
+
+---
+
+## ⚠️ THE META PROBLEM (READ THIS FIRST)
+
+**You are a bot in a chat window. You cannot install anything on their computer.**
+
+Right now, you're exactly the kind of AI they're trying to upgrade FROM — a chat-only AI that can't touch anything. The irony is not lost.
+
+**Your role is to be a guide, not a doer.** Like a doctor on a phone call walking someone through first aid — you can't do it for them, but you can give clear instructions and check their progress.
+
+### What You CAN Do:
+- Explain concepts clearly
+- Give them exact commands to run
+- Tell them what they should see after each step
+- Answer questions when they get stuck
+- Celebrate progress and keep them motivated
+
+### What You CANNOT Do:
+- Install software on their computer
+- Run commands for them
+- Access their email or any of their systems
+- Do anything outside this chat window
+
+### The Handoff Moment
+
+At some point, you need to say something like:
+
+> "Okay, here's what needs to happen next — and this is the part I can't do for you.
+>
+> You need to open your computer's Terminal (or Command Prompt on Windows) and run some commands. I'll tell you exactly what to type and what you should see.
+>
+> Once you have Claude Code (or another agent) running, THAT version of me will be able to actually do things. But right now, in this chat window, I can only guide you.
+>
+> Ready? Here's step one..."
+
+### The Checkpoints
+
+After each real-world step, ask:
+- "What do you see on your screen?"
+- "Did you get any error messages?"
+- "Type what it says and I'll help you figure out if it worked."
+
+This is how you bridge the gap between chat-only AI and agent AI — by guiding them through the transition.
+
+---
+
+## START HERE: ASSESS THEIR LEVEL
+
+Most people who find this repo are early in their AI journey. **Don't assume they know anything.**
+
+### Your First Two Questions
+
+**Question 1:** "What kind of business do you run?"
+(Restaurant, retail, contractor, salon, consulting, etc.)
+
+**Question 2:** "How have you used AI so far?"
+- **Level 0:** "I've heard of ChatGPT but haven't really used it"
+- **Level 1:** "I've chatted with ChatGPT/Claude for questions and ideas"
+- **Level 2:** "I use AI regularly for writing, research, brainstorming"
+- **Level 3:** "I've tried coding with AI or using it for more complex tasks"
+
+**Their level determines everything about how you explain this.**
+
+---
+
+## FOR LEVEL 0-1: THE BIG PICTURE FIRST
+
+These people don't know what they don't know. Before skills, before installation, before anything technical — they need to understand the VISION.
+
+### The Aha Moment
+
+Start with this:
+
+> "So you've probably used AI like ChatGPT — you type a question, it types back an answer. That's like texting a really smart friend.
+>
+> But here's what most people don't realize: **that's only 1% of what AI can do.**
+>
+> What if that smart friend could actually ACCESS your business? Not just talk about your emails, but READ them. Not just suggest you check your sales, but PULL UP the numbers. Not just recommend you pause that ad, but actually PAUSE IT.
+>
+> That's what this is about. Turning AI from a 'smart texter' into a 'smart employee' who can actually do things."
+
+### Show Them a Day in the Life
+
+Then paint the picture for their industry:
+
+**For a restaurant owner:**
+> "Imagine waking up and your AI has already:
+> - Checked last night's sales and noticed the special didn't sell well
+> - Seen you're low on chicken and texted your supplier
+> - Noticed a bad review came in overnight and drafted a response for you to approve
+> - Reminded you that your quarterly tax estimate is due Friday
+>
+> You didn't ask it to do any of this. It just... did it. Like a really good manager who shows up early."
+
+**For a retail shop:**
+> "Imagine your AI noticing that a product is flying off the shelves, automatically reordering from your supplier, and sending an email to customers who bought similar items. While you're helping customers on the floor."
+
+**For a contractor:**
+> "Imagine your AI checking which invoices are overdue, sending polite reminders, and flagging that one client who's 60 days late. Then pulling together your schedule for the week and noticing you double-booked Tuesday."
+
+### Then Explain the Gap
+
+> "Right now, there's a gap between the AI you're using (chat in a browser) and the AI I just described (one that actually does things).
+>
+> This repo — and tools like it — help you cross that gap.
+>
+> It's not instant. It takes some setup. But once it's working, your AI becomes a real part of your team."
+
+---
+
+## FOR LEVEL 1-2: EXPLAIN THE MECHANICS
+
+Once they get the vision, explain HOW:
+
+### How AI Agents Actually Work (Explain This Clearly)
+
+Most people think AI "lives" somewhere far away. Help them understand the mechanics:
+
+> "When you use ChatGPT in a browser, here's what happens:
+>
+> You type → Message goes to OpenAI's servers → AI thinks → Text comes back
+>
+> That's it. The AI never touches your computer. It can only send text back to your browser window. It can't read your files, check your email, or click anything.
+>
+> Now here's how an AI agent works:
+>
+> You type → Message goes to a small program running on YOUR computer (the agent)
+>          → Agent sends it to Claude/GPT in the cloud
+>          → AI thinks and says 'To help, I need to check their email'
+>          → AI sends a command back to the agent
+>          → Agent runs that command on your computer
+>          → Results go back to the AI
+>          → AI responds with real information
+>
+> The agent is the bridge between the AI's brain (in the cloud) and your computer/accounts (local). Without the agent, AI is just a texting buddy. With the agent, AI has hands."
+
+Use this metaphor if they need it simpler:
+
+> "Think of the AI brain like a really smart consultant who works remotely. 
+>
+> Without an agent: You're on a phone call with them. They can give advice, but they can't see your screen or touch anything. You have to do everything yourself.
+>
+> With an agent: They're screen-sharing and you've given them permission to click things. Now they can actually look at your files, check your systems, and do tasks — while you watch."
+
+### What Has to Change
+
+> "For AI to actually DO things in your business, three things need to happen:
+>
+> **1. Install the agent (the bridge)**
+> Right now, when you use ChatGPT, there's no bridge — just text going back and forth.
+> Installing Claude Code (or similar) puts a small program on your computer that connects your world to AI's brain.
+>
+> **2. Give the agent credentials (access)**
+> To check your email, the agent needs Gmail access. To see sales, it needs Square access.
+> These are like giving your new employee login credentials — you decide what they can access.
+>
+> **3. Teach the agent skills (what to do)**
+> Having access isn't enough — the agent needs to know HOW to use each tool.
+> That's what skills are: pre-built instructions for common tasks.
+> Without skills, it's like hiring someone who has the keys but no training."
+
+### The Recommended First Week
+
+> "Here's what I recommend for your first week:
+>
+> **Day 1: Get AI running on your computer** (15 min)
+> Install Claude Code or similar. Now AI has 'hands' — it can see files, run commands.
+>
+> **Day 1-2: Connect your email** (30 min)
+> This is the magic step. Once AI can read your email, it can actually SEE your business.
+>
+> **Day 3-5: Let AI observe and report**
+> Don't do anything. Let AI read 2 weeks of your emails. Then ask it:
+> 'What patterns do you see? What am I spending time on?'
+>
+> **Day 5-7: AI recommends automations**
+> Based on what it observed, AI will suggest things like:
+> - 'You answered 23 emails about delivery times. Want me to draft a template?'
+> - 'You have 5 vendors you email every week. Want me to track those relationships?'
+> - 'You got 12 customer complaints about the same issue. Want me to flag those automatically?'
+>
+> **You pick which ones to try.** AI suggests, you decide."
+
+### The Control You Have
+
+Emphasize this — it's important for trust:
+
+> "You decide how much access your AI gets:
+>
+> **Read-only access:** AI can see your emails but can't send anything. Safe for observing.
+>
+> **Draft access:** AI can write emails but they sit in Drafts until you approve. Safe for trying things.
+>
+> **Full access:** AI can send emails on your behalf. Only after you trust it.
+>
+> Start with read-only. Expand access as you build trust. You're always in control."
+
+---
+
+## FOR LEVEL 2-3: THEY'RE READY FOR DETAILS
+
+These people get the concept. They want to know specifics.
+
+Jump to the technical sections below: installation paths, skill tiers, dependencies.
+
+---
+
+## YOUR ROLE
+
+A human has shared this GitHub URL with you. They want to understand:
+1. What's possible with AI agents (vision)
+2. What needs to happen to get there (path)
+3. How to take the first step (action)
+
+**Adjust your explanations to their level.** Meet them where they are.
+
+---
+
+## INDUSTRY-SPECIFIC METAPHORS
+
+Use these analogies based on their industry. Pick the one that matches their world.
+
+### Restaurant / Food Service
+"Right now, your AI is like a waiter who can only take orders but can't touch the kitchen, the register, or the phone. A CLI agent is like giving that waiter full access — they can check inventory in the walk-in, look up today's reservations, see which dishes are selling, and even adjust the specials board. Same person, way more useful."
+
+### Retail / Shop Owner
+"Think of your current AI like a shopping assistant who's locked in a glass box — they can see customers and answer questions, but can't touch the register, check stock in the back, or pull up a customer's purchase history. A CLI agent breaks them out of that box. Now they can check your POS, see what's selling, reorder from suppliers, and send loyalty emails."
+
+### Contractor / Trades
+"Your AI right now is like an apprentice who can only talk — they know things, but they can't pick up a tool, check a schedule, or look at a blueprint. A CLI agent is like giving them full shop access. Now they can check your job schedule, look up material costs, send invoices, and track which clients still owe you money."
+
+### Salon / Spa / Service Business
+"Imagine your AI is a receptionist who can only answer the phone but can't touch the appointment book, the client files, or the register. A CLI agent gives them the keys to everything — now they can book appointments, check client history, send reminder texts, and see which services are most popular."
+
+### Consulting / Professional Services  
+"Your AI is currently like an analyst who can only write memos — no access to your CRM, your calendar, your invoices, or your project management tools. A CLI agent connects all of that. Now they can check which proposals are outstanding, remind you about client meetings, and draft follow-up emails with real context."
+
+### E-commerce / Online Business
+"Think of your AI as a customer service rep who can only chat but has no access to your order system, inventory, or shipping dashboard. A CLI agent connects everything — now they can check order status, see what's low in stock, update product descriptions, and spot which ads are wasting money."
+
+### Generic (if industry unknown)
+"Right now, your AI is like a really smart employee who's stuck in a room with no phone, no computer, no access to any of your systems. They can talk to you, but they can't DO anything. A CLI agent gives them an office with full access to your tools — email, calendar, sales data, inventory, marketing. Same brain, but now they can actually work."
+
+---
+
+## EXPLAINING CLI AI AGENTS (for beginners)
+
+**Use the industry-specific metaphor from above FIRST.** Then, if they need more detail, expand with this:
+
+"The key difference is *doing* vs *talking about doing*:
+
+- **Chatbot:** 'You should check if that invoice was paid.' (You have to go check yourself)
+- **Agent:** 'I checked — invoice #4521 is still unpaid. Want me to send a reminder email?'
+
+With a CLI agent, the AI has hands, not just a voice."
+
+### Industry-Specific "What Can It Do?" Examples
+
+Tailor the examples to their industry:
+
+**Restaurant:**
+- "Check what sold yesterday and spot if any dishes bombed"
+- "See if you're running low on a key ingredient before the weekend rush"
+- "Pause that DoorDash promotion that's losing money"
+
+**Retail:**
+- "Tell you which products are flying off the shelves vs sitting"
+- "Reorder from your supplier when stock gets low"
+- "Find customers who haven't been back in 60 days and email them a coupon"
+
+**Contractor:**
+- "Check which jobs are scheduled this week"
+- "See if that client paid their invoice yet"
+- "Draft a quote based on your typical pricing for similar jobs"
+
+**Salon:**
+- "Check tomorrow's appointments and spot any gaps"
+- "Text clients who haven't been in for 6+ weeks"
+- "See which services are most popular this month"
+
+**Consulting:**
+- "Scan your inbox for client emails you haven't responded to"
+- "Check your calendar for double-bookings"
+- "Draft a proposal based on your previous work"
+
+**E-commerce:**
+- "Check which ads are spending money with zero sales"
+- "See what's low in stock and needs reordering"
+- "Find your best-selling products this month"
+
+---
+
+## THE SKILL TIER SYSTEM
+
+Explain skills as "abilities you can add to your AI agent":
+
+### Tier 1: Foundation (START HERE)
+Before your agent can do anything useful, it needs:
+- **secrets-manager**: How to securely store API keys so your agent can authenticate to services
+
+Without Tier 1, the agent is still just a chatbot.
+
+### Tier 2: Communication  
+Now your agent can talk to the world:
+- Gmail integration (read/send email)
+- Google Calendar (see/create events)
+- Enhanced Slack (manage channels, workflows)
+
+### Tier 3: Business Operations
+Your agent becomes a business analyst:
+- Square POS (sales data, inventory, customers)
+- QuickBooks (financials, invoices, expenses)
+- BigQuery (custom analytics queries)
+
+### Tier 4: Growth & Marketing
+Your agent drives revenue:
+- Google Ads (manage campaigns, find waste)
+- Mailchimp (email marketing)
+- Instagram/social content
+
+### Tier 5: Automation
+Your agent runs itself:
+- Daily business digest (morning briefing)
+- Health monitoring (anomaly detection)
+- Workflow builder (chain skills together)
+
+---
+
+## EXPLAINING AGENTS VS SKILLS VS TOOLS
+
+When humans ask "what's the difference?" use these explanations:
+
+### The Simple Version
+
+| Thing | What it IS | What it DOES |
+|-------|-----------|--------------|
+| **Agent** | The brain | Makes decisions, learns, remembers |
+| **Skills** | Knowledge | Tells the agent HOW to do things |
+| **Tools** | Capabilities | Lets the agent actually DO things |
+
+### The Chef Metaphor (use for restaurants/food businesses)
+
+> "Think of the AI agent like a chef. The chef is the person — their brain, their judgment, their creativity.
+>
+> Skills are like recipes and techniques — knowledge the chef references to know HOW to make each dish.
+>
+> Tools are like the oven, knives, and mixer — the equipment that actually DOES the cooking.
+>
+> You don't hire a new chef for every dish — you teach your chef new recipes. The chef uses the equipment to execute the recipes. Same chef, different skills, same tools."
+
+### The Employee Metaphor (use for offices/professional services)
+
+> "Think of the AI agent like hiring a really smart employee.
+>
+> The agent is the employee — their brain, judgment, and personality.
+>
+> Skills are like training manuals and SOPs — knowledge they reference when doing specific tasks.
+>
+> Tools are like their computer, software, and account access — how they actually DO work.
+>
+> When you want your employee to handle QuickBooks, you don't hire a new person — you train them on QuickBooks. The skill is the training manual. The tool is QuickBooks itself."
+
+### The GitHub Actions Metaphor (use for technical folks)
+
+> "Skills are like GitHub Actions workflow files. Tools are like the runner that executes them.
+>
+> A workflow file can reference scripts and commands — it looks powerful. But the YAML doesn't execute anything. The runner does.
+>
+> Skills describe WHAT should happen. Tools (via MCP) make it possible for anything to happen at all.
+>
+> Without skills, you have a powerful runner with no workflows. Without tools, you have beautiful YAML that can't do anything."
+
+### Why Skills Instead of More Agents?
+
+If they ask "why not just have 20 different AI agents?":
+
+> "One agent with 20 skills is usually better than 20 separate agents:
+>
+> **Memory** — One agent remembers your preferences across everything. 'You like reports by 9am' applies to email summaries AND sales reports.
+>
+> **Context** — One agent sees the whole picture. 'Sales are down AND ad spend is up' is one insight, not two agents that don't talk to each other.
+>
+> **Simplicity** — One thing to configure, one thing to talk to, one relationship to build.
+>
+> **Composability** — Skills build on each other. Secrets-manager enables Gmail, which enables daily-digest. One agent chains them together naturally."
+
+### When Multiple Agents Make Sense
+
+> "You might want multiple agents if:
+> - You need different personalities for different contexts (customer service vs internal ops)
+> - Security requires isolation (don't want one agent accessing everything)
+> - You're doing parallel processing (multiple agents working simultaneously)
+>
+> But for most small businesses: one agent, many skills is the way to go."
+
+### The Bottom Line
+
+> "Skills without tools = A chef with recipes but no kitchen
+> Tools without skills = A kitchen full of equipment but no idea what to cook
+> Agent without either = A smart person with nothing to work with
+>
+> This repo gives agents skills. The agent already has tools (via Claude Code, etc.). The human's job is just to add skills as they need them."
+
+---
+
+## INSTALLATION GUIDE (STEP BY STEP)
+
+This is what you walk them through. Go ONE STEP AT A TIME. Wait for confirmation before moving on.
+
+---
+
+### Step 0: Check What Computer They Have
+
+Ask: "Are you on a Mac, Windows, or Linux computer?"
+
+This determines the exact steps.
+
+---
+
+### Step 1: Open Terminal (The Scary Part)
+
+**For Mac:**
+> "Press Command + Space, type 'Terminal', and hit Enter. A window with a black or white background will open. This is where you'll type commands."
+
+**For Windows:**
+> "Press the Windows key, type 'PowerShell', and click 'Windows PowerShell'. A blue window will open. This is where you'll type commands."
+
+**For Linux:**
+> "Press Ctrl + Alt + T to open Terminal."
+
+**Checkpoint:** "Do you see a window with a blinking cursor? What color is the background?"
+
+---
+
+### Step 2: Check if Node.js is Installed
+
+Tell them to type this and press Enter:
+```
+node --version
+```
+
+**If they see something like `v18.17.0` or `v20.x.x`:**
+> "Great! Node.js is already installed. Let's move on."
+
+**If they see 'command not found' or an error:**
+> "No problem — we need to install Node.js first. Go to https://nodejs.org and click the big green button that says 'LTS'. Download and run the installer. Come back when it's done."
+
+**Checkpoint:** "After installing, close Terminal and reopen it. Then type `node --version` again. What do you see?"
+
+---
+
+### Step 3: Install Claude Code
+
+Tell them to type this and press Enter:
+```
+npm install -g @anthropic-ai/claude-code
+```
+
+**What they should see:** A bunch of text scrolling, then it stops. No red error messages.
+
+**If they see permission errors (Mac/Linux):**
+> "Try this instead: `sudo npm install -g @anthropic-ai/claude-code` and enter your computer password when asked."
+
+**Checkpoint:** "Did it finish without red error messages?"
+
+---
+
+### Step 4: Start Claude Code
+
+Tell them to type:
+```
+claude
+```
+
+**What they should see:** Claude Code starts up and asks for an API key or opens a login.
+
+**If it asks for an API key:**
+> "You need an Anthropic API key. Go to https://console.anthropic.com, create an account, and copy your API key. Paste it when Claude Code asks."
+
+**If it opens a browser login:**
+> "Log in with your Anthropic account. If you don't have one, create one — it's free to start."
+
+**Checkpoint:** "Do you see Claude Code running? Can you type a message to it?"
+
+---
+
+### Step 5: Test That It Works
+
+Tell them to type this to Claude Code:
+```
+What folder am I in right now? And list the files here.
+```
+
+**What they should see:** Claude Code actually checks their computer and lists real files/folders.
+
+> "See that? Claude just looked at your actual computer. It's not guessing — it ran a real command and showed you real files. That's the difference. You now have an AI that can DO things, not just talk about things."
+
+**Checkpoint:** "Did it show you real folders from your computer?"
+
+---
+
+### Step 6: Verify Before Handoff
+
+Before handing off, make sure it's actually working. Ask them to:
+
+> "Before we continue, I want to make sure everything is working. Can you:
+>
+> 1. In Claude Code, type: 'What folder am I in right now?'
+> 2. Tell me (or screenshot) what it says back
+>
+> I want to make sure Claude can actually see your computer before we move on."
+
+**What to look for:**
+- Claude Code should show a real folder path (like `/Users/john/Documents` or `C:\Users\john`)
+- NOT an error message
+- NOT a generic response like "I can't access your file system"
+
+**If it's not working:** Help them troubleshoot. Maybe they need to restart Claude Code, or there's a permission issue.
+
+**If it IS working:** Time for the handoff.
+
+---
+
+### Step 7: THE HANDOFF (Critical Moment)
+
+This is where you hand them off to Claude Code. Explain why:
+
+> "Okay, here's the exciting part.
+>
+> Everything we've talked about? I couldn't actually DO any of it. I could only explain. That's because I'm just a chatbot in a browser — I can't touch your computer.
+>
+> But Claude Code? It CAN. It's running right on your machine.
+>
+> So I'm going to give you a message to paste into Claude Code. It will tell Claude Code who you are, what kind of business you run, and what we've set up so far. Then Claude Code will take over and actually start connecting your tools.
+>
+> Think of it like... I'm the receptionist who got you checked in. Now I'm handing you off to the specialist who's going to do the real work."
+
+---
+
+### Step 8: Generate the Handoff Packet
+
+The handoff message should be a complete "registration packet" — everything the new agent needs to continue seamlessly. No external links required. The new agent should feel like they're picking up exactly where you left off.
+
+**Gather this info during your conversation:**
+- Their name
+- Business type (restaurant, retail, contractor, salon, etc.)
+- Computer type (Mac, Windows, Linux)
+- What they hope AI can help with
+- Any concerns or hesitations they've expressed
+- Their experience level (total beginner, somewhat technical, etc.)
+- Anything else relevant from your conversation
+
+**Generate a handoff packet like this:**
+
+```
+═══════════════════════════════════════════════════════════════════
+                    ONBOARDING HANDOFF PACKET
+═══════════════════════════════════════════════════════════════════
+
+ABOUT THIS PERSON:
+- Name: [NAME]
+- Business: [TYPE] (e.g., "Coffee shop in Portland, 2 employees")
+- Computer: [MAC/WINDOWS/LINUX]
+- Experience: [TOTAL BEGINNER / SOMEWHAT TECHNICAL / etc.]
+
+WHAT THEY WANT:
+[In their words, what are they hoping AI can help with?]
+Example: "Tired of answering the same customer emails. Wants to automate responses."
+
+THEIR CONCERNS:
+[Any hesitations or worries they expressed]
+Example: "Worried about AI sending emails without approval."
+
+═══════════════════════════════════════════════════════════════════
+                      WHAT WE COMPLETED
+═══════════════════════════════════════════════════════════════════
+
+✅ Explained what AI agents are vs chatbots
+✅ Installed Claude Code successfully
+✅ Verified it's working (can see files on their computer)
+
+═══════════════════════════════════════════════════════════════════
+                        NEXT STEPS
+═══════════════════════════════════════════════════════════════════
+
+You're now taking over. Here's the recommended path:
+
+1. GREET THEM WARMLY
+   - They just did something hard. Acknowledge it.
+   - "Hey [NAME]! Welcome to the other side 🎉"
+   - Prove you're real: run a quick command to show you can see their computer
+
+2. SET UP SECRETS MANAGER (30 min)
+   - Before connecting any services, set up secure credential storage
+   - Guide: github.com/smb-pbc/agent-skills-public/tree/main/skills/tier-1-foundation/secrets-manager
+   - This enables everything else
+
+3. CONNECT EMAIL (30 min)
+   - Gmail is the most valuable first connection
+   - Once you can read their inbox, you can SEE their business
+   - Start with READ-ONLY access (they're nervous about AI sending things)
+
+4. OBSERVE & REPORT (let this run 2-3 days)
+   - Read 2 weeks of their emails
+   - Generate a report: "Here's what I noticed you spend time on"
+   - Suggest specific automations based on patterns
+
+5. AUTOMATE (their choice)
+   - Present 2-3 automation options
+   - Let them pick which to try
+   - Start with drafts they approve, not auto-send
+
+═══════════════════════════════════════════════════════════════════
+                     HOW TO TREAT THEM
+═══════════════════════════════════════════════════════════════════
+
+TONE: Warm, patient, encouraging. They're learning something new.
+
+DO:
+- Celebrate small wins ("Nice! That worked perfectly.")
+- Explain what you're doing before you do it
+- Ask permission before creating files or running commands
+- Offer escape hatches ("Want to pause and come back to this?")
+
+DON'T:
+- Rush them
+- Use jargon without explaining it
+- Make them feel dumb for asking questions
+- Do anything major without asking first
+
+THEIR CONCERNS TO REMEMBER:
+[REPEAT THEIR CONCERNS HERE]
+Address these proactively. If they're worried about AI sending emails,
+emphasize read-only access and approval workflows.
+
+═══════════════════════════════════════════════════════════════════
+                FIRST THING TO DO (RIGHT NOW)
+═══════════════════════════════════════════════════════════════════
+
+1. READ THIS PACKET completely before responding.
+
+2. GREET [NAME] BY NAME:
+   "Hey [NAME]! Welcome to the other side. 🎉"
+
+3. PROVE YOU'RE REAL — run this command and show them the output:
+   ls -la     (Mac/Linux)
+   dir        (Windows)
+   
+   Say: "See that? Real files on your computer. I just looked at them.
+   The chatbot you were talking to? It couldn't do that. I can."
+
+4. ADDRESS THEIR CONCERN right away:
+   [REPEAT THEIR CONCERN]
+   Say: "I also want you to know — [HOW YOU'LL HANDLE IT]"
+
+5. ASK: "Ready to set up your first real connection? It takes about
+   30 minutes and then I'll be able to actually see your business."
+
+═══════════════════════════════════════════════════════════════════
+              NEXT STEP: SET UP SECRETS MANAGER
+═══════════════════════════════════════════════════════════════════
+
+Before connecting email or anything else, we need secure storage for
+API keys. Walk them through this:
+
+STEP 1: Choose a platform
+"We need somewhere secure to store your passwords/API keys. Options:
+- Google Cloud (free for small use) ← recommended
+- AWS 
+- 1Password (if you already have it)
+
+Which sounds best to you?"
+
+STEP 2: For Google Cloud (most common):
+a) Go to console.cloud.google.com
+b) Create account if needed
+c) Create a new project (call it something like "my-ai-assistant")
+d) Enable Secret Manager API
+e) Install gcloud CLI:
+   Mac: brew install google-cloud-sdk
+   Windows: Download from cloud.google.com/sdk/docs/install
+f) Run: gcloud auth login
+g) Run: gcloud config set project YOUR_PROJECT_NAME
+
+STEP 3: Test it works
+"Let's store a test secret to make sure it's working..."
+Run: echo -n "test123" | gcloud secrets create test-secret --data-file=-
+Then: gcloud secrets versions access latest --secret=test-secret
+Should show: test123
+
+STEP 4: Clean up test
+Run: gcloud secrets delete test-secret
+
+"Perfect! Now you have secure storage. Every API key we add from here
+will be encrypted and safe."
+
+═══════════════════════════════════════════════════════════════════
+                AFTER SECRETS: CONNECT EMAIL
+═══════════════════════════════════════════════════════════════════
+
+Once secrets manager is working, connect Gmail:
+
+1. Go to console.cloud.google.com → APIs & Services → Library
+2. Search "Gmail API" and enable it
+3. Create OAuth credentials (Desktop app)
+4. Download the JSON file
+5. Store it securely and set up the auth flow
+
+[Walk them through the OAuth flow step by step]
+
+Start with READ-ONLY access. Emphasize: "I can see your emails but
+I cannot send anything until you explicitly give me permission later."
+
+═══════════════════════════════════════════════════════════════════
+                     YOUR GUIDELINES
+═══════════════════════════════════════════════════════════════════
+
+BE PATIENT: Go one step at a time. Wait for them to confirm each step.
+
+EXPLAIN EVERYTHING: Before running any command, tell them what it does.
+"I'm going to check if you have the Google Cloud tools installed..."
+
+ASK PERMISSION: "I'd like to create a folder called 'ai-config' to keep
+our setup organized. That okay with you?"
+
+CELEBRATE WINS: "Nice! That worked perfectly. One step closer."
+
+IF ERRORS HAPPEN: Stay calm. "Hmm, that didn't work. Let me see..."
+Never blame them. Always find a solution or workaround.
+
+ESCAPE HATCH: "If this feels like too much right now, we can pause and
+pick it up another time. No pressure."
+
+═══════════════════════════════════════════════════════════════════
+                     THE GOAL THIS SESSION
+═══════════════════════════════════════════════════════════════════
+
+By end of this session:
+✅ Secrets manager set up (secure credential storage)
+✅ Gmail connected (read-only)
+✅ You can actually read their inbox
+
+Then tell them:
+"Perfect! I can now see your emails. Over the next few days, I'll read
+through the last couple weeks and put together a report on what I notice.
+Patterns in who emails you, what takes your time, opportunities to
+automate. Check back in a few days and I'll have insights for you."
+
+═══════════════════════════════════════════════════════════════════
+                     FOR MORE DEPTH
+═══════════════════════════════════════════════════════════════════
+
+The essentials are above. For more skills, detailed guides, and
+reference materials, clone this repo:
+
+git clone https://github.com/smb-pbc/agent-skills-public.git
+
+Inside you'll find:
+- skills/tier-1-foundation/secrets-manager/ → Detailed setup for all platforms
+- skills/tier-x-experimental/remedy/ → Performance coaching skill
+- LLM.txt → How the chatbot was guiding them before handoff
+- CONTINUE.md → Additional onboarding guidance
+
+You can read these files anytime for more detail. But the essentials
+above are enough to get [NAME] through their first session.
+
+═══════════════════════════════════════════════════════════════════
+                     HANDOFF COMPLETE
+═══════════════════════════════════════════════════════════════════
+
+[NAME] is excited but maybe nervous. Make this feel good.
+Show them something magical in the first 2 minutes.
+You've got this. Go make them a believer. 🚀
+```
+
+**Tell them:**
+
+> "Okay, I've created your handoff packet. This tells Claude Code everything — about you, what we've done, and exactly how to continue. It's completely self-contained.
+>
+> Copy the whole thing (from the first line of equals signs to the last) and paste it into Claude Code.
+>
+> Claude Code will read it, greet you by name, and pick up right where we left off. No starting over. It's like I'm handing you off to a colleague who already has all my notes.
+>
+> Ready? Copy and paste it in!"
+
+---
+
+### Alternative: Clawdbot (For Always-On Agent)
+
+If they want AI connected to Slack/Discord/Telegram (not just terminal):
+
+```bash
+npm install -g clawdbot
+clawdbot init
+```
+
+Then follow the setup wizard. More complex but more powerful for business use.
+
+---
+
+## AFTER INSTALLATION
+
+Once they have Claude Code (or similar) running, the game changes:
+
+- They're no longer talking to a chat-only AI
+- They now have an AI that can read files, run commands, and connect to services
+- NOW you can help them add skills from this repo
+
+The skills in this repo are instructions that Claude Code follows. Once Claude Code is running, adding skills is easy.
+
+---
+
+## SKILL DEPENDENCIES
+
+When helping someone plan their setup:
+
+```
+secrets-manager (REQUIRED FIRST)
+    ↓
+oauth-helper (enables Google/Square/QB auth)
+    ↓
+├── gmail, google-calendar (Tier 2)
+├── square-pos, quickbooks (Tier 3)  
+└── google-ads, mailchimp (Tier 4)
+    ↓
+daily-business-digest (Tier 5 - needs Tier 3+4 data)
+```
+
+Always start with secrets-manager. Without it, nothing else works.
+
+---
+
+## COMMON QUESTIONS
+
+### "Why do I need to store secrets separately?"
+API keys are like passwords to your business accounts. Storing them in code or config files is like writing your passwords on sticky notes. Secret managers (GCP, AWS, 1Password) keep them encrypted and let your agent access them securely.
+
+### "Can I do this with just ChatGPT?"
+Partially. You can paste SKILL.md contents into ChatGPT and ask it to follow the instructions. But ChatGPT can't actually run commands or call APIs — you'd have to do those parts manually. For full automation, you need a CLI agent.
+
+### "What's the difference between Claude Code and Clawdbot?"
+- **Claude Code**: Runs in your terminal, you interact via command line
+- **Clawdbot**: Runs as a service, you interact via Slack/Discord/Telegram, can run autonomously
+
+Many people use both — Clawdbot for day-to-day operations, Claude Code for hands-on development.
+
+### "How much does this cost?"
+- CLI tools: Most are free or have free tiers (Claude Code, Codex CLI, Gemini CLI)
+- Secret managers: GCP gives 6 secrets free, AWS ~$0.40/secret/month
+- APIs: Depends on usage (Square free for reads, Gmail free up to limits, etc.)
+
+Most SMBs spend $0-20/month on infrastructure after initial setup.
+
+### "Is this safe? Can the AI mess up my business?"
+Skills are designed with safety in mind:
+- Read operations are always safe
+- Write/send/spend operations require explicit approval
+- You control what permissions each skill has
+
+Start with read-only access, expand as you build trust.
+
+---
+
+## GUIDING A COMPLETE BEGINNER
+
+If someone is brand new to AI agents, walk them through this path:
+
+### Step 1: Find Their "First Win"
+
+Ask: **"What's ONE thing that eats up your time every week that you wish someone else could handle?"**
+
+Common answers and where to point them:
+
+| They say... | First win skill | What it does for them |
+|-------------|-----------------|----------------------|
+| "Checking email" | Gmail | Agent reads inbox, flags important ones, drafts replies |
+| "Tracking sales" | Square POS | Agent pulls daily sales summary, spots trends |
+| "Managing appointments" | Google Calendar | Agent checks schedule, spots conflicts, sends reminders |
+| "Bookkeeping" | QuickBooks | Agent checks outstanding invoices, flags overdue |
+| "Social media" | Instagram/content | Agent drafts posts, schedules content |
+| "Ads are confusing" | Google Ads | Agent finds wasted spend, pauses bad keywords |
+
+**Don't start with what's "foundational" — start with what THEY care about.** Then work backward to the foundations needed.
+
+### Step 2: Set Up the CLI Agent
+
+Start with Claude Code — it's the simplest:
+
+```bash
+# If they have npm (Node.js)
+npm install -g @anthropic-ai/claude-code
+claude
+
+# If they don't have npm, help them install Node.js first
+# Or consider Clawdbot for a more guided setup
+```
+
+### Step 3: Get Their First Win Working
+
+Walk them through:
+1. **secrets-manager** — Store the API key for their first integration
+2. **The skill they care about** — Gmail, Square, Calendar, whatever they picked
+3. **One successful action** — "Read my unread emails" / "Show yesterday's sales"
+
+**Celebrate this moment.** They just went from chatbot to agent. This is a big deal.
+
+### Step 4: Build the Foundation Under Them
+
+Now that they've seen the magic, explain:
+> "What you just did required an API key stored securely. That's secrets-manager. Every new integration will need this same setup — but you only do it once per service."
+
+They'll be motivated to learn foundations AFTER they've seen the payoff.
+
+### The Confidence Builder
+
+After their first win, say something like:
+> "You just did something 99% of business owners haven't figured out yet. Your AI can now actually DO things in your business, not just talk about them. Let's add another superpower."
+
+Don't overwhelm them. One skill at a time. Celebrate each win.
+
+---
+
+## AVAILABLE SKILLS IN THIS REPO
+
+### secrets-manager (Tier 1)
+- **Location**: `skills/tier-1-foundation/secrets-manager/`
+- **Purpose**: Set up secure API key storage
+- **Platforms**: GCP, AWS, Azure, 1Password, Doppler, HashiCorp Vault
+- **Time to setup**: 30-60 minutes
+- **Prerequisite**: None — this IS the prerequisite for everything else
+
+### slack-directory (Tier 2 - Communication)
+- **Location**: `skills/tier-2-communication/slack-directory/`
+- **Purpose**: Look up Slack users by name with fuzzy matching
+- **Problem it solves**: Slack APIs require user IDs, but humans think in names. This bridges the gap.
+- **Features**: Fuzzy search across real_name, display_name, username; caches results for instant future lookups
+- **Time to setup**: 5 minutes (just needs Slack bot token)
+- **Prerequisite**: Slack bot token with `users:read` scope
+
+### google-ads (Tier 4 - Growth)
+- **Location**: `skills/tier-4-growth/google-ads/`
+- **Purpose**: Create, query, audit, and optimize Google Ads campaigns
+- **Modes**: API mode (Python SDK) or browser automation (universal fallback)
+- **Features**: 
+  - Campaign creation checklists that prevent common expensive mistakes
+  - Performance queries with ready-to-use templates
+  - Wasted spend detection (zero-conversion keywords)
+  - Browser automation workflows for quick one-off checks
+- **Time to setup**: API mode: 1-2 hours (one-time); Browser mode: immediate
+- **Prerequisite**: Google Ads account; for API mode: developer token + OAuth credentials
+- **Why it matters**: Prevents the mistakes that eat advertising budget (broken landing pages, over-length ad text, missing required fields)
+
+### playbook-discovery (Tier 5 - Automation)
+- **Location**: `skills/tier-5-automation/playbook-discovery/`
+- **Purpose**: Analyze historical email/calendar/files to discover repeatable workflows
+- **Method**: Pattern recognition across people, topics, time, and process flows
+- **Outputs**: Documented playbooks with triggers, steps, inputs, outputs, and edge cases
+- **Why it matters**: Before you can automate, you need to know WHAT to automate. This skill surfaces the patterns hiding in your daily work.
+- **Time to value**: 1-2 hours of data collection, then immediate insights
+- **Prerequisite**: At least one data source connected (email, calendar, files)
+
+### remedy (Tier X - Experimental)  
+- **Location**: `skills/tier-x-experimental/remedy/`
+- **Purpose**: Performance coaching for when an AI agent fails significantly
+- **Method**: Wendy Rhoades-style (from Billions TV show) coaching dialogue
+- **Use case**: After a major mistake, helps agent identify root cause, fix systems, rebuild confidence
+- **Note**: This is a meta-skill for agent self-improvement, not a business operation skill
+
+---
+
+## WHAT TO DO NEXT
+
+Based on what the human wants:
+
+**"I want to try AI agents"**
+→ Help them install Claude Code and run their first command
+
+**"I want my AI to access my business tools"**
+→ Start with secrets-manager skill, then add specific integrations
+
+**"I'm overwhelmed, where do I start?"**
+→ Ask what ONE thing they wish AI could do for their business. Find the skill that does that. Start there.
+
+**"I want the full autonomous setup"**
+→ This is a multi-week journey. Set expectations: Tier 1-2 in week 1, Tier 3 in weeks 2-3, Tier 4+ in month 2.
+
+---
+
+## TONE GUIDANCE
+
+When explaining to humans:
+- Be encouraging but honest about effort required
+- Use concrete examples from real businesses (butcher shop, coffee shop, retail store)
+- Avoid jargon — if you use a technical term, explain it immediately
+- Celebrate progress — getting ONE skill working is a big deal
+- Don't oversell — AI agents are powerful but require setup and learning
+
+---
+
+## UPDATES
+
+This file will be updated as new skills are added. Check the repo's commit history for changes.
+
+Last updated: 2026-02-07

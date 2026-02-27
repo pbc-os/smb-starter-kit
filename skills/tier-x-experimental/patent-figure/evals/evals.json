@@ -1,0 +1,23 @@
+{
+  "skill_name": "patent-figure",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Generate FIG. 2 for my medical device patent — the tier progression diagram showing the 5 clearance levels from UNCLASSIFIED up to CERTIFIED. The provisional is at ~/patents/PROVISIONAL-MEDICAL-DEVICE.md",
+      "expected_output": "A USPTO-style patent figure image (PATENT-FIG2-V1-*.jpg) saved to ~/Downloads, showing a tier progression diagram with 5 clearance levels (UNCLASSIFIED, BASIC, STANDARD, ENHANCED, CERTIFIED), reference numerals, correct line weights, SHEET N OF N header, FIG. 2 caption, no icons, no fills, all-caps block letters.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "I need FIG. 3 for the network protocol patent — the connection state machine. File is ~/patents/PROVISIONAL-NETWORK-PROTOCOL.md",
+      "expected_output": "A USPTO-style patent figure image (PATENT-FIG3-V1-*.jpg) saved to ~/Downloads, showing a state machine with IDLE, CONNECTING, ACTIVE, and TIMEOUT states, transitions labeled with trigger conditions, reference numerals, FIG. 3 caption, no icons, strict monochrome line art.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Generate FIG. 1 for the logistics coordination patent at ~/patents/PROVISIONAL-LOGISTICS.md — the system architecture showing multiple dispatch agents routing to a central coordinator.",
+      "expected_output": "A USPTO-style patent figure image (PATENT-FIG1-V1-*.jpg) saved to ~/Downloads, showing multiple DISPATCH AGENT boxes connected to a central COORDINATOR box, reference numerals, correct arrows, FIG. 1 caption, SHEET 1 OF N header.",
+      "files": []
+    }
+  ]
+}
