@@ -240,7 +240,7 @@ Start with read-only. Expand later. You're always in control.
 
 ---
 
-## 📦 Available Skills (18 skills)
+## 📦 Available Skills (19 skills)
 
 ### Tier 1: Foundation
 *Start here. These enable everything else.*
@@ -250,6 +250,7 @@ Start with read-only. Expand later. You're always in control.
 | [secrets-manager](./skills/tier-1-foundation/secrets-manager/) | Set up secure API key storage (GCP, AWS, Azure, etc.) | `npx skills add smb-pbc/agent-skills-public@secrets-manager -g -y` |
 | [semantic-layer-audit](./skills/tier-1-foundation/semantic-layer-audit/) | Discover and document all data sources your agent has access to. Living data catalog. | `npx skills add smb-pbc/agent-skills-public@semantic-layer-audit -g -y` |
 | [google-workspace](./skills/tier-1-foundation/google-workspace/) | Set up the [gws CLI](https://github.com/googleworkspace/cli) for Gmail, Calendar, Drive, Sheets, Docs, Chat, Tasks, and every Google Workspace API. Gateway to all Google-powered skills. | `npx skills add smb-pbc/agent-skills-public@google-workspace -g -y` |
+| [mcp-guide](./skills/tier-1-foundation/mcp-guide/) | Educational guide to MCP (Model Context Protocol) — what it is, when you need it vs when a CLI + skill is enough, and how to build your own. Links to [Anthropic's MCP builder](https://github.com/anthropics/skills/tree/main/skills/mcp-builder). | `npx skills add smb-pbc/agent-skills-public@mcp-guide -g -y` |
 
 ### Tier 2: Communication
 *Connect your agent to the people in your business.*
