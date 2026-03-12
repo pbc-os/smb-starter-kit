@@ -270,6 +270,7 @@ Start with read-only. Expand later. You're always in control.
 | Skill | Description | Install |
 |-------|-------------|---------|
 | [playbook-discovery](./skills/tier-5-automation/playbook-discovery/) | Analyze your email/calendar/files to discover repeatable workflows that AI can automate. | `npx skills add smb-pbc/agent-skills-public@playbook-discovery -g -y` |
+| [autoresearch](./skills/tier-5-automation/autoresearch/) | Autonomous iterative improvement loop for any measurable system. Inspired by Karpathy's autoresearch. Agent forms hypotheses, makes single changes, evaluates, keeps improvements, discards regressions. | `npx skills add smb-pbc/agent-skills-public@autoresearch -g -y` |
 
 ### Tier X: Agent Performance
 *Meta-skills for agent self-improvement.*
