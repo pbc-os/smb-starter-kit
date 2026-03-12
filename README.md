@@ -240,7 +240,7 @@ Start with read-only. Expand later. You're always in control.
 
 ---
 
-## 📦 Available Skills (17 skills)
+## 📦 Available Skills (18 skills)
 
 ### Tier 1: Foundation
 *Start here. These enable everything else.*
@@ -258,7 +258,8 @@ Start with read-only. Expand later. You're always in control.
 |-------|-------------|---------|
 | [gmail](./skills/tier-2-communication/gmail/) | Email management for SMBs — daily triage, vendor comms, customer replies, filters, and templates. Built on the [gws CLI](https://github.com/googleworkspace/cli). | `npx skills add smb-pbc/agent-skills-public@gmail -g -y` |
 | [google-calendar](./skills/tier-2-communication/google-calendar/) | Schedule meetings, check availability, prep for meetings, manage staff schedules. Built on the [gws CLI](https://github.com/googleworkspace/cli). | `npx skills add smb-pbc/agent-skills-public@google-calendar -g -y` |
-| [google-chat](./skills/tier-2-communication/google-chat/) | Team messaging — send updates, post alerts, and manage Google Chat spaces. Built on the [gws CLI](https://github.com/googleworkspace/cli). | `npx skills add smb-pbc/agent-skills-public@google-chat -g -y` |
+| [google-chat](./skills/tier-2-communication/google-chat/) | Team messaging — send updates, post alerts, manage Google Chat spaces. Includes SMB channel structure and communication cadence. Built on the [gws CLI](https://github.com/googleworkspace/cli). | `npx skills add smb-pbc/agent-skills-public@google-chat -g -y` |
+| [slack](./skills/tier-2-communication/slack/) | Slack team messaging — send messages, manage channels, post automated updates, daily standups, shift handoffs. Includes SMB channel structure and best practices. | `npx skills add smb-pbc/agent-skills-public@slack -g -y` |
 | [slack-directory](./skills/tier-2-communication/slack-directory/) | Look up Slack users by name with fuzzy matching. Caches discoveries for instant future lookups. | `npx skills add smb-pbc/agent-skills-public@slack-directory -g -y` |
 
 ### Tier 3: Business Ops
@@ -302,19 +303,22 @@ secrets-manager ─────────────────────�
                                                           │
 google-workspace ─┬── gmail ──────────┐                   │
                   ├── google-calendar ─┤                   │
-                  ├── google-chat      ├── morning-briefing│
+                  ├── google-chat ─────┼── morning-briefing│
                   ├── google-drive     │                   │
                   ├── google-sheets ───┤                   │
                   ├── google-docs      │                   │
                   └── google-tasks ────┘                   │
                                                           │
+slack-directory ──── slack ────────────── morning-briefing │
+                                                          │
                   playbook-discovery ──── autoresearch     │
                                                           │
-slack-directory                                           │
 google-ads ───────────────────────────────────────────────┘
 creative-matrix
 remedy
 ```
+
+> **Slack or Google Chat?** Pick whichever your team already uses. Both skills include the same SMB communication patterns (standup posts, shift handoffs, alerts, weekly recaps). The [shared best practices reference](./skills/tier-2-communication/slack/references/smb-team-messaging.md) applies to either platform.
 
 ### Coming Soon
 
