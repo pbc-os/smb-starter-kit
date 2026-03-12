@@ -240,7 +240,7 @@ Start with read-only. Expand later. You're always in control.
 
 ---
 
-## 📦 Available Skills
+## 📦 Available Skills (17 skills)
 
 ### Tier 1: Foundation
 *Start here. These enable everything else.*
@@ -248,13 +248,28 @@ Start with read-only. Expand later. You're always in control.
 | Skill | Description | Install |
 |-------|-------------|---------|
 | [secrets-manager](./skills/tier-1-foundation/secrets-manager/) | Set up secure API key storage (GCP, AWS, Azure, etc.) | `npx skills add smb-pbc/agent-skills-public@secrets-manager -g -y` |
+| [semantic-layer-audit](./skills/tier-1-foundation/semantic-layer-audit/) | Discover and document all data sources your agent has access to. Living data catalog. | `npx skills add smb-pbc/agent-skills-public@semantic-layer-audit -g -y` |
+| [google-workspace](./skills/tier-1-foundation/google-workspace/) | Set up the [gws CLI](https://github.com/googleworkspace/cli) for Gmail, Calendar, Drive, Sheets, Docs, Chat, Tasks, and every Google Workspace API. Gateway to all Google-powered skills. | `npx skills add smb-pbc/agent-skills-public@google-workspace -g -y` |
 
 ### Tier 2: Communication
 *Connect your agent to the people in your business.*
 
 | Skill | Description | Install |
 |-------|-------------|---------|
+| [gmail](./skills/tier-2-communication/gmail/) | Email management for SMBs — daily triage, vendor comms, customer replies, filters, and templates. Built on the [gws CLI](https://github.com/googleworkspace/cli). | `npx skills add smb-pbc/agent-skills-public@gmail -g -y` |
+| [google-calendar](./skills/tier-2-communication/google-calendar/) | Schedule meetings, check availability, prep for meetings, manage staff schedules. Built on the [gws CLI](https://github.com/googleworkspace/cli). | `npx skills add smb-pbc/agent-skills-public@google-calendar -g -y` |
+| [google-chat](./skills/tier-2-communication/google-chat/) | Team messaging — send updates, post alerts, and manage Google Chat spaces. Built on the [gws CLI](https://github.com/googleworkspace/cli). | `npx skills add smb-pbc/agent-skills-public@google-chat -g -y` |
 | [slack-directory](./skills/tier-2-communication/slack-directory/) | Look up Slack users by name with fuzzy matching. Caches discoveries for instant future lookups. | `npx skills add smb-pbc/agent-skills-public@slack-directory -g -y` |
+
+### Tier 3: Business Ops
+*Give your agent eyes on the actual business — files, data, documents, and tasks.*
+
+| Skill | Description | Install |
+|-------|-------------|---------|
+| [google-drive](./skills/tier-3-business-ops/google-drive/) | File management — organize invoices, contracts, SOPs, product photos. Search, upload, share, and manage permissions. Built on the [gws CLI](https://github.com/googleworkspace/cli). | `npx skills add smb-pbc/agent-skills-public@google-drive -g -y` |
+| [google-sheets](./skills/tier-3-business-ops/google-sheets/) | Spreadsheet operations — sales tracking, inventory, expense reports, data import/export. Includes SMB spreadsheet templates. Built on the [gws CLI](https://github.com/googleworkspace/cli). | `npx skills add smb-pbc/agent-skills-public@google-sheets -g -y` |
+| [google-docs](./skills/tier-3-business-ops/google-docs/) | Document creation — SOPs, proposals, contracts, meeting notes, and templates. Built on the [gws CLI](https://github.com/googleworkspace/cli). | `npx skills add smb-pbc/agent-skills-public@google-docs -g -y` |
+| [google-tasks](./skills/tier-3-business-ops/google-tasks/) | Task management — daily to-dos, project tracking, meeting action items. Integrates with Gmail and Calendar. Built on the [gws CLI](https://github.com/googleworkspace/cli). | `npx skills add smb-pbc/agent-skills-public@google-tasks -g -y` |
 
 ### Tier 4: Growth
 *Drive revenue through advertising, marketing, and SEO.*
@@ -269,8 +284,9 @@ Start with read-only. Expand later. You're always in control.
 
 | Skill | Description | Install |
 |-------|-------------|---------|
+| [morning-briefing](./skills/tier-5-automation/morning-briefing/) | Automated daily digest — combines email triage, calendar, open tasks, and business KPIs into one morning briefing. The "killer app" for SMB agents. | `npx skills add smb-pbc/agent-skills-public@morning-briefing -g -y` |
 | [playbook-discovery](./skills/tier-5-automation/playbook-discovery/) | Analyze your email/calendar/files to discover repeatable workflows that AI can automate. | `npx skills add smb-pbc/agent-skills-public@playbook-discovery -g -y` |
-| [autoresearch](./skills/tier-5-automation/autoresearch/) | Autonomous iterative improvement loop for any measurable system. Inspired by Karpathy's autoresearch. Agent forms hypotheses, makes single changes, evaluates, keeps improvements, discards regressions. | `npx skills add smb-pbc/agent-skills-public@autoresearch -g -y` |
+| [autoresearch](./skills/tier-5-automation/autoresearch/) | Autonomous iterative improvement loop for any measurable system. Inspired by [Karpathy's autoresearch](https://github.com/karpathy/autoresearch). Agent forms hypotheses, makes single changes, evaluates, keeps improvements, discards regressions. | `npx skills add smb-pbc/agent-skills-public@autoresearch -g -y` |
 
 ### Tier X: Agent Performance
 *Meta-skills for agent self-improvement.*
@@ -279,12 +295,32 @@ Start with read-only. Expand later. You're always in control.
 |-------|-------------|---------|
 | [remedy](./skills/tier-x-experimental/remedy/) | Performance coaching when your agent fails. Wendy Rhoades-style. | `npx skills add smb-pbc/agent-skills-public@remedy -g -y` |
 
+### Skill Dependency Map
+
+```
+secrets-manager ──────────────────────────────────────────┐
+                                                          │
+google-workspace ─┬── gmail ──────────┐                   │
+                  ├── google-calendar ─┤                   │
+                  ├── google-chat      ├── morning-briefing│
+                  ├── google-drive     │                   │
+                  ├── google-sheets ───┤                   │
+                  ├── google-docs      │                   │
+                  └── google-tasks ────┘                   │
+                                                          │
+                  playbook-discovery ──── autoresearch     │
+                                                          │
+slack-directory                                           │
+google-ads ───────────────────────────────────────────────┘
+creative-matrix
+remedy
+```
+
 ### Coming Soon
 
-- **Tier 2: Communication** — Gmail, Google Calendar (expanding)
 - **Tier 3: Business Ops** — Square POS, QuickBooks, BigQuery analytics
 - **Tier 4: Growth** — Mailchimp, Instagram (expanding)
-- **Tier 5: Automation** — Daily digest, workflow builder, health monitor (expanding)
+- **Tier 5: Automation** — Workflow builder, health monitor, anomaly detection
 
 ---
 
