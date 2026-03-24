@@ -8,7 +8,7 @@
 
 ## 🚀 Brand New to This?
 
-**Step 1:** Copy this URL: `https://github.com/smb-pbc/agent-skills-public`
+**Step 1:** Copy this URL: `https://github.com/pbc-os/agent-skills-public`
 
 **Step 2:** Paste it into ChatGPT, Claude, or any AI chat
 
@@ -55,7 +55,7 @@ You → type message → ChatGPT (cloud) → types back → You
 That's it. ChatGPT can't touch your computer. It just sends text.
 ```
 
-When you use an AI agent (like Claude Code):
+When you use an AI agent (like Claude Code, Codex, or Gemini CLI):
 ```
 You → type message → Agent (your computer) → sends to Claude (cloud)
                                            ↓
@@ -278,7 +278,7 @@ Start with read-only. Expand later. You're always in control.
 
 | Skill | Description | Install |
 |-------|-------------|---------|
-| [google-ads](./skills/tier-4-growth/google-ads/) | Create, query, audit, and optimize Google Ads campaigns. Battle-tested checklists and templates. | `npx skills add smb-pbc/agent-skills-public@google-ads -g -y` |
+| [google-ads](./skills/tier-4-growth/google-ads/) | Create, query, audit, and optimize Google Ads campaigns via the API. Battle-tested checklists and templates. | `npx skills add smb-pbc/agent-skills-public@google-ads -g -y` |
 | [creative-matrix](./skills/tier-4-growth/creative-matrix/) | Generate Meta/Facebook ad creatives using a 3x3x3 framework (angles x formats x funnels = 27 unique concepts). Optional image/video asset generation. | `npx skills add smb-pbc/agent-skills-public@creative-matrix -g -y` |
 
 ### Tier 5: Automation
@@ -360,8 +360,8 @@ Read [CONTINUE.md](./CONTINUE.md) — it tells you how to continue onboarding th
 The handoff flow:
 1. Chat AI reads LLM.txt → guides human through installation
 2. Chat AI generates handoff message with context
-3. Human pastes handoff message into Claude Code
-4. Claude Code reads CONTINUE.md → takes over onboarding
+3. Human pastes handoff message into their CLI agent
+4. CLI agent reads CONTINUE.md → takes over onboarding
 
 ---
 
@@ -372,12 +372,11 @@ Have a skill that's been battle-tested and could help other SMBs? Open a PR!
 **Quality bar:**
 - Skill must be proven through real use (not theoretical)
 - Documentation must be clear and complete
+- Skills must follow the [Skill Spec](./skills/SKILL_SPEC.md) (frontmatter schema, directory structure)
 - No hardcoded secrets or personal info
 - Generalized for any agent/human pair
 
----
-
-## 📋 For Contributors & Developers
+**Resources:**
 
 | Resource | What It Is |
 |----------|------------|
