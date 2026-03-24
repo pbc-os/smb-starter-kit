@@ -1,3 +1,13 @@
+---
+name: playbook-discovery
+version: 1.0.0
+tier: automation
+description: "Analyze email, calendar, and file patterns to discover repeatable workflows that AI agents can automate."
+requires:
+  bins: ["gws"]
+  skills: ["google-workspace", "gmail"]
+---
+
 # Playbook Discovery
 
 **Discover repeatable workflows from your historical data that AI agents can automate.**

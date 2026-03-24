@@ -1,13 +1,11 @@
 ---
 name: slack
 version: 1.0.0
+tier: communication
 description: "Slack team messaging for small businesses. Send messages, manage channels, post automated updates, run daily standups, and coordinate your team. Includes SMB channel structure and team communication best practices."
-metadata:
-  openclaw:
-    category: "communication"
-    requires:
-      bins: ["curl", "jq"]
-      skills: ["secrets-manager", "slack-directory"]
+requires:
+  bins: ["curl", "jq"]
+  skills: ["secrets-manager", "slack-directory"]
 ---
 
 # Slack

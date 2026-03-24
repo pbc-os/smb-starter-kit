@@ -1,7 +1,5 @@
 # SMB Team Messaging Best Practices
 
-> **Canonical location:** This file has moved to `skills/shared/smb-team-messaging.md`. This copy is kept for backwards compatibility. The shared version is the source of truth.
-
 Platform-agnostic best practices for small business team communication. Applies to Slack, Google Chat, Discord, Teams, or any team messaging tool.
 
 ## The Problem

@@ -1,0 +1,169 @@
+{
+  "version": "1.0.0",
+  "generated": "2025-06-01",
+  "description": "Machine-readable index of all skills in agent-skills-public",
+  "skills": [
+    {
+      "name": "secrets-manager",
+      "tier": "foundation",
+      "path": "tier-1-foundation/secrets-manager",
+      "version": "1.0.0",
+      "description": "Set up secure API key storage across cloud providers (GCP, AWS, Azure, 1Password, Doppler, Vault).",
+      "requires": { "bins": ["gcloud"], "skills": [], "secrets": [] }
+    },
+    {
+      "name": "google-workspace",
+      "tier": "foundation",
+      "path": "tier-1-foundation/google-workspace",
+      "version": "1.0.0",
+      "description": "Set up the gws CLI for Gmail, Calendar, Drive, Sheets, Docs, Chat, Tasks, and all Google Workspace APIs.",
+      "requires": { "bins": ["node"], "skills": [] }
+    },
+    {
+      "name": "semantic-layer-audit",
+      "tier": "foundation",
+      "path": "tier-1-foundation/semantic-layer-audit",
+      "version": "1.0.0",
+      "description": "Audit and maintain a data semantic layer. Scans BigQuery, APIs, secrets, and service accounts.",
+      "requires": { "bins": ["gcloud", "bq", "python3"], "skills": [], "env": ["GCP_PROJECT_ID"] }
+    },
+    {
+      "name": "mcp-guide",
+      "tier": "foundation",
+      "path": "tier-1-foundation/mcp-guide",
+      "version": "1.0.0",
+      "description": "Educational guide to MCP — when you need it vs when a CLI + skill is enough.",
+      "requires": { "bins": [], "skills": [] }
+    },
+    {
+      "name": "gmail",
+      "tier": "communication",
+      "path": "tier-2-communication/gmail",
+      "version": "1.0.0",
+      "description": "Email management for SMBs — daily triage, vendor comms, customer replies, templates.",
+      "requires": { "bins": ["gws"], "skills": ["google-workspace"] }
+    },
+    {
+      "name": "google-calendar",
+      "tier": "communication",
+      "path": "tier-2-communication/google-calendar",
+      "version": "1.0.0",
+      "description": "Calendar management — scheduling, availability, meeting prep, staff schedules.",
+      "requires": { "bins": ["gws"], "skills": ["google-workspace"] }
+    },
+    {
+      "name": "google-chat",
+      "tier": "communication",
+      "path": "tier-2-communication/google-chat",
+      "version": "1.0.0",
+      "description": "Google Chat team messaging — updates, alerts, spaces, daily standups.",
+      "requires": { "bins": ["gws"], "skills": ["google-workspace"] }
+    },
+    {
+      "name": "slack",
+      "tier": "communication",
+      "path": "tier-2-communication/slack",
+      "version": "1.0.0",
+      "description": "Slack team messaging — messages, channels, automated updates, standups, shift handoffs.",
+      "requires": { "bins": ["curl", "jq"], "skills": ["secrets-manager", "slack-directory"] }
+    },
+    {
+      "name": "slack-directory",
+      "tier": "communication",
+      "path": "tier-2-communication/slack-directory",
+      "version": "1.0.0",
+      "description": "Look up Slack users by name with fuzzy matching and local caching.",
+      "requires": { "bins": ["curl", "jq"], "skills": ["secrets-manager"] }
+    },
+    {
+      "name": "google-drive",
+      "tier": "business-ops",
+      "path": "tier-3-business-ops/google-drive",
+      "version": "1.0.0",
+      "description": "File management — organize invoices, contracts, SOPs. Search, upload, share, permissions.",
+      "requires": { "bins": ["gws"], "skills": ["google-workspace"] }
+    },
+    {
+      "name": "google-sheets",
+      "tier": "business-ops",
+      "path": "tier-3-business-ops/google-sheets",
+      "version": "1.0.0",
+      "description": "Spreadsheet operations — sales tracking, inventory, expense reports, dashboards.",
+      "requires": { "bins": ["gws"], "skills": ["google-workspace"] }
+    },
+    {
+      "name": "google-docs",
+      "tier": "business-ops",
+      "path": "tier-3-business-ops/google-docs",
+      "version": "1.0.0",
+      "description": "Document creation — SOPs, proposals, contracts, meeting notes, templates.",
+      "requires": { "bins": ["gws"], "skills": ["google-workspace"] }
+    },
+    {
+      "name": "google-tasks",
+      "tier": "business-ops",
+      "path": "tier-3-business-ops/google-tasks",
+      "version": "1.0.0",
+      "description": "Task management — daily to-dos, project tracking, meeting action items.",
+      "requires": { "bins": ["gws"], "skills": ["google-workspace"] }
+    },
+    {
+      "name": "google-ads",
+      "tier": "growth",
+      "path": "tier-4-growth/google-ads",
+      "version": "1.1.0",
+      "description": "Create, query, audit, and optimize Google Ads campaigns via the API. Battle-tested checklists.",
+      "requires": { "bins": ["python3"], "skills": ["secrets-manager"], "secrets": ["google-ads-config"] }
+    },
+    {
+      "name": "creative-matrix",
+      "tier": "growth",
+      "path": "tier-4-growth/creative-matrix",
+      "version": "1.1.0",
+      "description": "Generate Meta/Facebook ad creatives using a 3x3x3 framework (27 unique concepts).",
+      "requires": { "bins": [], "skills": [] }
+    },
+    {
+      "name": "morning-briefing",
+      "tier": "automation",
+      "path": "tier-5-automation/morning-briefing",
+      "version": "1.1.0",
+      "description": "Automated daily digest — email triage, calendar, tasks, KPIs in one morning briefing.",
+      "requires": { "bins": ["gws"], "skills": ["google-workspace"] }
+    },
+    {
+      "name": "playbook-discovery",
+      "tier": "automation",
+      "path": "tier-5-automation/playbook-discovery",
+      "version": "1.0.0",
+      "description": "Analyze email/calendar/files to discover repeatable workflows AI can automate.",
+      "requires": { "bins": ["gws"], "skills": ["google-workspace", "gmail"] }
+    },
+    {
+      "name": "autoresearch",
+      "tier": "automation",
+      "path": "tier-5-automation/autoresearch",
+      "version": "1.0.0",
+      "description": "Autonomous iterative improvement loop for any measurable system.",
+      "requires": { "bins": [], "skills": [] }
+    },
+    {
+      "name": "remedy",
+      "tier": "experimental",
+      "path": "tier-x-experimental/remedy",
+      "version": "1.1.0",
+      "description": "Performance coaching for significant agent failures. Wendy Rhoades-style coaching method.",
+      "requires": { "bins": [], "skills": [] }
+    }
+  ],
+  "coming_soon": [
+    { "name": "square-pos", "tier": "business-ops", "description": "Square POS integration — transactions, inventory, customer data." },
+    { "name": "quickbooks", "tier": "business-ops", "description": "QuickBooks integration — invoicing, expenses, P&L, payroll." },
+    { "name": "bigquery-analytics", "tier": "business-ops", "description": "BigQuery analytics — custom queries, dashboards, data pipelines." },
+    { "name": "mailchimp", "tier": "growth", "description": "Email marketing — campaigns, audiences, automation." },
+    { "name": "instagram", "tier": "growth", "description": "Instagram management — posts, stories, insights." },
+    { "name": "workflow-builder", "tier": "automation", "description": "Build and schedule multi-step automated workflows." },
+    { "name": "health-monitor", "tier": "automation", "description": "Monitor system and business health metrics with alerting." },
+    { "name": "anomaly-detection", "tier": "automation", "description": "Detect anomalies in business metrics and trigger alerts." }
+  ]
+}

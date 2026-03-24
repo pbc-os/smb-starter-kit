@@ -1,6 +1,11 @@
 ---
 name: slack-directory
-description: Look up Slack users by name with fuzzy matching. Caches discoveries for instant future lookups.
+version: 1.0.0
+tier: communication
+description: "Look up Slack users by name with fuzzy matching. Caches discoveries for instant future lookups."
+requires:
+  bins: ["curl", "jq"]
+  skills: ["secrets-manager"]
 ---
 
 # Slack Directory Lookup

@@ -1,13 +1,11 @@
 ---
 name: google-drive
 version: 1.0.0
+tier: business-ops
 description: "File management for small businesses. Organize invoices, contracts, SOPs, product photos, and team documents. Search, upload, share, and manage permissions. Built on the gws CLI."
-metadata:
-  openclaw:
-    category: "business-ops"
-    requires:
-      bins: ["gws"]
-      skills: ["google-workspace"]
+requires:
+  bins: ["gws"]
+  skills: ["google-workspace"]
 ---
 
 # Google Drive

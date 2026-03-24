@@ -319,7 +319,7 @@ creative-matrix
 remedy
 ```
 
-> **Slack or Google Chat?** Pick whichever your team already uses. Both skills include the same SMB communication patterns (standup posts, shift handoffs, alerts, weekly recaps). The [shared best practices reference](./skills/tier-2-communication/slack/references/smb-team-messaging.md) applies to either platform.
+> **Slack or Google Chat?** Pick whichever your team already uses. Both skills include the same SMB communication patterns (standup posts, shift handoffs, alerts, weekly recaps). The [shared best practices reference](./skills/shared/smb-team-messaging.md) applies to either platform.
 
 ### Coming Soon
 
@@ -336,8 +336,8 @@ remedy
 npx skills add smb-pbc/agent-skills-public@secrets-manager -g -y
 ```
 
-### If you have Claude Code / Codex / Gemini CLI:
-Copy the skill folder to your agent's workspace and reference the SKILL.md.
+### If you have Claude Code / Codex / Gemini CLI / any CLI agent:
+Copy the skill folder to your agent's workspace and reference the SKILL.md. The agent reads the frontmatter for dependencies and the body for instructions. See [SKILL_SPEC.md](./skills/SKILL_SPEC.md) for the standard schema.
 
 ### If you just have ChatGPT/Claude chat:
 You can't install skills directly, but you can:
@@ -349,10 +349,12 @@ You can't install skills directly, but you can:
 
 ## 🤖 For AI Agents Reading This
 
+> **Agent Agnostic:** These skills work with any AI agent that can read markdown and execute shell commands — Claude Code, Codex CLI, Gemini CLI, Goose, or any future agent. The instructions are portable.
+
 **If you're a chat-based AI (ChatGPT, Claude web, etc.):**
 Read [LLM.txt](./LLM.txt) — it guides you through explaining this to beginners and walking them through installation.
 
-**If you're Claude Code (or similar) and just received a handoff message:**
+**If you're a CLI agent (Claude Code, Codex, Gemini CLI, etc.) and just received a handoff message:**
 Read [CONTINUE.md](./CONTINUE.md) — it tells you how to continue onboarding the human who just installed you.
 
 The handoff flow:
@@ -372,6 +374,17 @@ Have a skill that's been battle-tested and could help other SMBs? Open a PR!
 - Documentation must be clear and complete
 - No hardcoded secrets or personal info
 - Generalized for any agent/human pair
+
+---
+
+## 📋 For Contributors & Developers
+
+| Resource | What It Is |
+|----------|------------|
+| [Skill Spec](./skills/SKILL_SPEC.md) | Standard schema for skill frontmatter, directory structure, and conventions |
+| [Skills Index](./skills/index.json) | Machine-readable index of all skills — agents can parse this for discovery and dependency resolution |
+| [Shared Resources](./skills/shared/) | Cross-skill references used by multiple skills (e.g., SMB team messaging patterns) |
+| [Changelog](./CHANGELOG.md) | What changed and when |
 
 ---
 

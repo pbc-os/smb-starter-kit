@@ -1,13 +1,11 @@
 ---
 name: morning-briefing
-version: 1.0.0
+version: 1.1.0
+tier: automation
 description: "Automated daily digest for small business owners. Combines email triage, calendar agenda, open tasks, and business KPIs into a single morning briefing. Composable — works with whatever data sources are available."
-metadata:
-  openclaw:
-    category: "automation"
-    requires:
-      bins: ["gws"]
-      skills: ["google-workspace"]
+requires:
+  bins: ["gws"]
+  skills: ["google-workspace"]
 ---
 
 # Morning Briefing
@@ -174,6 +172,17 @@ The agent should use whatever cron mechanism is available (Claude Code cron, sys
 ### Manual invocation
 
 Just say "morning briefing" or "brief me" to get an on-demand briefing at any time.
+
+## Configuration Template
+
+A starter config is provided at `templates/briefing-config.yaml`. Copy it to your agent's workspace and customize:
+
+- Toggle sections on/off based on what data sources you have connected
+- Set delivery method (console, Slack, Google Chat, email)
+- Configure schedule, key contacts, and alert thresholds
+- Start simple (calendar + email) and enable more sections as you connect more tools
+
+The agent reads this config to know what to gather and how to format the output.
 
 ## Customization
 

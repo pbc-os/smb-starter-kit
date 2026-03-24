@@ -1,7 +1,8 @@
 ---
 name: autoresearch
-description: Autonomous iterative improvement loop for any measurable system. Inspired by Karpathy's autoresearch pattern. Agent forms hypotheses, makes single changes, evaluates, keeps improvements, discards regressions — repeating until the metric converges. Works for forecasting, prompt engineering, config tuning, performance optimization, cost reduction, or anything with a measurable objective.
-metadata: {"clawdbot":{"emoji":"🔬"}}
+version: 1.0.0
+tier: automation
+description: "Autonomous iterative improvement loop for any measurable system. Inspired by Karpathy's autoresearch pattern. Agent forms hypotheses, makes single changes, evaluates, keeps improvements, discards regressions."
 ---
 
 # Autoresearch

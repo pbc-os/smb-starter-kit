@@ -1,6 +1,10 @@
 ---
 name: secrets-manager
-description: Set up and configure cloud secrets management for your AI agent. Use when onboarding a new user, setting up API key storage, configuring secure credential management, or when someone asks about storing secrets, API keys, tokens, or passwords securely. Guides users through platform selection (GCP, AWS, Azure, 1Password, Doppler, HashiCorp Vault), account setup, CLI configuration, and integration with Clawdbot's gateway.
+version: 1.0.0
+tier: foundation
+description: "Set up and configure cloud secrets management for your AI agent. Guides users through platform selection (GCP, AWS, Azure, 1Password, Doppler, HashiCorp Vault), account setup, CLI configuration, and secure credential storage."
+requires:
+  bins: ["gcloud"]
 ---
 
 # Secrets Manager — Give Your AI Agent Keys to the Kingdom
