@@ -124,7 +124,7 @@ The coach stays alive waiting for your `sessions_send` responses. Keep the `sess
 ---
 
 **The Coaching Method:**
-The performance coach sub-agent uses the **Wendy Rhoades method** (based on real Wall Street performance coach Denise Shull):
+The performance coach sub-agent uses the **Wendy Rhoades method** (based on real Wall Street performance coach [Denise Shull](https://www.theresilienceshield.com/)):
 
 **Two approaches, used as needed:**
 
