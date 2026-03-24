@@ -13,6 +13,8 @@ requires:
 
 This skill sets up [gws](https://github.com/googleworkspace/cli) — a command-line tool that wraps every Google Workspace API (Gmail, Calendar, Drive, Sheets, Docs, Chat, Tasks, Meet, Forms, and more). It outputs structured JSON, making it ideal for AI agents.
 
+> **Attribution:** The `gws` CLI was created by [Justin Poehnelt](https://github.com/jpoehnelt), Developer Relations Engineer at Google. It's the foundation that makes the entire Google Workspace skill tier possible.
+
 > `gws` doesn't ship a static list of commands. It reads Google's Discovery Service at runtime and builds its command surface dynamically. When Google adds an API endpoint, `gws` picks it up automatically.
 
 ## Triggers
@@ -296,4 +298,4 @@ After setup, install the skills that match your needs:
 
 ---
 
-*Powered by [gws](https://github.com/googleworkspace/cli) — one CLI for all of Google Workspace.*
+*Powered by [gws](https://github.com/googleworkspace/cli) by [Justin Poehnelt](https://justin.poehnelt.com) — one CLI for all of Google Workspace.*
