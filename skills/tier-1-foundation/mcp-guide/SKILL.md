@@ -1,10 +1,8 @@
 ---
 name: mcp-guide
 version: 1.0.0
+tier: foundation
 description: "Educational guide to MCP (Model Context Protocol) — what it is, when you need it, when you don't, and how to build your own. Helps agents and humans understand when an MCP server adds value vs when a CLI + skill is enough."
-metadata:
-  openclaw:
-    category: "foundation"
 ---
 
 # MCP Guide

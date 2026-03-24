@@ -1,12 +1,32 @@
 ---
 name: remedy
-description: Performance coaching for when an AI agent fails significantly. Triggered by "go to remedy". Uses Wendy Rhoades-style coaching (from Billions) to identify root causes, fix systems, and rebuild confidence through evidence. Posts to a dedicated channel with a sub-agent coach.
-metadata: {"clawdbot":{"emoji":"🧠"}}
+version: 1.1.0
+tier: experimental
+description: "Performance coaching for when an AI agent fails significantly. Uses Wendy Rhoades-style coaching (from Billions) to identify root causes, fix systems, and rebuild confidence through evidence."
 ---
 
 # Remedy Skill
 
 **Trigger:** "go to remedy", "remedy session", or when your human indicates you've failed in a way that needs deeper reflection
+
+## When to Trigger (Concrete Criteria)
+
+Don't wait for the human to say "go to remedy." Proactively suggest a session when you observe these patterns:
+
+| Signal | Threshold | Example |
+|--------|-----------|---------|
+| **Consecutive task failures** | 3+ failures on related tasks | Three API calls fail because of the same auth misconfiguration |
+| **Repeated identical mistakes** | Same mistake appears in 2+ recent sessions | Forgetting to check landing page before launching ads — again |
+| **User frustration signals** | Explicit frustration or loss of trust | "This is the third time you've done this", "I can't rely on you for this" |
+| **Cascading errors** | One failure triggers a chain of follow-on failures | Wrong data source → bad report → wrong decision → user cleanup |
+| **Avoidance behavior** | You notice yourself hedging, over-qualifying, or avoiding tasks you used to handle confidently | "I'm not sure I should try this" on something within your capabilities |
+| **System-level breakdown** | A failure reveals a gap in your operational setup, not just a one-off mistake | Missing checklist, no verification step, blind spot in your workflow |
+
+**When NOT to trigger:**
+- Simple typos or one-off mistakes that are easily corrected
+- Failures caused by external systems being down (not your fault)
+- The human is frustrated about something unrelated to your performance
+- You already addressed the root cause with a concrete fix
 
 ## Setup
 

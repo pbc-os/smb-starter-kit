@@ -1,11 +1,17 @@
 ---
 name: google-ads
-description: "Create, query, audit, and optimize Google Ads campaigns. Supports both API mode (google-ads Python SDK) and browser automation. Use for campaign management, performance analysis, keyword optimization, and ad creation."
+version: 1.1.0
+tier: growth
+description: "Create, query, audit, and optimize Google Ads campaigns via the Google Ads API (Python SDK). Use for campaign management, performance analysis, keyword optimization, and ad creation."
+requires:
+  bins: ["python3"]
+  skills: ["secrets-manager"]
+  secrets: ["google-ads-config"]
 ---
 
 # Google Ads Management Skill
 
-Comprehensive skill for managing Google Ads accounts via API or browser automation.
+Comprehensive skill for managing Google Ads accounts via the Google Ads API.
 
 ## Why This Skill Exists
 
@@ -38,25 +44,19 @@ This skill provides battle-tested checklists, query templates, and workflows for
 
 ---
 
-## Mode Selection
+## Setup Verification
 
-This skill supports two modes. Choose based on what's available:
-
-### API Mode (Power Users)
-**Best for:** Automation, programmatic changes, bulk operations  
-**Requires:** Developer token, OAuth credentials, `google-ads` Python SDK
+The agent should verify API access before proceeding:
 
 ```bash
-# Check if API mode is available
-ls ~/.google-ads.yaml 2>/dev/null && echo "API config found" || echo "No API config"
-python -c "from google.ads.googleads.client import GoogleAdsClient; print('SDK installed')" 2>/dev/null
+# Check for API configuration
+ls ~/.google-ads.yaml 2>/dev/null && echo "API config found" || echo "No API config — see references/api-setup.md"
+
+# Check for SDK
+python3 -c "from google.ads.googleads.client import GoogleAdsClient; print('SDK installed')" 2>/dev/null || echo "SDK not installed — run: pip install google-ads"
 ```
 
-### Browser Mode (Universal)
-**Best for:** Quick checks, one-off changes, no API setup needed  
-**Requires:** User logged into ads.google.com in browser
-
-If no API config exists, ask: *"I don't see Google Ads API credentials. Should I use browser automation instead?"*
+If API is not configured, guide the user through `references/api-setup.md`. The API approach is strongly recommended — it's reliable, automatable, and doesn't depend on UI changes.
 
 ---
 
@@ -275,41 +275,20 @@ def pause_keywords(client, customer_id, keyword_resource_names):
 
 ---
 
-## Browser Automation (Universal Mode)
+## Browser Fallback (Not Recommended)
 
-When API isn't available, use browser automation at ads.google.com.
+> **Stability Warning:** Browser automation against ads.google.com is fragile. Google frequently changes their UI, which breaks selectors and workflows. Use the API whenever possible.
 
-### URL Quick Reference
+If the API is truly unavailable (no developer token, client account without API access), browser automation can work for **read-only checks**. See `references/browser-workflows.md` for details.
 
-```
-Base: https://ads.google.com/aw/
-├── overview          # Account dashboard
-├── campaigns         # All campaigns
-├── adgroups          # All ad groups
-├── keywords          # All keywords
-├── ads               # All ads
-├── searchterms       # Search terms report
-└── conversions       # Conversion tracking
-```
+**Limitations of browser mode:**
+- UI selectors break without warning when Google updates the interface
+- Cannot be reliably scheduled or automated
+- Requires the user to be logged in with an active session
+- Slower and more error-prone than API calls
+- Not suitable for mutations (pausing, budget changes) — too risky without confirmation loops
 
-### Common Workflows
-
-**Check Campaign Performance:**
-1. Navigate to ads.google.com/aw/campaigns
-2. Set date range (top-right picker)
-3. Read the table: Campaign, Status, Budget, Cost, Conversions
-
-**Find Zero-Conversion Keywords:**
-1. Navigate to ads.google.com/aw/keywords
-2. Click "Add filter" → Conversions → Less than → 1
-3. Click "Add filter" → Cost → Greater than → [threshold]
-4. Sort by Cost descending
-
-**Pause Items:**
-1. Check boxes next to items
-2. Click "Edit" dropdown → "Pause"
-
-For detailed browser selectors, see `references/browser-workflows.md`
+**Recommended path:** Invest the 1-2 hours to set up API access (see `references/api-setup.md`). It pays off immediately.
 
 ---
 
@@ -345,15 +324,6 @@ When reporting findings, use clear tables:
 | `proto-plus CopyFrom errors` | Wrong assignment syntax | Use direct assignment, not CopyFrom |
 | `INVALID_STRING_LENGTH` | Text too long | Headlines ≤30, descriptions ≤90 |
 
-### Browser Issues
-
-| Problem | Cause | Fix |
-|---------|-------|-----|
-| Can't see data | Wrong account | Check account selector (top right) |
-| Slow loading | Heavy UI | Wait for tables to fully render |
-| Session expired | Timeout | User re-login to ads.google.com |
-| Wrong date range | Default range | Always set date range before reading |
-
 ---
 
 ## Why This Belongs in Tier 4 (Growth)
@@ -375,6 +345,6 @@ Google Ads is one of the primary paid growth channels for SMBs. This skill helps
 google-ads/
 ├── SKILL.md                    # This documentation
 └── references/
-    ├── api-setup.md            # Full API setup guide
-    └── browser-workflows.md    # Browser automation details
+    ├── api-setup.md            # Full API setup guide (start here)
+    └── browser-workflows.md    # Browser fallback (unstable, last resort)
 ```

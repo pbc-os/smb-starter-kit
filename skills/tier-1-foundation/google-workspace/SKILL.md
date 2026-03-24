@@ -1,12 +1,10 @@
 ---
 name: google-workspace
 version: 1.0.0
+tier: foundation
 description: "Set up the gws CLI to give your agent access to Gmail, Calendar, Drive, Sheets, Docs, Chat, Tasks, and every Google Workspace API. Foundation skill that enables all Google-powered communication, business ops, and automation skills."
-metadata:
-  openclaw:
-    category: "foundation"
-    requires:
-      bins: ["node"]
+requires:
+  bins: ["node"]
 ---
 
 # Google Workspace

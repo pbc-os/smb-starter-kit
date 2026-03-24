@@ -1,13 +1,11 @@
 ---
 name: gmail
 version: 1.0.0
+tier: communication
 description: "Email management for small businesses. Daily triage, vendor communication, customer replies, templates, and inbox automation. Built on the gws CLI."
-metadata:
-  openclaw:
-    category: "communication"
-    requires:
-      bins: ["gws"]
-      skills: ["google-workspace"]
+requires:
+  bins: ["gws"]
+  skills: ["google-workspace"]
 ---
 
 # Gmail

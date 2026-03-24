@@ -1,13 +1,11 @@
 ---
 name: google-docs
 version: 1.0.0
+tier: business-ops
 description: "Document creation and management for small businesses. SOPs, proposals, contracts, meeting notes, and templates. Built on the gws CLI."
-metadata:
-  openclaw:
-    category: "business-ops"
-    requires:
-      bins: ["gws"]
-      skills: ["google-workspace"]
+requires:
+  bins: ["gws"]
+  skills: ["google-workspace"]
 ---
 
 # Google Docs

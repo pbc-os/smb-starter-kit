@@ -1,13 +1,11 @@
 ---
 name: google-sheets
 version: 1.0.0
+tier: business-ops
 description: "Spreadsheet operations for small businesses. Sales tracking, inventory management, expense reports, simple dashboards, and data import/export. Built on the gws CLI."
-metadata:
-  openclaw:
-    category: "business-ops"
-    requires:
-      bins: ["gws"]
-      skills: ["google-workspace"]
+requires:
+  bins: ["gws"]
+  skills: ["google-workspace"]
 ---
 
 # Google Sheets

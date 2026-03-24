@@ -1,6 +1,8 @@
 ---
 name: creative-matrix
-description: Generate Meta/Facebook ad creative concepts using a 3x3x3 Creative Multiplication framework (3 messaging angles x 3 formats x 3 funnel stages = 27 unique concepts). This skill should be used when the user wants to generate ad creatives, build a creative brief, plan ad campaigns, overcome creative fatigue, or scale paid social creative. Produces structured briefs with copy, format specs, and targeting. Optionally generates draft image and video assets if nano-banana or fal.ai tools are available.
+version: 1.1.0
+tier: growth
+description: "Generate Meta/Facebook ad creative concepts using a 3x3x3 Creative Multiplication framework (3 messaging angles x 3 formats x 3 funnel stages = 27 unique concepts). Produces structured briefs with copy, format specs, and targeting. Optionally generates draft image and video assets."
 ---
 
 # Creative Matrix
@@ -118,6 +120,10 @@ Follow with:
 - **Recommended test order** — which concepts to launch first
 - **Performance benchmarks to watch** — hook rate thresholds for video (kill below 25%, good 30-40%, scale above 40%), static conversion share targets
 - **Iteration guidance** — when to kill, iterate, or scale each concept
+
+## Example Output
+
+See `examples/starter-set-example.md` for a complete example of the 6-concept starter set generated for a premium butcher shop. Use this as a reference for the expected output format, level of detail, and quality bar.
 
 ## Format Specs Quick Reference
 

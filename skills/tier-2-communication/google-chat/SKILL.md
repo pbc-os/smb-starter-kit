@@ -1,20 +1,18 @@
 ---
 name: google-chat
 version: 1.0.0
-description: "Google Chat messaging for small business teams. Send messages, post automated updates, manage spaces, run daily standups, and coordinate your team. Includes SMB channel structure and team communication best practices. Built on the gws CLI."
-metadata:
-  openclaw:
-    category: "communication"
-    requires:
-      bins: ["gws"]
-      skills: ["google-workspace"]
+tier: communication
+description: "Google Chat messaging for small business teams. Send messages, post automated updates, manage spaces, run daily standups, and coordinate your team. Built on the gws CLI."
+requires:
+  bins: ["gws"]
+  skills: ["google-workspace"]
 ---
 
 # Google Chat
 
 **Team messaging for small businesses using Google Workspace.**
 
-Uses the [gws CLI](https://github.com/googleworkspace/cli) for all Chat operations. See the `google-workspace` skill for setup. For platform-agnostic team messaging best practices, see [SMB Team Messaging](../slack/references/smb-team-messaging.md) — it applies to both Google Chat and Slack.
+Uses the [gws CLI](https://github.com/googleworkspace/cli) for all Chat operations. See the `google-workspace` skill for setup. For platform-agnostic team messaging best practices, see [SMB Team Messaging](../../shared/smb-team-messaging.md) — it applies to both Google Chat and Slack.
 
 ## Triggers
 
@@ -217,7 +215,7 @@ gws chat spaces messages create \
 | Uses Slack for other projects or prefers it | **Slack** — see the `slack` skill |
 | Is split or undecided | **Pick one and commit** — don't split communication across both |
 
-Both platforms work. The patterns in [SMB Team Messaging](../slack/references/smb-team-messaging.md) apply to either. The worst choice is using both — consolidate.
+Both platforms work. The patterns in [SMB Team Messaging](../../shared/smb-team-messaging.md) apply to either. The worst choice is using both — consolidate.
 
 ## Tips
 

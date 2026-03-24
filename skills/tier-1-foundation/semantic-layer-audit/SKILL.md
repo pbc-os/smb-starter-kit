@@ -1,6 +1,11 @@
 ---
 name: semantic-layer-audit
-description: Audit and maintain a data semantic layer for AI agents. Scans BigQuery datasets, GCP APIs, secrets, and service accounts to keep your data catalog current. Essential for any agent that needs to know "what data do I have access to?"
+version: 1.0.0
+tier: foundation
+description: "Audit and maintain a data semantic layer for AI agents. Scans BigQuery datasets, GCP APIs, secrets, and service accounts to keep your data catalog current."
+requires:
+  bins: ["gcloud", "bq", "python3"]
+  env: ["GCP_PROJECT_ID"]
 ---
 
 # Semantic Layer Audit

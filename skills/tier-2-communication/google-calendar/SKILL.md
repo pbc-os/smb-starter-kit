@@ -1,13 +1,11 @@
 ---
 name: google-calendar
 version: 1.0.0
+tier: communication
 description: "Calendar management for small businesses. Schedule meetings, check availability, prep for meetings, manage staff schedules, and coordinate with customers. Built on the gws CLI."
-metadata:
-  openclaw:
-    category: "communication"
-    requires:
-      bins: ["gws"]
-      skills: ["google-workspace"]
+requires:
+  bins: ["gws"]
+  skills: ["google-workspace"]
 ---
 
 # Google Calendar

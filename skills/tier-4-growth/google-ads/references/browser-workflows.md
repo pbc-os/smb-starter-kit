@@ -1,20 +1,23 @@
 # Google Ads Browser Automation Workflows
 
-When API access isn't available, browser automation works well for Google Ads management. This guide covers the key workflows.
+> **Stability Warning:** This document describes browser-based workflows that depend on Google's web UI. Google frequently changes the Ads interface without notice, which can break selectors, page layouts, and automation scripts. **The API is the recommended approach** — see `api-setup.md`.
+>
+> These workflows are provided as a **last resort** for situations where API access is not available.
 
 ## Why Browser Mode?
 
-**Use browser automation when:**
-- API credentials aren't set up
-- Quick one-off checks
-- Client accounts you can't get API access to
-- Teaching/demonstrating to someone
+**Use browser automation only when:**
+- API credentials aren't set up and can't be (e.g., client account restrictions)
+- One-off read-only checks where API setup isn't justified
+- Teaching/demonstrating to someone in a live session
 
-**Limitations:**
+**Limitations (important):**
+- **Fragile** — Google changes the UI regularly, breaking selectors without warning
 - Slower than API
-- Requires user to be logged in
-- Can't schedule/automate reliably
-- UI changes can break workflows
+- Requires user to be logged in with an active session
+- Cannot be reliably scheduled or automated
+- Mutations (pausing, budget changes) are risky without confirmation loops
+- Not suitable for production workflows
 
 ---
 

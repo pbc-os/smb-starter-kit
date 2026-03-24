@@ -1,0 +1,108 @@
+# Morning Briefing Configuration
+#
+# This template defines which sections appear in your daily briefing
+# and how they're configured. Copy this file to your agent's workspace
+# and customize it for your business.
+#
+# Usage: The agent reads this config to know what data to gather
+# and how to structure the briefing output.
+
+# When the briefing runs (agent interprets this for cron setup)
+schedule:
+  time: "07:30"           # 24-hour format, local time
+  days: ["Mon", "Tue", "Wed", "Thu", "Fri"]  # Weekdays only
+  timezone: "America/New_York"
+
+# Where to deliver the briefing
+delivery:
+  # Enable one or more delivery methods
+  console: true           # Display in the current conversation
+  google_chat:
+    enabled: false
+    space_id: ""          # e.g., "spaces/AAAA1234"
+  slack:
+    enabled: false
+    channel: ""           # e.g., "#daily-briefing" or channel ID
+  email:
+    enabled: false
+    to: ""                # e.g., "owner@yourbusiness.com"
+
+# --- Briefing Sections ---
+# Toggle sections on/off. The agent skips any section marked enabled: false
+# or whose data source is unavailable.
+
+sections:
+  urgent:
+    enabled: true
+    # Items that surface here: calendar conflicts, flagged emails,
+    # overdue tasks, anomalous metrics
+
+  calendar:
+    enabled: true
+    # Source: gws calendar +agenda
+    show_prep_notes: true   # Suggest prep for upcoming meetings
+    lookahead_hours: 12     # How far ahead to show events
+
+  email:
+    enabled: true
+    # Source: gws gmail +triage
+    max_messages: 15        # Max unread messages to summarize
+    key_contacts: []        # Highlight emails from these senders
+    # Example:
+    # key_contacts:
+    #   - "boss@company.com"
+    #   - "biggest-customer@example.com"
+    #   - "main-vendor@supplier.com"
+
+  tasks:
+    enabled: true
+    # Source: gws workflow +standup-report
+    show_overdue: true
+    show_due_today: true
+    show_due_this_week: true
+
+  business_snapshot:
+    enabled: false          # Enable once you have KPI data connected
+    # Source: Google Sheets, BigQuery, or POS system
+    # Configure your data source below
+    source: ""              # e.g., "google-sheets", "bigquery", "square"
+    sheet_id: ""            # If using Sheets — the spreadsheet ID
+    metrics:
+      - name: "Revenue"
+        # The agent will look for this data in your configured source
+      - name: "Transactions"
+      - name: "Avg Ticket"
+
+  drive_activity:
+    enabled: false
+    # Source: gws drive
+    # Shows recently shared or modified docs needing attention
+    max_items: 5
+
+  ads_performance:
+    enabled: false
+    # Source: google-ads skill
+    # Shows yesterday's ad spend, ROAS, anomalies
+    alert_threshold_roas: 1.0   # Alert if ROAS drops below this
+
+  forecast:
+    enabled: false
+    # Source: autoresearch skill or custom forecasting
+    # Shows today's forecast vs actuals
+
+  this_week:
+    enabled: true
+    # Summarizes key meetings, deadlines, deliverables for the week
+
+# --- Behavior ---
+
+behavior:
+  # Keep the briefing concise — aim for 2-minute read
+  max_length: "concise"     # "concise" (2 min read) or "detailed" (5 min read)
+
+  # On quiet days, reduce to essentials only
+  quiet_day_mode: false
+  quiet_days: ["Sun"]       # Days with minimal briefing
+
+  # Learn priorities over time
+  adaptive: true            # Agent adjusts priority of senders/topics based on patterns
