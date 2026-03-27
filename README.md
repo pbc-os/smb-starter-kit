@@ -240,7 +240,7 @@ Start with read-only. Expand later. You're always in control.
 
 ---
 
-## 📦 Available Skills (19 skills)
+## 📦 Available Skills (21 skills)
 
 ### Tier 1: Foundation
 *Start here. These enable everything else.*
@@ -279,7 +279,9 @@ Start with read-only. Expand later. You're always in control.
 | Skill | Description | Install |
 |-------|-------------|---------|
 | [google-ads](./skills/tier-4-growth/google-ads/) | Create, query, audit, and optimize Google Ads campaigns via the API. Battle-tested checklists and templates. | `npx skills add smb-pbc/agent-skills-public@google-ads -g -y` |
-| [creative-matrix](./skills/tier-4-growth/creative-matrix/) | Generate Meta/Facebook ad creatives using a 3x3x3 framework (angles x formats x funnels = 27 unique concepts). Optional image/video asset generation. | `npx skills add smb-pbc/agent-skills-public@creative-matrix -g -y` |
+| [nano-banana](./skills/tier-4-growth/nano-banana/) | AI image generation, editing, background removal, and web-asset rendering using Google Gemini. Includes a 4-pass transparent PNG pipeline for web-ready assets. | `npx skills add smb-pbc/agent-skills-public@nano-banana -g -y` |
+| [creative-matrix](./skills/tier-4-growth/creative-matrix/) | Generate Meta/Facebook ad creatives using a 3x3x3 framework (angles x formats x funnels = 27 unique concepts). Uses nano-banana for image/video asset generation. | `npx skills add smb-pbc/agent-skills-public@creative-matrix -g -y` |
+| [brand-identity](./skills/tier-4-growth/brand-identity/) | Agency-grade brand identity system — 18 deliverables, 19 visual assets via nano-banana, design tokens, SVG logos, and a printable HTML brand guide. | `npx skills add smb-pbc/agent-skills-public@brand-identity -g -y` |
 
 ### Tier 5: Automation
 *Discover and automate repeatable workflows.*
@@ -315,7 +317,10 @@ slack-directory ──── slack ────────────── mo
                   playbook-discovery ──── autoresearch     │
                                                           │
 google-ads ───────────────────────────────────────────────┘
-creative-matrix
+                                                          │
+nano-banana ──────┬── creative-matrix                     │
+(Gemini images)   └── brand-identity                      │
+                                                          │
 remedy
 ```
 
