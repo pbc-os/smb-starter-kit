@@ -124,6 +124,14 @@
       "requires": { "bins": [], "skills": [] }
     },
     {
+      "name": "nano-banana",
+      "tier": "growth",
+      "path": "tier-4-growth/nano-banana",
+      "version": "1.0.0",
+      "description": "AI image generation, editing, background removal, and web-asset rendering using Google Gemini models.",
+      "requires": { "bins": ["python3"], "skills": ["secrets-manager"], "secrets": ["GEMINI_API_KEY"] }
+    },
+    {
       "name": "morning-briefing",
       "tier": "automation",
       "path": "tier-5-automation/morning-briefing",
