@@ -11,14 +11,16 @@ Agents frequently fail at background removal because they try to do it in a sing
 Always use separate passes. Each pass has a single, clear job.
 
 ```
-┌──────────────┐     ┌──────────────────┐     ┌──────────────────┐     ┌──────────────┐
-│  Pass 1:     │     │  Pass 2:         │     │  Pass 3:         │     │  Integration │
-│  Generate    │────▶│  Remove BG       │────▶│  make_transparent │────▶│  Web-ready   │
-│  (solid bg)  │     │  (checkerboard)  │     │  (real RGBA)     │     │  asset       │
-└──────────────┘     └──────────────────┘     └──────────────────┘     └──────────────┘
+┌──────────────┐     ┌──────────────┐     ┌─────────────────┐     ┌──────────────┐     ┌─────────────┐
+│  Pass 1:     │     │  Pass 2:     │     │  Pass 3:        │     │  Pass 4:     │     │ Integration │
+│  Generate    │────▶│  Remove BG   │────▶│  make_transparent│────▶│  Compress    │────▶│ Web-ready   │
+│  (solid bg)  │     │  (Gemini)    │     │  (real RGBA)    │     │  (pngquant)  │     │ asset       │
+└──────────────┘     └──────────────┘     └─────────────────┘     └──────────────┘     └─────────────┘
 ```
 
-**Why three passes?** Gemini's "background removal" renders a visible checkerboard pattern to represent transparency, but the actual PNG output is RGB — no alpha channel. The `make_transparent.py` script detects this pattern and converts it to real RGBA with a proper alpha channel. Without Pass 3, your "transparent" PNG will have a checkerboard baked into the pixels.
+**Why four passes?**
+- Pass 2 → 3: Gemini renders a checkerboard pattern in RGB, not real RGBA. `make_transparent.py` converts it to a proper alpha channel.
+- Pass 3 → 4: Transparent PNGs from generation are typically 1-4MB. `pngquant` compresses them to under 500KB with minimal quality loss — critical for web performance.
 
 ### Pass 1: Generate the Subject
 
@@ -27,6 +29,7 @@ Generate the image with a **simple, solid-color background**. This gives the mod
 **Best backgrounds for later removal:**
 - White (`on a clean white background`) — works best in most cases
 - Light gray (`on a plain light gray background`) — good when the subject has white elements
+- **Magenta** (`on a solid magenta/hot pink background`) — classic chroma key color, excellent for subjects with white, gray, or earth-toned elements. Battle-tested in production at CrossBeam for architectural miniatures
 - Solid color that contrasts with the subject
 
 **Prompt structure:**
@@ -89,9 +92,31 @@ python3 scripts/make_transparent.py ./assets/adu-greenroof-keyed.png \
   --threshold 210 --feather 2
 ```
 
-### Verification
+### Pass 4: Compress for Web (pngquant)
 
-After the pipeline, verify the result:
+Transparent PNGs from the generation pipeline are large (1-4MB). For web delivery, compress with `pngquant`:
+
+```bash
+# Install: brew install pngquant (macOS) or apt install pngquant (Linux)
+pngquant --quality=65-85 --force --output ./assets/adu-greenroof-transparent.png \
+  ./assets/adu-greenroof-transparent.png
+```
+
+**Batch compress all transparent PNGs in a directory:**
+```bash
+cd ./assets/transparent/
+for f in *-transparent.png; do
+  pngquant --quality=65-85 --force --output "$f" "$f"
+done
+```
+
+**Target:** Under 500KB per image. The `--quality=65-85` range preserves visual quality while achieving 60-80% file size reduction. Transparent PNGs compress well because the alpha channel contains large uniform regions.
+
+**If pngquant is not available**, the Next.js `<Image>` component with `quality={85}` provides runtime compression, but pre-compressing with pngquant is preferred — it reduces storage, CDN bandwidth, and initial load time.
+
+### Verification and QA
+
+After the pipeline, verify each result. **Do not skip this step.** In production, roughly 1 in 5 images needs a re-run or manual fix (bad edges, missing subject parts, artifacts bleeding into surrounding UI elements).
 
 1. **Check the mode:** `python3 -c "from PIL import Image; img = Image.open('output.png'); print(img.mode)"` — must print `RGBA`, not `RGB`
 2. **Check alpha stats:** The `make_transparent.py` script prints transparency percentages automatically
@@ -208,13 +233,16 @@ function useRandomAsset(pool: string[]): string {
 When generating multiple assets (e.g., a set of product images):
 
 1. **Generate all subjects first** (Pass 1) using Flash model for speed
-2. **Review the generations** — regenerate any that don't meet quality bar
+2. **QA the generations** — open each image, regenerate any that don't meet the quality bar. Expect ~20% rejection rate. Common issues: wrong perspective, blurry details, subject clipping
 3. **Remove backgrounds in batch** (Pass 2) — same Gemini prompt for all
 4. **Run make_transparent on all** (Pass 3) — converts checkerboard to real RGBA
-5. **Spot-check** — composite a few on a colored background to verify
-6. **Rename** to follow the naming convention (`-transparent.png`)
+5. **QA the transparency** — composite a few on a colored background. Re-run `make_transparent` with adjusted threshold on failures. Remove any with unfixable artifacts (bokeh bleeding, missing parts)
+6. **Compress with pngquant** (Pass 4) — `pngquant --quality=65-85 --force` on all
+7. **Rename** to follow the naming convention (`-transparent.png`)
 
-This is more efficient than running the full pipeline per-image, because you can batch the removal pass and only do cleanup on the subset that needs it.
+This is more efficient than running the full pipeline per-image, because you can batch each pass and only re-run the subset that fails QA.
+
+**Expect iteration.** In CrossBeam's production run of 23 ADU miniatures, 2 images were removed post-launch (artifacts bleeding into UI) and 1 had a transparency fix applied to a specific corner. Budget for manual review time.
 
 ## Troubleshooting
 

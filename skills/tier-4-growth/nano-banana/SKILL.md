@@ -75,14 +75,15 @@ Remove backgrounds to produce transparent PNGs for websites. This is a **three-p
 
 **CRITICAL: Read `references/web-asset-workflow.md` before attempting background removal.** Agents frequently get this wrong. The key rules:
 
-1. **Always use THREE separate passes** — do not try to generate a transparent image in one shot
-2. **Pass 1 — Generate:** Create the image with a simple, solid-color background (white or light gray)
+1. **Always use FOUR separate passes** — do not try to generate a transparent image in one shot
+2. **Pass 1 — Generate:** Create the image with a solid-color background (white, light gray, or magenta for earth-toned subjects)
 3. **Pass 2 — Remove background:** Use `edit_image.py` to visually remove the background
 4. **Pass 3 — Make transparent:** Use `make_transparent.py` to convert to real RGBA (Gemini outputs a checkerboard pattern, NOT actual alpha transparency)
-5. **Output MUST be PNG** — JPEG does not support transparency
+5. **Pass 4 — Compress:** `pngquant --quality=65-85` to get under 500KB for web delivery
+6. **Output MUST be PNG** — JPEG does not support transparency
 
 ```bash
-# Pass 1: Generate the subject
+# Pass 1: Generate the subject (use magenta bg for earth-toned subjects)
 python3 scripts/generate_image.py \
   "a modern two-story ADU building, isometric tilt-shift miniature style, on a simple white background" \
   --output ./assets/ --filename subject.png
@@ -96,6 +97,10 @@ python3 scripts/edit_image.py \
 # Pass 3: Convert checkerboard to real RGBA transparency
 python3 scripts/make_transparent.py ./assets/subject-keyed.png \
   --output ./assets/ --filename subject-transparent.png
+
+# Pass 4: Compress for web (target: under 500KB)
+pngquant --quality=65-85 --force --output ./assets/subject-transparent.png \
+  ./assets/subject-transparent.png
 ```
 
 **Why Pass 3 is required:** Gemini's background removal renders a visible checkerboard pattern to represent transparency, but the actual PNG output is **RGB with no alpha channel**. The `make_transparent.py` script detects this checkerboard pattern and converts it to real RGBA transparency with a proper alpha channel.
@@ -160,7 +165,7 @@ python3 scripts/inpaint_image.py "" --image photo.png --bbox 50,50,300,200 --mod
 For generating assets intended for websites, follow the full pipeline documented in `references/web-asset-workflow.md`. Summary:
 
 ```
-Generate (solid bg) → Remove BG (Gemini) → Make Transparent (real RGBA) → Integrate
+Generate (solid bg) → Remove BG (Gemini) → Make Transparent (real RGBA) → Compress (pngquant) → Integrate
 ```
 
 Key integration patterns for web:
