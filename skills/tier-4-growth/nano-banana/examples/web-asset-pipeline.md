@@ -82,9 +82,9 @@ Result: 83% transparent, 16% opaque, RGBA mode
 PASS: Transparent PNG created
 ```
 
-## Step 6: Verify
+## Step 6: QA and Verify
 
-Spot-check by compositing on a colored background:
+Spot-check by compositing on a colored background. **Expect ~20% of images to need a re-run.** Common issues: bokeh artifacts, missing subject parts, bad edges near shadows.
 
 ```python
 from PIL import Image
@@ -101,7 +101,26 @@ python3 scripts/make_transparent.py ./assets/keyed/cottage-porch-keyed.png \
   --threshold 210 --feather 2
 ```
 
-## Step 7: Integrate into Website
+If an image has unfixable artifacts (bokeh bleeding, major subject loss), remove it and regenerate from Pass 1.
+
+## Step 7: Compress for Web (pngquant)
+
+Transparent PNGs from generation are typically 1-4MB. Compress them for web delivery:
+
+```bash
+# Install: brew install pngquant (macOS) or apt install pngquant (Linux)
+cd ./assets/transparent/
+for f in *-transparent.png; do
+  pngquant --quality=65-85 --force --output "$f" "$f"
+done
+```
+
+Target: under 500KB per image. Check sizes:
+```bash
+ls -lh ./assets/transparent/*.png
+```
+
+## Step 8: Integrate into Website
 
 ### File placement (Next.js example)
 
@@ -179,7 +198,9 @@ export function ProductGrid() {
 
 4 transparent PNG assets, each:
 - Named with `-transparent.png` suffix
+- Real RGBA alpha channel (not baked-in checkerboard)
 - Clean edges with no fringe or halo
 - Consistent isometric tilt-shift style
+- Compressed with pngquant to under 500KB
 - Ready for display on any background color or gradient
 - Optimized for web delivery via Next.js `<Image>` at quality 85
