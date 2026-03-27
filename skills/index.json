@@ -132,6 +132,14 @@
       "requires": { "bins": ["python3"], "skills": ["secrets-manager"], "secrets": ["GEMINI_API_KEY"] }
     },
     {
+      "name": "brand-identity",
+      "tier": "growth",
+      "path": "tier-4-growth/brand-identity",
+      "version": "1.0.0",
+      "description": "Agency-grade brand identity system — 18 deliverables, 19 visual assets, design tokens, SVG logos, and HTML brand guide.",
+      "requires": { "bins": ["python3"], "skills": ["nano-banana"], "secrets": ["GEMINI_API_KEY"] }
+    },
+    {
       "name": "morning-briefing",
       "tier": "automation",
       "path": "tier-5-automation/morning-briefing",
