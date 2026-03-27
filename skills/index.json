@@ -119,9 +119,9 @@
       "name": "creative-matrix",
       "tier": "growth",
       "path": "tier-4-growth/creative-matrix",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "description": "Generate Meta/Facebook ad creatives using a 3x3x3 framework (27 unique concepts).",
-      "requires": { "bins": [], "skills": [] }
+      "requires": { "bins": [], "skills": ["nano-banana"], "secrets": ["GEMINI_API_KEY"] }
     },
     {
       "name": "nano-banana",
