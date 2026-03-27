@@ -1,8 +1,12 @@
 ---
 name: creative-matrix
-version: 1.1.0
+version: 1.2.0
 tier: growth
 description: "Generate Meta/Facebook ad creative concepts using a 3x3x3 Creative Multiplication framework (3 messaging angles x 3 formats x 3 funnel stages = 27 unique concepts). Produces structured briefs with copy, format specs, and targeting. Optionally generates draft image and video assets."
+requires:
+  bins: []
+  skills: ["nano-banana"]
+  secrets: ["GEMINI_API_KEY"]
 ---
 
 # Creative Matrix
@@ -15,13 +19,17 @@ Generate a full set of ad creative concepts for any brand using the Creative Mul
 
 ## Prerequisites — Asset Generation (Optional)
 
-Brief/copy generation requires no additional tools. Asset generation is optional and requires the user to bring their own API keys:
+Brief/copy generation requires no additional tools. Asset generation is optional:
 
-- **Static image generation**: Requires nano-banana skill (Gemini) OR fal.ai MCP server (Flux, SDXL)
+- **Static image generation**: Requires **nano-banana** skill (Gemini). Verify: `python3 -c "from google import genai; print('ok')"` and `GEMINI_API_KEY` in environment. Alternatively: fal.ai MCP server (Flux, SDXL)
+- **Transparent product cutouts** (for compositing on ad backgrounds): Requires nano-banana's full 4-pass web-asset pipeline (`generate_image.py` → `edit_image.py` → `make_transparent.py` → `pngquant`). See nano-banana skill's `references/web-asset-workflow.md`
 - **Video generation**: Requires fal.ai MCP server (Kling, MiniMax, Wan)
 - **No tools available**: Output briefs only — the user or their production team handles asset creation
 
-To detect availability, check if nano-banana or fal.ai tools are accessible before offering asset generation.
+To detect availability, check if nano-banana scripts are accessible before offering asset generation:
+```bash
+python3 -c "from google import genai; print('nano-banana: ok')"
+```
 
 ## Workflow
 
@@ -86,16 +94,45 @@ If asset generation tools are available and the user requests assets:
 #### Static Images
 
 1. For each static concept, compose an image generation prompt based on the brief's hook, visual direction, and brand context
-2. Generate using nano-banana or fal.ai image generation
+2. Generate using nano-banana `generate_image.py`:
+   ```bash
+   # Feed static (1080x1080 = 1:1)
+   python3 scripts/generate_image.py "{hook visual description}, {brand aesthetic}, {product in context}" \
+     --aspect-ratio 1:1 --output ./assets/ --filename tof-static-pain-v1.png
+
+   # Stories/Reels static (1080x1920 = 9:16)
+   python3 scripts/generate_image.py "{same concept adapted for vertical}" \
+     --aspect-ratio 9:16 --output ./assets/ --filename tof-static-pain-stories-v1.png
+   ```
 3. Aim for smartphone-aesthetic quality — studio polish is not needed (smartphone beats studio 84% of the time in Stories)
 4. Generate 1-2 variants per concept for A/B testing
+5. **Product cutouts on colored/gradient backgrounds**: Use the 4-pass transparent PNG pipeline:
+   ```bash
+   # Generate product on white bg → remove bg → make transparent → composite
+   python3 scripts/generate_image.py "{product}, on a simple white background" \
+     --output ./assets/ --filename product-raw.png
+   python3 scripts/edit_image.py \
+     "Remove the background completely. Make the background fully transparent. Keep only the main subject with clean edges. Output as PNG with alpha transparency." \
+     --images ./assets/product-raw.png --output ./assets/ --filename product-keyed.png
+   python3 scripts/make_transparent.py ./assets/product-keyed.png \
+     --output ./assets/ --filename product-transparent.png
+   pngquant --quality=65-85 --force --output ./assets/product-transparent.png \
+     ./assets/product-transparent.png
+   ```
+   Then composite the transparent product onto ad backgrounds using `edit_image.py` with the product + background as multi-image input.
 
 #### Carousel Cards
 
-1. For each carousel concept, generate individual card images
+1. For each carousel concept, generate individual card images using nano-banana `generate_image.py` with `--aspect-ratio 1:1`
 2. Card 1 must hook with the problem or question — never lead with the product
 3. Final card includes the CTA and offer
-4. Maintain visual consistency across cards
+4. Maintain visual consistency across cards — pass all prior cards as reference images to `edit_image.py`:
+   ```bash
+   # Generate card 1, then use it as style reference for cards 2-5
+   python3 scripts/edit_image.py \
+     "Create card 2 of a carousel in the exact same visual style. {card 2 content description}" \
+     --images ./assets/carousel-card-1.png --output ./assets/ --filename carousel-card-2.png
+   ```
 
 #### Video
 
