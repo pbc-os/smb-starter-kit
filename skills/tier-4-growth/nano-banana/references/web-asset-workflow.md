@@ -11,12 +11,14 @@ Agents frequently fail at background removal because they try to do it in a sing
 Always use separate passes. Each pass has a single, clear job.
 
 ```
-┌──────────────┐     ┌──────────────────┐     ┌──────────────┐     ┌──────────────┐
-│  Pass 1:     │     │  Pass 2:         │     │  Pass 3:     │     │  Integration │
-│  Generate    │────▶│  Remove BG       │────▶│  Cleanup     │────▶│  Web-ready   │
-│  (solid bg)  │     │  (transparent)   │     │  (if needed) │     │  asset       │
-└──────────────┘     └──────────────────┘     └──────────────┘     └──────────────┘
+┌──────────────┐     ┌──────────────────┐     ┌──────────────────┐     ┌──────────────┐
+│  Pass 1:     │     │  Pass 2:         │     │  Pass 3:         │     │  Integration │
+│  Generate    │────▶│  Remove BG       │────▶│  make_transparent │────▶│  Web-ready   │
+│  (solid bg)  │     │  (checkerboard)  │     │  (real RGBA)     │     │  asset       │
+└──────────────┘     └──────────────────┘     └──────────────────┘     └──────────────┘
 ```
+
+**Why three passes?** Gemini's "background removal" renders a visible checkerboard pattern to represent transparency, but the actual PNG output is RGB — no alpha channel. The `make_transparent.py` script detects this pattern and converts it to real RGBA with a proper alpha channel. Without Pass 3, your "transparent" PNG will have a checkerboard baked into the pixels.
 
 ### Pass 1: Generate the Subject
 
@@ -44,7 +46,7 @@ python3 scripts/generate_image.py \
 - Use complex or gradient backgrounds — they make removal harder
 - Use backgrounds similar in color to the subject
 
-### Pass 2: Remove the Background
+### Pass 2: Remove the Background (Gemini)
 
 Use `edit_image.py` with a specific, explicit background removal prompt. The prompt must be detailed — vague prompts produce vague results.
 
@@ -57,7 +59,7 @@ Remove the background completely. Make the background fully transparent. Keep on
 python3 scripts/edit_image.py \
   "Remove the background completely. Make the background fully transparent. Keep only the main subject with clean, sharp edges. Output as PNG with alpha transparency." \
   --images ./assets/adu-greenroof.png \
-  --output ./assets/ --filename adu-greenroof-transparent.png
+  --output ./assets/ --filename adu-greenroof-keyed.png
 ```
 
 **Critical rules:**
@@ -65,29 +67,36 @@ python3 scripts/edit_image.py \
 - Do NOT use vague prompts like "remove background" — be explicit about transparency
 - Do NOT add creative instructions in the removal pass — keep it purely technical
 
-### Pass 3: Cleanup (If Needed)
+**Important:** The output of this pass is NOT truly transparent. Gemini renders a checkerboard pattern to visually represent transparency, but the actual PNG is RGB with no alpha channel. You MUST run Pass 3.
 
-After removal, inspect the result. Common issues:
-- **White fringe/halo** around edges (most common)
-- **Semi-transparent patches** where the background wasn't fully removed
-- **Missing subject parts** that were similar in color to the background
+### Pass 3: Convert to Real RGBA Transparency
 
-If any of these are present, run a cleanup pass:
+This is the critical step that agents skip. The `make_transparent.py` script detects Gemini's checkerboard pattern and converts it to a real RGBA alpha channel.
 
 ```bash
-python3 scripts/edit_image.py \
-  "Clean up the edges of this transparent PNG. Remove any white fringe, halo, or semi-transparent artifacts around the subject edges. The background must be completely transparent with no artifacts. Preserve all subject detail." \
-  --images ./assets/adu-greenroof-transparent.png \
+python3 scripts/make_transparent.py ./assets/adu-greenroof-keyed.png \
   --output ./assets/ --filename adu-greenroof-transparent.png
+```
+
+**Parameters:**
+- `--threshold` (default: 220) — Brightness threshold for background detection. Lower = more aggressive removal. Raise if subject parts are being removed.
+- `--feather` (default: 1) — Edge feathering in pixels. Higher = softer edges. Set to 0 for hard edges.
+- `--mode` — `auto` (default), `checkerboard`, or `white`
+
+**If shadows or edges have artifacts:**
+```bash
+python3 scripts/make_transparent.py ./assets/adu-greenroof-keyed.png \
+  --threshold 210 --feather 2
 ```
 
 ### Verification
 
-After the pipeline, verify the result before using it:
+After the pipeline, verify the result:
 
-1. **Visual check:** Open the PNG in a viewer that shows transparency (Preview on macOS shows a checkerboard pattern for transparent areas)
-2. **File size check:** A transparent PNG is typically larger than the original (alpha channel adds data). If it's smaller, the transparency may not have been applied
-3. **Web preview check:** Drop it on a colored `<div>` and confirm no white box appears
+1. **Check the mode:** `python3 -c "from PIL import Image; img = Image.open('output.png'); print(img.mode)"` — must print `RGBA`, not `RGB`
+2. **Check alpha stats:** The `make_transparent.py` script prints transparency percentages automatically
+3. **Composite test:** Paste the image on a colored background — if the background bleeds through where it shouldn't, adjust the threshold
+4. **Web preview:** Drop it on a colored `<div>` and confirm no white/gray box appears
 
 ## Naming Convention
 
@@ -200,10 +209,10 @@ When generating multiple assets (e.g., a set of product images):
 
 1. **Generate all subjects first** (Pass 1) using Flash model for speed
 2. **Review the generations** — regenerate any that don't meet quality bar
-3. **Remove backgrounds in batch** (Pass 2) — same prompt for all
-4. **Cleanup pass only on those that need it** (Pass 3)
-5. **Final review** — verify all are clean transparent PNGs
-6. **Rename** to follow the naming convention
+3. **Remove backgrounds in batch** (Pass 2) — same Gemini prompt for all
+4. **Run make_transparent on all** (Pass 3) — converts checkerboard to real RGBA
+5. **Spot-check** — composite a few on a colored background to verify
+6. **Rename** to follow the naming convention (`-transparent.png`)
 
 This is more efficient than running the full pipeline per-image, because you can batch the removal pass and only do cleanup on the subset that needs it.
 
@@ -211,9 +220,11 @@ This is more efficient than running the full pipeline per-image, because you can
 
 | Problem | Cause | Fix |
 |---------|-------|-----|
-| White box around subject | JPEG output, not PNG | Ensure output filename ends in `.png` |
-| Partial transparency | Vague removal prompt | Use the exact prompt from Pass 2 above |
-| Subject parts missing | Background color too similar to subject | Regenerate Pass 1 with a contrasting background color |
-| White fringe/halo | Common edge artifact | Run Pass 3 cleanup |
-| Model returns text instead of image | Prompt too complex | Simplify the removal prompt — keep it technical, not creative |
-| 500 Internal Error | Prompt too long or model overloaded | Shorten the prompt; retry; try Flash instead of Pro |
+| White box around subject | JPEG output, or skipped Pass 3 | Ensure `.png` AND run `make_transparent.py` |
+| Checkerboard baked into pixels | Skipped Pass 3 | Run `make_transparent.py` — Gemini does NOT output real alpha |
+| Image mode is RGB not RGBA | Skipped Pass 3 | Run `make_transparent.py` to add real alpha channel |
+| Subject parts cut off | `make_transparent` threshold too aggressive | Raise `--threshold` (e.g., 230) |
+| Background remnants at edges | Threshold too conservative | Lower `--threshold` (e.g., 210) |
+| White fringe near shadows | Shadow colors close to background | Use `--feather 2` and lower threshold slightly |
+| Model returns text not image | Prompt too complex | Simplify the removal prompt — keep it technical |
+| 500 Internal Error | Prompt too long or model overloaded | Shorten prompt; retry; try Flash instead of Pro |

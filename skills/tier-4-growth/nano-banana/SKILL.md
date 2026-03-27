@@ -71,15 +71,15 @@ python3 scripts/edit_image.py "create a collage combining these images" \
 
 ### 3. Background Removal (Web-Asset Pipeline)
 
-Remove backgrounds to produce transparent PNGs for websites. This is a **two-pass workflow** — generate first, then remove the background in a second pass.
+Remove backgrounds to produce transparent PNGs for websites. This is a **three-pass workflow**.
 
 **CRITICAL: Read `references/web-asset-workflow.md` before attempting background removal.** Agents frequently get this wrong. The key rules:
 
-1. **Always use TWO separate passes** — do not try to generate a transparent image in one shot
-2. **Pass 1 — Generate:** Create the image with a simple, solid-color background (white or light gray works best)
-3. **Pass 2 — Remove background:** Use `edit_image.py` with the exact prompt below
-4. **Output MUST be PNG** — JPEG does not support transparency
-5. **Verify the result** — open the output and confirm the background is actually transparent
+1. **Always use THREE separate passes** — do not try to generate a transparent image in one shot
+2. **Pass 1 — Generate:** Create the image with a simple, solid-color background (white or light gray)
+3. **Pass 2 — Remove background:** Use `edit_image.py` to visually remove the background
+4. **Pass 3 — Make transparent:** Use `make_transparent.py` to convert to real RGBA (Gemini outputs a checkerboard pattern, NOT actual alpha transparency)
+5. **Output MUST be PNG** — JPEG does not support transparency
 
 ```bash
 # Pass 1: Generate the subject
@@ -87,19 +87,23 @@ python3 scripts/generate_image.py \
   "a modern two-story ADU building, isometric tilt-shift miniature style, on a simple white background" \
   --output ./assets/ --filename subject.png
 
-# Pass 2: Remove the background
+# Pass 2: Remove the background (Gemini renders checkerboard, not real alpha)
 python3 scripts/edit_image.py \
   "Remove the background completely. Make the background fully transparent. Keep only the main subject with clean edges. Output as PNG with alpha transparency." \
   --images ./assets/subject.png \
+  --output ./assets/ --filename subject-keyed.png
+
+# Pass 3: Convert checkerboard to real RGBA transparency
+python3 scripts/make_transparent.py ./assets/subject-keyed.png \
   --output ./assets/ --filename subject-transparent.png
 ```
 
-**If the first removal attempt leaves artifacts**, run a cleanup pass:
+**Why Pass 3 is required:** Gemini's background removal renders a visible checkerboard pattern to represent transparency, but the actual PNG output is **RGB with no alpha channel**. The `make_transparent.py` script detects this checkerboard pattern and converts it to real RGBA transparency with a proper alpha channel.
+
+**If artifacts remain** (white fringe near shadows), adjust the threshold:
 ```bash
-python3 scripts/edit_image.py \
-  "Clean up any remaining background artifacts. The background must be completely transparent. Remove any white fringe, halo, or semi-transparent edges around the subject. Output as PNG with alpha transparency." \
-  --images ./assets/subject-transparent.png \
-  --output ./assets/ --filename subject-transparent-clean.png
+python3 scripts/make_transparent.py ./assets/subject-keyed.png \
+  --threshold 210 --feather 2
 ```
 
 **Naming convention:** Web-ready transparent assets should use the `-transparent.png` suffix.
@@ -156,7 +160,7 @@ python3 scripts/inpaint_image.py "" --image photo.png --bbox 50,50,300,200 --mod
 For generating assets intended for websites, follow the full pipeline documented in `references/web-asset-workflow.md`. Summary:
 
 ```
-Generate (solid bg) → Remove Background → Verify → Optimize → Integrate
+Generate (solid bg) → Remove BG (Gemini) → Make Transparent (real RGBA) → Integrate
 ```
 
 Key integration patterns for web:
@@ -171,7 +175,8 @@ See `examples/web-asset-pipeline.md` for a complete walkthrough.
 
 ### scripts/
 - `generate_image.py` — Text-to-image generation (Gemini API)
-- `edit_image.py` — Image editing and background removal (Gemini API)
+- `edit_image.py` — Image editing and visual background removal (Gemini API)
+- `make_transparent.py` — Converts checkerboard backgrounds to real RGBA transparency (Pillow + scipy)
 - `inpaint_image.py` — Region-targeted inpainting (Imagen 3, Vertex AI)
 - `requirements.txt` — Python dependencies
 
