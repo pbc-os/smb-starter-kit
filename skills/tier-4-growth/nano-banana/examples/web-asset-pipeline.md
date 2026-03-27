@@ -50,35 +50,58 @@ Open `./assets/raw/` and visually check each image:
 
 Regenerate any that don't meet the bar. Consistency across the set matters more than individual perfection.
 
-## Step 4: Remove Backgrounds (Pass 2)
+## Step 4: Remove Backgrounds (Pass 2 — Gemini)
 
-Run the background removal pass on each:
+Run the background removal pass on each. Note: Gemini outputs a checkerboard pattern, NOT real transparency.
 
 ```bash
 for img in cottage-porch 2story-garage spanish-style prefab-modern; do
   python3 scripts/edit_image.py \
     "Remove the background completely. Make the background fully transparent. Keep only the main subject with clean, sharp edges. Output as PNG with alpha transparency." \
     --images "./assets/raw/${img}.png" \
+    --output ./assets/keyed/ \
+    --filename "${img}-keyed.png"
+done
+```
+
+## Step 5: Convert to Real RGBA (Pass 3 — make_transparent)
+
+This is the critical step. Gemini's "transparent" output is actually RGB with a baked-in checkerboard pattern. `make_transparent.py` detects the checkerboard and converts it to a real RGBA alpha channel.
+
+```bash
+for img in cottage-porch 2story-garage spanish-style prefab-modern; do
+  python3 scripts/make_transparent.py "./assets/keyed/${img}-keyed.png" \
     --output ./assets/transparent/ \
     --filename "${img}-transparent.png"
 done
 ```
 
-## Step 5: Verify and Cleanup (Pass 3 if needed)
-
-Open each transparent PNG. On macOS, Preview shows transparent areas as a checkerboard.
-
-If any have white fringe or artifacts:
-
-```bash
-python3 scripts/edit_image.py \
-  "Clean up the edges of this transparent PNG. Remove any white fringe, halo, or semi-transparent artifacts around the subject edges. The background must be completely transparent. Preserve all subject detail." \
-  --images ./assets/transparent/cottage-porch-transparent.png \
-  --output ./assets/transparent/ \
-  --filename cottage-porch-transparent.png
+Each run prints verification stats:
+```
+Result: 83% transparent, 16% opaque, RGBA mode
+PASS: Transparent PNG created
 ```
 
-## Step 6: Integrate into Website
+## Step 6: Verify
+
+Spot-check by compositing on a colored background:
+
+```python
+from PIL import Image
+img = Image.open('./assets/transparent/cottage-porch-transparent.png')
+assert img.mode == 'RGBA', f"Expected RGBA, got {img.mode}"
+bg = Image.new('RGBA', img.size, (0, 100, 200, 255))
+bg.paste(img, (0, 0), img)
+bg.convert('RGB').save('./assets/verify/cottage-porch-on-blue.png')
+```
+
+If you see checkerboard artifacts in the blue composite, lower the threshold:
+```bash
+python3 scripts/make_transparent.py ./assets/keyed/cottage-porch-keyed.png \
+  --threshold 210 --feather 2
+```
+
+## Step 7: Integrate into Website
 
 ### File placement (Next.js example)
 
