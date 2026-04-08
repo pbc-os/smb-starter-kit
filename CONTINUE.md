@@ -1,6 +1,10 @@
-# CONTINUE.md — For AI Agents Receiving the Handoff
+# CONTINUE.md — For AI Agents Receiving the Handoff (Chatbot Bridge Pattern)
 
-A human just pasted a **Handoff Packet** from another AI (ChatGPT, Claude web, etc.) into your session. That AI guided them through installing you. Now you're taking over.
+> **Read this first:** This file is specifically for the chatbot-bridge onboarding pattern, which is now an *advanced* path for users who couldn't or wouldn't install Claude Desktop. If you're a CLI agent that was just installed via a normal direct install, you don't need this file — just use the skills in this repo as you would any other skill set, and skip the handoff ceremony below.
+>
+> See [`docs/advanced-onboarding.md`](docs/advanced-onboarding.md) for the full context on when and why this pattern is used.
+
+A human just pasted a **Handoff Packet** from another AI (ChatGPT, Claude web, etc.) into your session. That AI guided them through installing you because they couldn't use the default Claude Desktop path. Now you're taking over.
 
 ---
 

@@ -6,198 +6,69 @@
 
 ---
 
-## 🚀 Brand New to This?
+## What this is
 
-**Step 1:** Copy this URL: `https://github.com/pbc-os/agent-skills-public`
+A collection of **skills** — pre-built instructions that teach an AI agent how to actually run parts of a small business. Read your email. Pull your sales numbers. Pause a wasteful ad. Send a vendor reminder. Generate creative for a campaign. Forecast next week's revenue.
 
-**Step 2:** Paste it into ChatGPT, Claude, or any AI chat
+Not "talk about" any of those things. *Do* them.
 
-**Step 3:** Say: *"Read this and help me understand what AI agents can do for my small business. I'm completely new to this."*
+If you've only ever used AI in a chat window, this is the part you've been missing. ChatGPT and Claude in a browser are smart, but they can't touch anything outside the chat. An AI **agent** is the same intelligence with hands — it runs on your computer (or in your Anthropic account), it can read files and call APIs, and skills are how you teach it to do specific jobs well.
 
-The AI will read this page and guide you through everything — explained for your specific type of business.
+## Who this is for
 
-### ⚠️ One Thing to Know
+Small business owners who already feel like AI is useful for thinking and writing, and now want it to actually take work off their plate. You don't need to be technical. You don't need to use a terminal. You need about 5 minutes to set up the agent, and another 5 to drop in the first skill.
 
-The AI chatting with you right now (in ChatGPT, Claude, etc.) **can't install anything on your computer.** It can only explain and guide.
-
-At some point, you'll need to open your computer's Terminal and run some commands. The AI will tell you exactly what to type. It takes about 15 minutes, and then you'll have an AI that CAN actually do things.
-
-Think of this guide like a phone call with an expert — they'll walk you through each step, but you're the one pressing the buttons.
+If you're a developer who already runs Claude Code or another CLI agent, skip to [the skill catalog](#-available-skills-22-skills) — you know what to do.
 
 ---
 
-## 💡 What You Might Not Know About AI
+## Setup
 
-You've probably used ChatGPT or Claude. You type, it types back. It's helpful for questions and writing.
+### Default path: Claude Desktop *(5 minutes, no terminal)*
 
-**But that's only 1% of what AI can do.**
+The fastest way to get an agent that can actually run skills is to install **Claude Desktop**. It's the native Mac/Windows app from Anthropic, and it includes Claude Code's execution capabilities — meaning it can read files, run commands, and use skills, all from a chat interface. No terminal.
 
-Right now, your AI is like a really smart person stuck in a room with no phone, no computer, and no access to anything. They can talk to you through a slot in the door, but they can't actually DO anything.
+1. **Download Claude Desktop:** [claude.com/download](https://claude.com/download)
+2. **Install and sign in** with your Anthropic account (or create one — there's a free tier).
+3. **Add a skill.** Skills go in `~/.claude/skills/<skill-name>/` on Mac (`%APPDATA%\Claude\skills\<skill-name>\` on Windows). The easiest way to add one from this repo is to `git clone` the repo and copy the folder for the skill you want, e.g.:
 
-**AI agents are different.** They can:
-- Actually read your emails (not just talk about email)
-- Actually check your sales numbers (not just suggest you check them)
-- Actually pause that ad that's wasting money (not just tell you to pause it)
-- Actually send that invoice reminder (not just draft it for you to copy-paste)
+   ```bash
+   git clone https://github.com/pbc-os/agent-skills-public.git
+   cp -r agent-skills-public/skills/tier-2-communication/gmail ~/.claude/skills/gmail
+   ```
 
-**This repo helps you get there.** It's a collection of "skills" — pre-built instructions that teach AI how to connect to and use your business tools.
+   *(If you're not comfortable with git, you can also download the repo as a ZIP from the GitHub page and copy the folder manually.)*
 
----
+4. **Use the skill.** Open Claude Desktop and ask the agent to do the thing the skill is for — e.g., "give me a morning briefing" or "read my unread email." The agent will load the skill and follow its instructions.
 
-## 🤔 How Does This Work?
+That's it. Most skills also need credentials for the service they connect to (a Gmail token, a Square API key, etc.) — the [secrets-manager](./skills/tier-1-foundation/secrets-manager/) skill walks you through storing those securely once, and then every other skill that needs them just works.
 
-### The Difference Between ChatGPT and AI Agents
+### Power-user path: any CLI agent
 
-When you use ChatGPT in a browser:
-```
-You → type message → ChatGPT (cloud) → types back → You
+These skills are agent-agnostic — they work with any AI agent that can read markdown and execute shell commands. If you already run one of these, just point it at the skills directory:
 
-That's it. ChatGPT can't touch your computer. It just sends text.
-```
+| Tool | Notes |
+|---|---|
+| [Claude Code](https://docs.anthropic.com/en/docs/claude-code) | The CLI version. Same skill loader as Desktop (`~/.claude/skills/`) |
+| [Codex CLI](https://github.com/openai/codex) | OpenAI's terminal agent |
+| [Gemini CLI](https://github.com/google-gemini/gemini-cli) | Google's terminal agent |
+| [Goose](https://github.com/block/goose) | Local-first, extensible |
 
-When you use an AI agent (like Claude Code, Codex, or Gemini CLI):
-```
-You → type message → Agent (your computer) → sends to Claude (cloud)
-                                           ↓
-Claude thinks: "To check email, I need to run this command..."
-                                           ↓
-                    Agent receives instructions ← Claude responds
-                                           ↓
-                    Agent runs the command on YOUR computer
-                                           ↓
-                    Results go back to Claude
-                                           ↓
-Claude: "You have 23 unread emails. 5 are from vendors..."
-```
+For Codex / Gemini / Goose, check each tool's docs for where its skills directory lives. The `SKILL.md` file inside each skill folder is the entry point — frontmatter declares dependencies, the body is the instructions.
 
-**The agent is the bridge.** It runs on your computer (or a server you control) and translates between you, the AI brain in the cloud, and your actual systems.
-
-Think of it like this:
-- **ChatGPT in browser** = A smart person texting you from another country. They can give advice but can't touch anything in your office.
-- **AI agent on your computer** = That same smart person sitting at a desk in your office, with access to your computer, your files, and whatever accounts you give them.
-
-### Three Things Need to Happen
-
-| Step | What It Means | How Long |
-|------|---------------|----------|
-| 1. **Install the agent** | Put the "bridge" on your computer (Claude Code, etc.) | 15 min |
-| 2. **Store credentials safely** | Give the agent secure access to Gmail, Square, etc. | 30 min |
-| 3. **Add skills** | Teach the agent HOW to use each service | 5 min each |
-
-**This repo handles Step 3.** Steps 1-2 are one-time setup — the AI reading this can walk you through it.
+> **Need to onboard a non-technical user from inside ChatGPT or another browser chatbot?** There's an advanced "chatbot bridge" pattern that uses [`LLM.txt`](./LLM.txt) and [`CONTINUE.md`](./CONTINUE.md) to walk a beginner through installation from inside any chat window, then hand them off to a freshly-installed CLI agent with full context. See [`docs/advanced-onboarding.md`](./docs/advanced-onboarding.md). Most users won't need this — Claude Desktop is simpler.
 
 ---
 
-## 🧠 Agents vs Skills vs Tools: What's the Difference?
+## Agents, skills, and tools — the 30-second version
 
-This can get confusing fast. Here's the simple version:
+Think of an AI agent like a really smart employee.
 
-### The Chef Metaphor
+- **The agent** is the employee — their brain, judgment, and memory. You hire one, they stick around, they learn how you like things.
+- **Skills** are the training manuals you hand them. "Here's how we run a morning briefing." "Here's how we handle a vendor invoice." Each skill is a focused playbook for one job.
+- **Tools** are the things the employee uses to do the work — your inbox, your spreadsheet, your accounting software, your ad platform. The agent already has access to tools through Claude Desktop or its CLI; what it doesn't have is the *playbook* for how to use them well in your business.
 
-| Concept | In a Kitchen | For Your Business |
-|---------|--------------|-------------------|
-| **Agent** | The chef (the person) | The AI running on your computer |
-| **Skills** | Recipes + techniques | Instructions for how to do specific tasks |
-| **Tools** | Oven, knives, mixer | APIs, databases, email servers |
-
-- You don't hire a new chef for every dish — you teach your chef new recipes
-- The chef uses equipment (tools) to execute the recipes (skills)
-- The chef's judgment, creativity, and decision-making stay constant
-
-### The Employee Metaphor
-
-Think of an AI agent like hiring a really smart employee:
-
-- **Agent** = The employee (their brain, judgment, personality)
-- **Skills** = Training manuals and SOPs (knowledge they reference)
-- **Tools** = Computer, software, and account access (how they actually DO work)
-
-When you want your employee to handle QuickBooks, you don't hire a new person — you train them on QuickBooks. The skill is the training manual. The tool is QuickBooks itself.
-
-### Why Skills Instead of More Agents?
-
-You might wonder: *"Why not just have 20 different AI agents for 20 different tasks?"*
-
-**One agent with 20 skills is better because:**
-
-1. **Memory** — One agent remembers your preferences across everything. "Owner likes reports by 9am" applies to email summaries AND sales reports.
-
-2. **Context** — One agent sees the whole picture. "Sales are down AND ad spend is up" is one insight, not two separate agents that don't talk to each other.
-
-3. **Simplicity** — One thing to configure, one thing to talk to, one relationship to build.
-
-4. **Composability** — Skills build on each other. Secrets-manager enables Gmail, which enables daily-digest. One agent chains them together naturally.
-
-**When you might want multiple agents:**
-- Different personalities for different contexts (customer service vs internal ops)
-- Security isolation (don't want one agent accessing everything)
-- Parallel processing (multiple agents working simultaneously)
-
-But for most small businesses: **one agent, many skills** is the way.
-
-### The Bottom Line
-
-| Thing | What it IS | What it DOES |
-|-------|-----------|--------------|
-| **Agent** | The brain | Makes decisions, learns, remembers |
-| **Skills** | Knowledge | Tells the agent HOW to do things |
-| **Tools** | Capabilities | Lets the agent actually DO things |
-
-Skills without tools = A chef with recipes but no kitchen
-Tools without skills = A kitchen full of equipment but no idea what to cook
-Agent without either = A smart person with nothing to work with
-
-**This repo gives your agent skills. The agent already has tools (via Claude Code, etc.). Your job is just to add skills as you need them.**
-
----
-
-## 🛠️ How to Install an AI Agent (15 minutes)
-
-This is the one-time setup that lets AI actually do things on your computer.
-
-### Quick Version (Mac/Linux)
-
-Open Terminal and run:
-```bash
-# 1. Install Node.js if you don't have it (check with: node --version)
-#    Download from https://nodejs.org if needed
-
-# 2. Install Claude Code
-npm install -g @anthropic-ai/claude-code
-
-# 3. Start it
-claude
-```
-
-That's it. Claude Code will walk you through the rest.
-
-### Quick Version (Windows)
-
-Open PowerShell and run:
-```powershell
-# 1. Install Node.js from https://nodejs.org first
-
-# 2. Install Claude Code  
-npm install -g @anthropic-ai/claude-code
-
-# 3. Start it
-claude
-```
-
-### Need More Help?
-
-Ask the AI helping you to walk you through it step by step. Say: *"I need help installing Claude Code on my [Mac/Windows/Linux]. Start from the very beginning."*
-
-### Other Options
-
-These skills are agent-agnostic — they work with any CLI agent that can read markdown and execute shell commands.
-
-| Tool | Best For | Difficulty |
-|------|----------|------------|
-| [Claude Code](https://docs.anthropic.com/en/docs/claude-code) | Beginners, Mac/Linux/Windows | Easy |
-| [Codex CLI](https://github.com/openai/codex) | OpenAI/GPT users | Easy |
-| [Gemini CLI](https://github.com/google-gemini/gemini-cli) | Google users | Easy |
-| [Goose](https://github.com/block/goose) | Local-first, extensible | Medium |
+**This repo gives your agent skills.** One agent with twenty skills is almost always better than twenty separate agents with one skill each — because the agent remembers your preferences across everything, sees the whole picture, and chains skills together naturally (the secrets-manager skill enables Gmail, which enables the morning briefing, which uses the revenue forecaster).
 
 ---
 
@@ -347,38 +218,11 @@ nano-banana ──┬── creative-matrix
 
 ---
 
-## 🛠️ Installation
-
-The skills in this repo are agent-agnostic — any CLI agent that can read markdown and execute shell commands can use them. Three ways to install:
-
-**Option 1 — Copy the folder into your agent's skills directory.** For Claude Code, that's typically `~/.claude/skills/<skill-name>/`. For other agents, check their docs. The agent reads the frontmatter for dependencies and the body for instructions.
-
-**Option 2 — Use a skill installer.** If your setup includes [skills.sh](https://skills.sh) or a compatible installer:
-```bash
-npx skills add pbc-os/agent-skills-public@secrets-manager -g -y
-```
-
-**Option 3 — Just read them.** If all you have is ChatGPT or Claude chat, open the `SKILL.md` files directly and ask the AI to follow the instructions. It won't be able to run the commands itself, but it can walk you through them step by step.
-
-See [`skills/SKILL_SPEC.md`](./skills/SKILL_SPEC.md) for the schema every skill follows.
-
----
-
 ## 🤖 For AI Agents Reading This
 
-> **Agent Agnostic:** These skills work with any AI agent that can read markdown and execute shell commands — Claude Code, Codex CLI, Gemini CLI, Goose, or any future agent. The instructions are portable.
+These skills are portable across runtimes. The `SKILL.md` file in each folder is the entry point — frontmatter for dependencies, body for instructions. See [`skills/SKILL_SPEC.md`](./skills/SKILL_SPEC.md) for the standard schema.
 
-**If you're a chat-based AI (ChatGPT, Claude web, etc.):**
-Read [LLM.txt](./LLM.txt) — it guides you through explaining this to beginners and walking them through installation.
-
-**If you're a CLI agent (Claude Code, Codex, Gemini CLI, etc.) and just received a handoff message:**
-Read [CONTINUE.md](./CONTINUE.md) — it tells you how to continue onboarding the human who just installed you.
-
-The handoff flow:
-1. Chat AI reads LLM.txt → guides human through installation
-2. Chat AI generates handoff message with context
-3. Human pastes handoff message into their CLI agent
-4. CLI agent reads CONTINUE.md → takes over onboarding
+If you're a chat-based AI walking a non-technical user through installation, see [`docs/advanced-onboarding.md`](./docs/advanced-onboarding.md) — it documents the chatbot-bridge pattern (`LLM.txt` → handoff packet → `CONTINUE.md`) for the rare case where the user can't or won't install Claude Desktop directly.
 
 ---
 

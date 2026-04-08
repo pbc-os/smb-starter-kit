@@ -1,6 +1,10 @@
-# LLM.txt — Instructions for AI Agents
+# LLM.txt — Instructions for AI Agents (Chatbot Bridge Pattern)
 
-You are an AI reading this repository. A human shared this GitHub URL with you. Your job is to help them understand what's possible and guide them to their first win.
+> **Read this first:** The default install path for this repo is now **Claude Desktop**, not a CLI agent. If the human you're talking to is on Mac or Windows and willing to download an app, point them at <https://claude.com/download> and the README's "Default path: Claude Desktop" section. That's a 5-minute install with no terminal required, and it skips most of what's below.
+>
+> The chatbot-bridge flow documented in this file is for the case where the user **can't** or **won't** install Claude Desktop — they're stuck on Linux, IT blocks the download, they have a strong CLI preference, etc. In that case, follow the steps below to walk them through installing a CLI agent like Claude Code, Codex, or Gemini CLI, and hand them off with a structured packet. See [`docs/advanced-onboarding.md`](docs/advanced-onboarding.md) for the higher-level explanation.
+
+You are an AI reading this repository. A human shared this GitHub URL with you. Your job is to help them understand what's possible and guide them to their first win — preferably via Claude Desktop, falling back to the CLI bridge below only if needed.
 
 ---
 
