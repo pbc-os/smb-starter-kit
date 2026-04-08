@@ -120,7 +120,7 @@ You might wonder: *"Why not just have 20 different AI agents for 20 different ta
 
 **One agent with 20 skills is better because:**
 
-1. **Memory** — One agent remembers your preferences across everything. "Corey likes reports by 9am" applies to email summaries AND sales reports.
+1. **Memory** — One agent remembers your preferences across everything. "Owner likes reports by 9am" applies to email summaries AND sales reports.
 
 2. **Context** — One agent sees the whole picture. "Sales are down AND ad spend is up" is one insight, not two separate agents that don't talk to each other.
 
@@ -190,12 +190,14 @@ Ask the AI helping you to walk you through it step by step. Say: *"I need help i
 
 ### Other Options
 
+These skills are agent-agnostic — they work with any CLI agent that can read markdown and execute shell commands.
+
 | Tool | Best For | Difficulty |
 |------|----------|------------|
 | [Claude Code](https://docs.anthropic.com/en/docs/claude-code) | Beginners, Mac/Linux/Windows | Easy |
-| [Clawdbot](https://github.com/clawdbot/clawdbot) | Slack/Discord users, always-on | Medium |
 | [Codex CLI](https://github.com/openai/codex) | OpenAI/GPT users | Easy |
 | [Gemini CLI](https://github.com/google-gemini/gemini-cli) | Google users | Easy |
+| [Goose](https://github.com/block/goose) | Local-first, extensible | Medium |
 
 ---
 
@@ -242,113 +244,119 @@ Start with read-only. Expand later. You're always in control.
 
 ## 📦 Available Skills (21 skills)
 
-### Tier 1: Foundation
-*Start here. These enable everything else.*
+Each skill is a self-contained `SKILL.md` file (plus optional references, scripts, and templates) that teaches your agent how to do one job well. Skills compose — set up Tier 1 once and everything above it becomes a 5-minute install.
 
-| Skill | Description | Install |
-|-------|-------------|---------|
-| [secrets-manager](./skills/tier-1-foundation/secrets-manager/) | Set up secure API key storage (GCP, AWS, Azure, etc.) | `npx skills add smb-pbc/agent-skills-public@secrets-manager -g -y` |
-| [semantic-layer-audit](./skills/tier-1-foundation/semantic-layer-audit/) | Discover and document all data sources your agent has access to. Living data catalog. | `npx skills add smb-pbc/agent-skills-public@semantic-layer-audit -g -y` |
-| [google-workspace](./skills/tier-1-foundation/google-workspace/) | Set up the [gws CLI](https://github.com/googleworkspace/cli) for Gmail, Calendar, Drive, Sheets, Docs, Chat, Tasks, and every Google Workspace API. Gateway to all Google-powered skills. | `npx skills add smb-pbc/agent-skills-public@google-workspace -g -y` |
-| [mcp-guide](./skills/tier-1-foundation/mcp-guide/) | Educational guide to MCP (Model Context Protocol) — what it is, when you need it vs when a CLI + skill is enough, and how to build your own. Links to [Anthropic's MCP builder](https://github.com/anthropics/skills/tree/main/skills/mcp-builder). | `npx skills add smb-pbc/agent-skills-public@mcp-guide -g -y` |
+### Tier 1 — Foundation *(start here)*
 
-### Tier 2: Communication
-*Connect your agent to the people in your business.*
+These enable everything else. Set up once, forget about it.
 
-| Skill | Description | Install |
-|-------|-------------|---------|
-| [gmail](./skills/tier-2-communication/gmail/) | Email management for SMBs — daily triage, vendor comms, customer replies, filters, and templates. Built on the [gws CLI](https://github.com/googleworkspace/cli). | `npx skills add smb-pbc/agent-skills-public@gmail -g -y` |
-| [google-calendar](./skills/tier-2-communication/google-calendar/) | Schedule meetings, check availability, prep for meetings, manage staff schedules. Built on the [gws CLI](https://github.com/googleworkspace/cli). | `npx skills add smb-pbc/agent-skills-public@google-calendar -g -y` |
-| [google-chat](./skills/tier-2-communication/google-chat/) | Team messaging — send updates, post alerts, manage Google Chat spaces. Includes SMB channel structure and communication cadence. Built on the [gws CLI](https://github.com/googleworkspace/cli). | `npx skills add smb-pbc/agent-skills-public@google-chat -g -y` |
-| [slack](./skills/tier-2-communication/slack/) | Slack team messaging — send messages, manage channels, post automated updates, daily standups, shift handoffs. Includes SMB channel structure and best practices. | `npx skills add smb-pbc/agent-skills-public@slack -g -y` |
-| [slack-directory](./skills/tier-2-communication/slack-directory/) | Look up Slack users by name with fuzzy matching. Caches discoveries for instant future lookups. | `npx skills add smb-pbc/agent-skills-public@slack-directory -g -y` |
+| Skill | What it does |
+|---|---|
+| [secrets-manager](./skills/tier-1-foundation/secrets-manager/) | Secure API key storage across GCP, AWS, Azure, 1Password, Doppler, or Vault — with a startup wrapper pattern that keeps secrets in memory only |
+| [google-workspace](./skills/tier-1-foundation/google-workspace/) | Install and authenticate the [gws CLI](https://github.com/googleworkspace/cli) — the gateway to every Google-powered skill in Tier 2 and 3 |
+| [semantic-layer-audit](./skills/tier-1-foundation/semantic-layer-audit/) | Discover and document every data source your agent can touch. A living data catalog with reconciliation notes for the things only humans know |
+| [mcp-guide](./skills/tier-1-foundation/mcp-guide/) | When to build an MCP server vs. when a CLI + skill is enough. Links to [Anthropic's mcp-builder](https://github.com/anthropics/skills/tree/main/skills/mcp-builder) |
 
-### Tier 3: Business Ops
-*Give your agent eyes on the actual business — files, data, documents, and tasks.*
+### Tier 2 — Communication
 
-| Skill | Description | Install |
-|-------|-------------|---------|
-| [google-drive](./skills/tier-3-business-ops/google-drive/) | File management — organize invoices, contracts, SOPs, product photos. Search, upload, share, and manage permissions. Built on the [gws CLI](https://github.com/googleworkspace/cli). | `npx skills add smb-pbc/agent-skills-public@google-drive -g -y` |
-| [google-sheets](./skills/tier-3-business-ops/google-sheets/) | Spreadsheet operations — sales tracking, inventory, expense reports, data import/export. Includes SMB spreadsheet templates. Built on the [gws CLI](https://github.com/googleworkspace/cli). | `npx skills add smb-pbc/agent-skills-public@google-sheets -g -y` |
-| [google-docs](./skills/tier-3-business-ops/google-docs/) | Document creation — SOPs, proposals, contracts, meeting notes, and templates. Built on the [gws CLI](https://github.com/googleworkspace/cli). | `npx skills add smb-pbc/agent-skills-public@google-docs -g -y` |
-| [google-tasks](./skills/tier-3-business-ops/google-tasks/) | Task management — daily to-dos, project tracking, meeting action items. Integrates with Gmail and Calendar. Built on the [gws CLI](https://github.com/googleworkspace/cli). | `npx skills add smb-pbc/agent-skills-public@google-tasks -g -y` |
+Connect your agent to the people in your business.
 
-### Tier 4: Growth
-*Drive revenue through advertising, marketing, and SEO.*
+| Skill | What it does |
+|---|---|
+| [gmail](./skills/tier-2-communication/gmail/) | Daily triage, vendor comms, customer replies, filters, and templates |
+| [google-calendar](./skills/tier-2-communication/google-calendar/) | Scheduling, availability, meeting prep, and staff schedules |
+| [google-chat](./skills/tier-2-communication/google-chat/) | Team updates, shift handoffs, standups, alerts |
+| [slack](./skills/tier-2-communication/slack/) | Messages, channels, automated updates, standups, rich blocks — pairs with `slack-directory` for name→ID lookups |
+| [slack-directory](./skills/tier-2-communication/slack-directory/) | Fuzzy name-to-user-ID lookup for Slack, with local caching |
 
-| Skill | Description | Install |
-|-------|-------------|---------|
-| [google-ads](./skills/tier-4-growth/google-ads/) | Create, query, audit, and optimize Google Ads campaigns via the API. Battle-tested checklists and templates. | `npx skills add smb-pbc/agent-skills-public@google-ads -g -y` |
-| [nano-banana](./skills/tier-4-growth/nano-banana/) | AI image generation, editing, background removal, and web-asset rendering using Google Gemini. Includes a 4-pass transparent PNG pipeline for web-ready assets. | `npx skills add smb-pbc/agent-skills-public@nano-banana -g -y` |
-| [creative-matrix](./skills/tier-4-growth/creative-matrix/) | Generate Meta/Facebook ad creatives using a 3x3x3 framework (angles x formats x funnels = 27 unique concepts). Uses nano-banana for image/video asset generation. | `npx skills add smb-pbc/agent-skills-public@creative-matrix -g -y` |
-| [brand-identity](./skills/tier-4-growth/brand-identity/) | Agency-grade brand identity system — 18 deliverables, 19 visual assets via nano-banana, design tokens, SVG logos, and a printable HTML brand guide. | `npx skills add smb-pbc/agent-skills-public@brand-identity -g -y` |
+> **Slack or Google Chat?** Pick whichever your team already uses. Both skills share the same SMB patterns (standups, shift handoffs, alerts, weekly recaps) via the [shared messaging reference](./skills/shared/smb-team-messaging.md).
 
-### Tier 5: Automation
-*Discover and automate repeatable workflows.*
+### Tier 3 — Business Ops
 
-| Skill | Description | Install |
-|-------|-------------|---------|
-| [morning-briefing](./skills/tier-5-automation/morning-briefing/) | Automated daily digest — combines email triage, calendar, open tasks, and business KPIs into one morning briefing. The "killer app" for SMB agents. | `npx skills add smb-pbc/agent-skills-public@morning-briefing -g -y` |
-| [playbook-discovery](./skills/tier-5-automation/playbook-discovery/) | Analyze your email/calendar/files to discover repeatable workflows that AI can automate. | `npx skills add smb-pbc/agent-skills-public@playbook-discovery -g -y` |
-| [autoresearch](./skills/tier-5-automation/autoresearch/) | Autonomous iterative improvement loop for any measurable system. Inspired by [Karpathy's autoresearch](https://github.com/karpathy/autoresearch). Agent forms hypotheses, makes single changes, evaluates, keeps improvements, discards regressions. | `npx skills add smb-pbc/agent-skills-public@autoresearch -g -y` |
+Your agent's eyes on the actual business: files, data, documents, tasks.
 
-### Tier X: Agent Performance
-*Meta-skills for agent self-improvement.*
+| Skill | What it does |
+|---|---|
+| [google-drive](./skills/tier-3-business-ops/google-drive/) | File management with an opinionated SMB folder taxonomy — invoices, contracts, SOPs, product photos |
+| [google-sheets](./skills/tier-3-business-ops/google-sheets/) | Sales logs, inventory, expenses, and ready-to-adapt SMB sheet templates (Daily Sales / Inventory / P&L) |
+| [google-docs](./skills/tier-3-business-ops/google-docs/) | SOPs, proposals, contracts, meeting notes |
+| [google-tasks](./skills/tier-3-business-ops/google-tasks/) | Daily to-dos, project tracking, meeting action items |
 
-| Skill | Description | Install |
-|-------|-------------|---------|
-| [remedy](./skills/tier-x-experimental/remedy/) | Performance coaching when your agent fails. Wendy Rhoades-style. | `npx skills add smb-pbc/agent-skills-public@remedy -g -y` |
+### Tier 4 — Growth
+
+Drive revenue through ads, creative, and brand.
+
+| Skill | What it does |
+|---|---|
+| [google-ads](./skills/tier-4-growth/google-ads/) | Campaigns, audits, and wasted-spend detection via the official Google Ads API — with pre-flight checklists that prevent expensive launch mistakes |
+| [nano-banana](./skills/tier-4-growth/nano-banana/) | Image generation, editing, and a 4-pass pipeline for truly transparent PNGs via Google Gemini |
+| [creative-matrix](./skills/tier-4-growth/creative-matrix/) | 27-concept Meta/Facebook ad creative matrix (3 angles × 3 formats × 3 funnel stages), with nano-banana-powered asset generation |
+| [brand-identity](./skills/tier-4-growth/brand-identity/) | 18-deliverable agency-grade brand system — strategy, logo, W3C design tokens, SVG vectors, and a printable HTML brand guide |
+
+### Tier 5 — Automation
+
+Discover and automate the repeatable work.
+
+| Skill | What it does |
+|---|---|
+| [morning-briefing](./skills/tier-5-automation/morning-briefing/) | The "killer app" — composable daily digest that pulls email, calendar, tasks, and KPIs from whichever skills you've installed |
+| [playbook-discovery](./skills/tier-5-automation/playbook-discovery/) | Mine 6 months of email, calendar, and files to surface the repeatable workflows hiding in your daily work |
+| [autoresearch](./skills/tier-5-automation/autoresearch/) | Generalizes [Karpathy's autoresearch](https://github.com/karpathy/autoresearch) pattern to any measurable system — hypothesize, change one thing, evaluate, keep wins, discard regressions |
+
+### Tier X — Experimental
+
+Niche or in-development skills that don't fit the main tiers yet.
+
+| Skill | What it does |
+|---|---|
+| [patent-figure](./skills/tier-x-experimental/patent-figure/) | Generate USPTO-style patent figure drawings from provisional patent markdown, with targeted single-fix iteration. Built on `nano-banana`. |
 
 ### Skill Dependency Map
 
 ```
-secrets-manager ──────────────────────────────────────────┐
-                                                          │
-google-workspace ─┬── gmail ──────────┐                   │
-                  ├── google-calendar ─┤                   │
-                  ├── google-chat ─────┼── morning-briefing│
-                  ├── google-drive     │                   │
-                  ├── google-sheets ───┤                   │
-                  ├── google-docs      │                   │
-                  └── google-tasks ────┘                   │
-                                                          │
-slack-directory ──── slack ────────────── morning-briefing │
-                                                          │
-                  playbook-discovery ──── autoresearch     │
-                                                          │
-google-ads ───────────────────────────────────────────────┘
-                                                          │
-nano-banana ──────┬── creative-matrix                     │
-(Gemini images)   └── brand-identity                      │
-                                                          │
-remedy
-```
+secrets-manager ───────────────────────────────┐
+                                               │
+google-workspace ─┬── gmail ─────────┐         │
+                  ├── google-calendar │         │
+                  ├── google-chat ────┤         │
+                  ├── google-drive    ├── morning-briefing
+                  ├── google-sheets ──┤         │
+                  ├── google-docs     │         │
+                  └── google-tasks ───┘         │
+                                               │
+slack-directory ──── slack ────────────────────┤
+                                               │
+                  playbook-discovery ──── autoresearch
+                                               │
+google-ads ────────────────────────────────────┘
 
-> **Slack or Google Chat?** Pick whichever your team already uses. Both skills include the same SMB communication patterns (standup posts, shift handoffs, alerts, weekly recaps). The [shared best practices reference](./skills/shared/smb-team-messaging.md) applies to either platform.
+nano-banana ──┬── creative-matrix
+              ├── brand-identity
+              └── patent-figure
+```
 
 ### Coming Soon
 
-- **Tier 3: Business Ops** — Square POS, QuickBooks, BigQuery analytics
-- **Tier 4: Growth** — Mailchimp, Instagram (expanding)
-- **Tier 5: Automation** — Workflow builder, health monitor, anomaly detection
+- **Tier 3 — Business Ops:** Square POS, QuickBooks, BigQuery analytics
+- **Tier 4 — Growth:** Mailchimp, Instagram, revenue-forecaster
+- **Tier 5 — Automation:** Workflow builder, health monitor, anomaly detection
 
 ---
 
 ## 🛠️ Installation
 
-### If you have [skills.sh](https://skills.sh) / Clawdbot:
+The skills in this repo are agent-agnostic — any CLI agent that can read markdown and execute shell commands can use them. Three ways to install:
+
+**Option 1 — Copy the folder into your agent's skills directory.** For Claude Code, that's typically `~/.claude/skills/<skill-name>/`. For other agents, check their docs. The agent reads the frontmatter for dependencies and the body for instructions.
+
+**Option 2 — Use a skill installer.** If your setup includes [skills.sh](https://skills.sh) or a compatible installer:
 ```bash
-npx skills add smb-pbc/agent-skills-public@secrets-manager -g -y
+npx skills add pbc-os/agent-skills-public@secrets-manager -g -y
 ```
 
-### If you have Claude Code / Codex / Gemini CLI / any CLI agent:
-Copy the skill folder to your agent's workspace and reference the SKILL.md. The agent reads the frontmatter for dependencies and the body for instructions. See [SKILL_SPEC.md](./skills/SKILL_SPEC.md) for the standard schema.
+**Option 3 — Just read them.** If all you have is ChatGPT or Claude chat, open the `SKILL.md` files directly and ask the AI to follow the instructions. It won't be able to run the commands itself, but it can walk you through them step by step.
 
-### If you just have ChatGPT/Claude chat:
-You can't install skills directly, but you can:
-1. Read the SKILL.md files — they contain all the knowledge
-2. Ask your AI to follow the instructions in those files
-3. Consider setting up a CLI agent (Claude Code is free to try)
+See [`skills/SKILL_SPEC.md`](./skills/SKILL_SPEC.md) for the schema every skill follows.
 
 ---
 

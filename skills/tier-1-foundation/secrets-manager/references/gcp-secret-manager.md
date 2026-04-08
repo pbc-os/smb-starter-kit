@@ -193,8 +193,8 @@ For production, create a dedicated service account so the agent can access secre
 ### Create a Service Account
 
 ```bash
-gcloud iam service-accounts create clawdbot-agent \
-  --display-name="Clawdbot AI Agent" \
+gcloud iam service-accounts create ai-agent \
+  --display-name="AI Agent" \
   --project=YOUR_PROJECT_ID
 ```
 
@@ -202,15 +202,15 @@ gcloud iam service-accounts create clawdbot-agent \
 
 ```bash
 gcloud projects add-iam-policy-binding YOUR_PROJECT_ID \
-  --member="serviceAccount:clawdbot-agent@YOUR_PROJECT_ID.iam.gserviceaccount.com" \
+  --member="serviceAccount:ai-agent@YOUR_PROJECT_ID.iam.gserviceaccount.com" \
   --role="roles/secretmanager.secretAccessor"
 ```
 
 ### Create and Download a Key (For Non-GCE Machines)
 
 ```bash
-gcloud iam service-accounts keys create ~/clawdbot-sa-key.json \
-  --iam-account=clawdbot-agent@YOUR_PROJECT_ID.iam.gserviceaccount.com
+gcloud iam service-accounts keys create ~/ai-agent-sa-key.json \
+  --iam-account=ai-agent@YOUR_PROJECT_ID.iam.gserviceaccount.com
 ```
 
 **⚠️ Store this key file securely. Do NOT commit it to git.**
@@ -218,7 +218,7 @@ gcloud iam service-accounts keys create ~/clawdbot-sa-key.json \
 ### Activate the Service Account
 
 ```bash
-gcloud auth activate-service-account --key-file=~/clawdbot-sa-key.json
+gcloud auth activate-service-account --key-file=~/ai-agent-sa-key.json
 ```
 
 ### If Running on GCE/Cloud Run
@@ -226,7 +226,7 @@ gcloud auth activate-service-account --key-file=~/clawdbot-sa-key.json
 No key file needed. Attach the service account directly to the instance:
 ```bash
 gcloud compute instances set-service-account INSTANCE_NAME \
-  --service-account=clawdbot-agent@YOUR_PROJECT_ID.iam.gserviceaccount.com \
+  --service-account=ai-agent@YOUR_PROJECT_ID.iam.gserviceaccount.com \
   --scopes=https://www.googleapis.com/auth/cloud-platform
 ```
 
@@ -234,7 +234,7 @@ gcloud compute instances set-service-account INSTANCE_NAME \
 
 ## 6. Gateway Wrapper Script
 
-Create `~/.clawdbot/gateway-wrapper.sh`:
+Create `~/.config/ai-agent/wrapper.sh`:
 
 ```bash
 #!/bin/bash
@@ -251,11 +251,11 @@ export SLACK_BOT_TOKEN=$(fetch_secret "slack-bot-token")
 export SQUARE_ACCESS_TOKEN=$(fetch_secret "square-access-token")
 # Add more as needed...
 
-exec clawdbot gateway start
+exec exec "$@"  # pass-through to your agent command
 ```
 
 ```bash
-chmod +x ~/.clawdbot/gateway-wrapper.sh
+chmod +x ~/.config/ai-agent/wrapper.sh
 ```
 
 ---

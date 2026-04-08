@@ -1,6 +1,6 @@
 # Web-Asset Rendering Workflow
 
-How to generate transparent PNG assets suitable for website integration. This workflow was battle-tested producing architectural miniature assets for CrossBeam's Next.js frontend, where AI-generated transparent PNGs are displayed floating on gradient backgrounds.
+How to generate transparent PNG assets suitable for website integration. This workflow was battle-tested producing architectural miniature assets for a production Next.js frontend, where AI-generated transparent PNGs are displayed floating on gradient backgrounds.
 
 ## The Problem
 
@@ -29,7 +29,7 @@ Generate the image with a **simple, solid-color background**. This gives the mod
 **Best backgrounds for later removal:**
 - White (`on a clean white background`) — works best in most cases
 - Light gray (`on a plain light gray background`) — good when the subject has white elements
-- **Magenta** (`on a solid magenta/hot pink background`) — classic chroma key color, excellent for subjects with white, gray, or earth-toned elements. Battle-tested in production at CrossBeam for architectural miniatures
+- **Magenta** (`on a solid magenta/hot pink background`) — classic chroma key color, excellent for subjects with white, gray, or earth-toned elements. Battle-tested in production for architectural miniatures
 - Solid color that contrasts with the subject
 
 **Prompt structure:**
@@ -242,7 +242,7 @@ When generating multiple assets (e.g., a set of product images):
 
 This is more efficient than running the full pipeline per-image, because you can batch each pass and only re-run the subset that fails QA.
 
-**Expect iteration.** In CrossBeam's production run of 23 ADU miniatures, 2 images were removed post-launch (artifacts bleeding into UI) and 1 had a transparency fix applied to a specific corner. Budget for manual review time.
+**Expect iteration.** In a production run of 23 ADU miniatures we shipped, 2 images were removed post-launch (artifacts bleeding into UI) and 1 had a transparency fix applied to a specific corner. Budget for manual review time.
 
 ## Troubleshooting
 

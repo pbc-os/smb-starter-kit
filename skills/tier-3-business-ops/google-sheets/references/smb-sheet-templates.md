@@ -11,9 +11,9 @@ Common spreadsheet structures for small businesses. Use these as starting points
 
 ### Example data
 ```
-2025-01-13 | Store 1 | $2,150 | 73 | $29.45 | Monday | Holiday weekend recovery
-2025-01-14 | Store 1 | $2,890 | 95 | $30.42 | Tuesday | Normal
-2025-01-14 | Store 2 | $1,940 | 68 | $28.53 | Tuesday | Short staffed
+2026-01-13 | Store 1 | $2,150 | 73 | $29.45 | Monday | Holiday weekend recovery
+2026-01-14 | Store 1 | $2,890 | 95 | $30.42 | Tuesday | Normal
+2026-01-14 | Store 2 | $1,940 | 68 | $28.53 | Tuesday | Short staffed
 ```
 
 ### Useful formulas (put in a Summary tab)
@@ -57,7 +57,7 @@ Common spreadsheet structures for small businesses. Use these as starting points
 - Miscellaneous
 
 ### Summary formulas
-- **Monthly total by category:** `=SUMIFS(D:D, B:B, "Marketing", A:A, ">="&DATE(2025,1,1), A:A, "<"&DATE(2025,2,1))`
+- **Monthly total by category:** `=SUMIFS(D:D, B:B, "Marketing", A:A, ">="&DATE(2026,1,1), A:A, "<"&DATE(2026,2,1))`
 
 ---
 

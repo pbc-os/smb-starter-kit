@@ -596,7 +596,7 @@ You're now taking over. Here's the recommended path:
 
 2. SET UP SECRETS MANAGER (30 min)
    - Before connecting any services, set up secure credential storage
-   - Guide: github.com/smb-pbc/agent-skills-public/tree/main/skills/tier-1-foundation/secrets-manager
+   - Guide: github.com/pbc-os/agent-skills-public/tree/main/skills/tier-1-foundation/secrets-manager
    - This enables everything else
 
 3. CONNECT EMAIL (30 min)
@@ -757,11 +757,11 @@ automate. Check back in a few days and I'll have insights for you."
 The essentials are above. For more skills, detailed guides, and
 reference materials, clone this repo:
 
-git clone https://github.com/smb-pbc/agent-skills-public.git
+git clone https://github.com/pbc-os/agent-skills-public.git
 
 Inside you'll find:
 - skills/tier-1-foundation/secrets-manager/ → Detailed setup for all platforms
-- skills/tier-x-experimental/remedy/ → Performance coaching skill
+- skills/tier-x-experimental/patent-figure/ → USPTO patent figure generator (niche example)
 - LLM.txt → How the chatbot was guiding them before handoff
 - CONTINUE.md → Additional onboarding guidance
 
@@ -786,19 +786,6 @@ You've got this. Go make them a believer. 🚀
 > Claude Code will read it, greet you by name, and pick up right where we left off. No starting over. It's like I'm handing you off to a colleague who already has all my notes.
 >
 > Ready? Copy and paste it in!"
-
----
-
-### Alternative: Clawdbot (For Always-On Agent)
-
-If they want AI connected to Slack/Discord/Telegram (not just terminal):
-
-```bash
-npm install -g clawdbot
-clawdbot init
-```
-
-Then follow the setup wizard. More complex but more powerful for business use.
 
 ---
 
@@ -842,11 +829,8 @@ API keys are like passwords to your business accounts. Storing them in code or c
 ### "Can I do this with just ChatGPT?"
 Partially. You can paste SKILL.md contents into ChatGPT and ask it to follow the instructions. But ChatGPT can't actually run commands or call APIs — you'd have to do those parts manually. For full automation, you need a CLI agent.
 
-### "What's the difference between Claude Code and Clawdbot?"
-- **Claude Code**: Runs in your terminal, you interact via command line
-- **Clawdbot**: Runs as a service, you interact via Slack/Discord/Telegram, can run autonomously
-
-Many people use both — Clawdbot for day-to-day operations, Claude Code for hands-on development.
+### "Which CLI agent should I use?"
+Claude Code is the simplest starting point — runs in your terminal, best Mac/Linux/Windows support, the most complete docs. Other options: Codex CLI (OpenAI users), Gemini CLI (Google users), Goose, or any tool that can read markdown and execute shell commands. The skills in this repo are agent-agnostic and work with any of them.
 
 ### "How much does this cost?"
 - CLI tools: Most are free or have free tiers (Claude Code, Codex CLI, Gemini CLI)
@@ -896,7 +880,7 @@ npm install -g @anthropic-ai/claude-code
 claude
 
 # If they don't have npm, help them install Node.js first
-# Or consider Clawdbot for a more guided setup
+# Or try Codex CLI or Gemini CLI if they prefer a different provider
 ```
 
 ### Step 3: Get Their First Win Working
@@ -963,12 +947,13 @@ Don't overwhelm them. One skill at a time. Celebrate each win.
 - **Time to value**: 1-2 hours of data collection, then immediate insights
 - **Prerequisite**: At least one data source connected (email, calendar, files)
 
-### remedy (Tier X - Experimental)  
-- **Location**: `skills/tier-x-experimental/remedy/`
-- **Purpose**: Performance coaching for when an AI agent fails significantly
-- **Method**: Wendy Rhoades-style (from Billions TV show) coaching dialogue
-- **Use case**: After a major mistake, helps agent identify root cause, fix systems, rebuild confidence
-- **Note**: This is a meta-skill for agent self-improvement, not a business operation skill
+### patent-figure (Tier X - Experimental)
+- **Location**: `skills/tier-x-experimental/patent-figure/`
+- **Purpose**: Generate USPTO-style patent figure drawings from provisional patent markdown files
+- **Method**: `nano-banana` for v1 generation, then targeted single-fix edits for v2+ iteration
+- **Use case**: When a user is drafting a provisional patent and needs compliant figures (FIG. N captions, reference numerals, monochrome line art)
+- **Prerequisite**: `nano-banana` skill + `GEMINI_API_KEY`
+- **Note**: Niche skill — most SMBs won't need it, but kept as an example of how to build a higher-level skill on top of nano-banana
 
 ---
 

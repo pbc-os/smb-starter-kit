@@ -46,7 +46,7 @@ gws docs +write
 
 # Create via API
 gws docs documents create --json '{
-  "title": "Weekly Meeting Notes — 2025-01-15"
+  "title": "Weekly Meeting Notes — 2026-01-15"
 }'
 ```
 
@@ -59,7 +59,7 @@ gws docs documents batchUpdate --params '{"documentId": "DOC_ID"}' --json '{
     {
       "insertText": {
         "location": {"index": 1},
-        "text": "Meeting Notes\n\nDate: January 15, 2025\nAttendees: Team\n\nAgenda:\n1. Review last week\n2. This week priorities\n3. Blockers\n\nNotes:\n"
+        "text": "Meeting Notes\n\nDate: January 15, 2026\nAttendees: Team\n\nAgenda:\n1. Review last week\n2. This week priorities\n3. Blockers\n\nNotes:\n"
       }
     }
   ]

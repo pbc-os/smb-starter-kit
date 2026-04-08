@@ -219,12 +219,13 @@ query = """
 
 ```python
 from google.ads.googleads.client import GoogleAdsClient
+from google.api_core import protobuf_helpers
 
 def pause_campaigns(client, customer_id, campaign_ids):
     """Pause one or more campaigns."""
     campaign_service = client.get_service("CampaignService")
     operations = []
-    
+
     for campaign_id in campaign_ids:
         operation = client.get_type("CampaignOperation")
         campaign = operation.update
@@ -232,14 +233,14 @@ def pause_campaigns(client, customer_id, campaign_ids):
             customer_id, campaign_id
         )
         campaign.status = client.enums.CampaignStatusEnum.PAUSED
-        
-        # Set field mask
+
+        # Set field mask so the API only updates the fields we changed
         client.copy_from(
             operation.update_mask,
             protobuf_helpers.field_mask(None, campaign._pb)
         )
         operations.append(operation)
-    
+
     response = campaign_service.mutate_campaigns(
         customer_id=customer_id,
         operations=operations
@@ -250,23 +251,25 @@ def pause_campaigns(client, customer_id, campaign_ids):
 ### Pause Keywords
 
 ```python
+from google.api_core import protobuf_helpers
+
 def pause_keywords(client, customer_id, keyword_resource_names):
     """Pause specific keywords by resource name."""
     service = client.get_service("AdGroupCriterionService")
     operations = []
-    
+
     for resource_name in keyword_resource_names:
         operation = client.get_type("AdGroupCriterionOperation")
         criterion = operation.update
         criterion.resource_name = resource_name
         criterion.status = client.enums.AdGroupCriterionStatusEnum.PAUSED
-        
+
         client.copy_from(
             operation.update_mask,
             protobuf_helpers.field_mask(None, criterion._pb)
         )
         operations.append(operation)
-    
+
     return service.mutate_ad_group_criteria(
         customer_id=customer_id,
         operations=operations

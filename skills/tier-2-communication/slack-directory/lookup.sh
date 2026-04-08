@@ -38,7 +38,7 @@ TOKEN="${SLACK_BOT_TOKEN:-}"
 if [[ -z "$TOKEN" ]]; then
     echo "Error: Could not retrieve Slack bot token"
     echo ""
-    echo "Configure your token by editing this script (lines 16-28)"
+    echo "Configure your token by editing this script (see the TOKEN CONFIGURATION block above)"
     echo "or set the SLACK_BOT_TOKEN environment variable:"
     echo ""
     echo "  export SLACK_BOT_TOKEN='xoxb-your-token-here'"
@@ -53,10 +53,27 @@ QUERY_LOWER=$(echo "$QUERY" | tr '[:upper:]' '[:lower:]')
 # doesn't support server-side name filtering. For large workspaces,
 # consider caching the full user list and searching locally.
 
-RESULTS=$(curl -s -H "Authorization: Bearer $TOKEN" \
-    "https://slack.com/api/users.list" | \
+API_RESPONSE=$(curl -s -H "Authorization: Bearer $TOKEN" \
+    "https://slack.com/api/users.list")
+
+# Slack returns 200 OK even for auth failures; the real status is in .ok
+API_OK=$(echo "$API_RESPONSE" | jq -r '.ok')
+if [[ "$API_OK" != "true" ]]; then
+    API_ERROR=$(echo "$API_RESPONSE" | jq -r '.error // "unknown_error"')
+    echo "Error: Slack API call failed: $API_ERROR" >&2
+    echo "" >&2
+    case "$API_ERROR" in
+        invalid_auth|not_authed|token_revoked)
+            echo "Your bot token is invalid or revoked. Regenerate and update your secret." >&2 ;;
+        missing_scope)
+            echo "Bot token is missing the 'users:read' scope. Add it at api.slack.com/apps." >&2 ;;
+    esac
+    exit 1
+fi
+
+RESULTS=$(echo "$API_RESPONSE" | \
     jq --arg q "$QUERY_LOWER" '
-        .members[] 
+        .members[]
         | select(.deleted == false and .is_bot == false and .id != "USLACKBOT")
         | select(
             ((.real_name // "") | ascii_downcase | contains($q)) or

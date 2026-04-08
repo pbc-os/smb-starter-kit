@@ -125,12 +125,12 @@ Token duration:   ∞
 Enable userpass auth first:
 ```bash
 vault auth enable userpass
-vault write auth/userpass/users/clawdbot password="secure-password" policies="clawdbot-policy"
+vault write auth/userpass/users/ai-agent password="secure-password" policies="ai-agent-policy"
 ```
 
 Then login:
 ```bash
-vault login -method=userpass username=clawdbot password=secure-password
+vault login -method=userpass username=ai-agent password=secure-password
 ```
 
 ### Enable the KV Secrets Engine
@@ -247,7 +247,7 @@ vault kv destroy -versions=1 secret/my-first-secret
 
 ### Create a Policy
 
-Create a file `clawdbot-policy.hcl`:
+Create a file `ai-agent-policy.hcl`:
 ```hcl
 # Read-only access to all secrets under secret/
 path "secret/data/*" {
@@ -261,7 +261,7 @@ path "secret/metadata/*" {
 
 Apply the policy:
 ```bash
-vault policy write clawdbot-read clawdbot-policy.hcl
+vault policy write ai-agent-read ai-agent-policy.hcl
 ```
 
 ### Create an AppRole (Recommended for Automation)
@@ -271,16 +271,16 @@ vault policy write clawdbot-read clawdbot-policy.hcl
 vault auth enable approle
 
 # Create the role
-vault write auth/approle/role/clawdbot-agent \
-  token_policies="clawdbot-read" \
+vault write auth/approle/role/ai-agent \
+  token_policies="ai-agent-read" \
   token_ttl=1h \
   token_max_ttl=4h
 
 # Get the Role ID
-vault read auth/approle/role/clawdbot-agent/role-id
+vault read auth/approle/role/ai-agent/role-id
 
 # Generate a Secret ID
-vault write -f auth/approle/role/clawdbot-agent/secret-id
+vault write -f auth/approle/role/ai-agent/secret-id
 ```
 
 **Save both the Role ID and Secret ID.** The agent uses them to authenticate.
@@ -298,7 +298,7 @@ vault write auth/approle/login \
 ### Create a Periodic Token (Alternative — Simpler)
 
 ```bash
-vault token create -policy=clawdbot-read -period=24h -display-name="clawdbot-agent"
+vault token create -policy=ai-agent-read -period=24h -display-name="ai-agent"
 ```
 
 The token auto-renews as long as it's used within the period.
@@ -307,7 +307,7 @@ The token auto-renews as long as it's used within the period.
 
 ## 6. Gateway Wrapper Script
 
-Create `~/.clawdbot/gateway-wrapper.sh`:
+Create `~/.config/ai-agent/wrapper.sh`:
 
 ### Using AppRole Authentication
 
@@ -334,7 +334,7 @@ export SLACK_BOT_TOKEN=$(fetch_secret "slack-bot-token")
 export SQUARE_ACCESS_TOKEN=$(fetch_secret "square-access-token")
 # Add more as needed...
 
-exec clawdbot gateway start
+exec exec "$@"  # pass-through to your agent command
 ```
 
 ### Using a Static Token (Simpler, Less Secure)
@@ -353,11 +353,11 @@ fetch_secret() {
 export SLACK_BOT_TOKEN=$(fetch_secret "slack-bot-token")
 export SQUARE_ACCESS_TOKEN=$(fetch_secret "square-access-token")
 
-exec clawdbot gateway start
+exec exec "$@"  # pass-through to your agent command
 ```
 
 ```bash
-chmod +x ~/.clawdbot/gateway-wrapper.sh
+chmod +x ~/.config/ai-agent/wrapper.sh
 ```
 
 ---
@@ -394,7 +394,7 @@ brew install hashicorp/tap/vault
 vault token lookup
 
 # Attach the correct policy
-vault token create -policy=clawdbot-read
+vault token create -policy=ai-agent-read
 ```
 
 ### "connection refused"

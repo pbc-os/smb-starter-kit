@@ -113,7 +113,7 @@ Strong day. No action needed.
 ### Example: Sales update (bad — too much noise)
 
 ```
-DAILY SALES REPORT FOR JANUARY 15 2025
+DAILY SALES REPORT FOR JANUARY 15 2026
 
 Total revenue today was $2,450.00 which is $250 above our forecasted amount of $2,200.00, representing an 11.36% positive variance from the forecast. We processed a total of 87 individual transactions throughout the day with an average transaction value of $28.16 per transaction...
 

@@ -3,6 +3,9 @@ name: autoresearch
 version: 1.0.0
 tier: automation
 description: "Autonomous iterative improvement loop for any measurable system. Inspired by Karpathy's autoresearch pattern. Agent forms hypotheses, makes single changes, evaluates, keeps improvements, discards regressions."
+requires:
+  bins: []
+  skills: []
 ---
 
 # Autoresearch
@@ -294,7 +297,7 @@ If the user wants continuous improvement:
 ## Related Skills
 
 - `playbook-discovery` — Find repeatable workflows to optimize
-- `remedy` — When experiments reveal deeper systemic issues
+- `semantic-layer-audit` — Document the data sources your eval script pulls from
 
 ---
 

@@ -67,7 +67,7 @@ gws tasks tasks insert --params '{"tasklist": "TASKLIST_ID"}' --json '{
 # Task with due date
 gws tasks tasks insert --params '{"tasklist": "TASKLIST_ID"}' --json '{
   "title": "Submit quarterly tax filing",
-  "due": "2025-03-31T00:00:00Z",
+  "due": "2026-03-31T00:00:00Z",
   "notes": "Documents in Drive > Finance > Tax Documents"
 }'
 ```
@@ -117,7 +117,7 @@ After a meeting, quickly capture action items:
 ```bash
 gws tasks tasks insert --params '{"tasklist": "TASKLIST_ID"}' --json '{
   "title": "Send updated pricing to vendor — from Jan 15 meeting",
-  "due": "2025-01-17T00:00:00Z"
+  "due": "2026-01-17T00:00:00Z"
 }'
 ```
 
@@ -128,7 +128,7 @@ gws tasks tasks insert --params '{"tasklist": "TASKLIST_ID"}' --json '{
 gws tasks tasks list --params '{
   "tasklist": "TASKLIST_ID",
   "showCompleted": false,
-  "dueMax": "2025-01-15T23:59:59Z"
+  "dueMax": "2026-01-15T23:59:59Z"
 }'
 ```
 

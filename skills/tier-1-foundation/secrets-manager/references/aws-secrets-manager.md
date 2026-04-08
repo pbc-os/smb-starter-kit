@@ -215,20 +215,20 @@ aws secretsmanager delete-secret \
 ### Create a Dedicated IAM User
 
 ```bash
-aws iam create-user --user-name clawdbot-agent
+aws iam create-user --user-name ai-agent
 ```
 
 ### Attach the Secrets Policy
 
 ```bash
 aws iam attach-user-policy \
-  --user-name clawdbot-agent \
+  --user-name ai-agent \
   --policy-arn arn:aws:iam::aws:policy/SecretsManagerReadWrite
 ```
 
 For read-only agent access, create a custom policy:
 ```bash
-aws iam create-policy --policy-name ClawdbotSecretsRead --policy-document '{
+aws iam create-policy --policy-name AgentSecretsRead --policy-document '{
   "Version": "2012-10-17",
   "Statement": [{
     "Effect": "Allow",
@@ -241,7 +241,7 @@ aws iam create-policy --policy-name ClawdbotSecretsRead --policy-document '{
 ### Create Access Keys for the Agent
 
 ```bash
-aws iam create-access-key --user-name clawdbot-agent
+aws iam create-access-key --user-name ai-agent
 ```
 
 **What you should see:** JSON with `AccessKeyId` and `SecretAccessKey`. Save both securely.
@@ -249,11 +249,11 @@ aws iam create-access-key --user-name clawdbot-agent
 ### Configure a Named Profile
 
 ```bash
-aws configure --profile clawdbot
+aws configure --profile ai-agent
 # Enter the agent's Access Key ID and Secret
 ```
 
-Use in scripts with `--profile clawdbot` or `export AWS_PROFILE=clawdbot`.
+Use in scripts with `--profile ai-agent` or `export AWS_PROFILE=ai-agent`.
 
 ### If Running on EC2
 
@@ -265,7 +265,7 @@ No access keys needed. Attach an IAM role to the EC2 instance:
 
 ## 6. Gateway Wrapper Script
 
-Create `~/.clawdbot/gateway-wrapper.sh`:
+Create `~/.config/ai-agent/wrapper.sh`:
 
 ```bash
 #!/bin/bash
@@ -285,11 +285,11 @@ export SLACK_BOT_TOKEN=$(fetch_secret "slack-bot-token")
 export SQUARE_ACCESS_TOKEN=$(fetch_secret "square-access-token")
 # Add more as needed...
 
-exec clawdbot gateway start
+exec exec "$@"  # pass-through to your agent command
 ```
 
 ```bash
-chmod +x ~/.clawdbot/gateway-wrapper.sh
+chmod +x ~/.config/ai-agent/wrapper.sh
 ```
 
 ---

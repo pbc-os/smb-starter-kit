@@ -6,6 +6,7 @@ description: "Look up Slack users by name with fuzzy matching. Caches discoverie
 requires:
   bins: ["curl", "jq"]
   skills: ["secrets-manager"]
+  secrets: ["slack-bot-token"]
 ---
 
 # Slack Directory Lookup
@@ -113,7 +114,7 @@ After finding someone new, add them to your local cache for next time.
 
 ### Getting Your Bot Token
 
-If using Clawdbot with Slack channel configured, your token is already available. Otherwise:
+If your agent platform already manages Slack tokens for you, the token may already be available. Otherwise:
 
 1. Create a Slack App at api.slack.com/apps
 2. Add Bot Token Scopes: `users:read`, `users:read.email` (optional)
@@ -122,7 +123,7 @@ If using Clawdbot with Slack channel configured, your token is already available
 
 ### Token Storage Options
 
-The included `lookup.sh` expects the token in an environment variable or secrets manager. Modify line 13 for your setup:
+The included `lookup.sh` expects the token in an environment variable or secrets manager. Edit the `TOKEN CONFIGURATION` block near the top of the script for your setup:
 
 ```bash
 # Option 1: Environment variable

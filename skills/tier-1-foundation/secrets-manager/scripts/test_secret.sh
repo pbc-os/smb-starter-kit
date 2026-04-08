@@ -2,7 +2,7 @@
 # =============================================================================
 # test_secret.sh — Round-trip test: create, read, verify, delete a test secret
 #
-# Creates "clawdbot-test-secret" with value "hello-from-clawdbot", reads it
+# Creates "ai-agent-test-secret" with value "hello-from-agent", reads it
 # back, verifies the value matches, then cleans up.
 #
 # Usage: bash test_secret.sh [platform]
@@ -23,8 +23,8 @@ PASS="${GREEN}✅ PASS${NC}"
 FAIL="${RED}❌ FAIL${NC}"
 INFO="${BLUE}ℹ️ ${NC}"
 
-SECRET_NAME="clawdbot-test-secret"
-SECRET_VALUE="hello-from-clawdbot"
+SECRET_NAME="ai-agent-test-secret"
+SECRET_VALUE="hello-from-agent"
 PLATFORM="${1:-}"
 
 echo ""
@@ -115,13 +115,13 @@ op_delete() {
 
 # -- Doppler --
 doppler_create() {
-  doppler secrets set CLAWDBOT_TEST_SECRET="$SECRET_VALUE" --silent 2>&1
+  doppler secrets set AI_AGENT_TEST_SECRET="$SECRET_VALUE" --silent 2>&1
 }
 doppler_read() {
-  doppler secrets get CLAWDBOT_TEST_SECRET --plain 2>/dev/null
+  doppler secrets get AI_AGENT_TEST_SECRET --plain 2>/dev/null
 }
 doppler_delete() {
-  doppler secrets delete CLAWDBOT_TEST_SECRET --silent --yes 2>&1
+  doppler secrets delete AI_AGENT_TEST_SECRET --silent --yes 2>&1
 }
 
 # -- Vault --
@@ -274,7 +274,7 @@ if [ $CREATE_STATUS -eq 0 ] && [ "$READ_VALUE" = "$SECRET_VALUE" ] && [ $DELETE_
   echo "  ✅ Cleaned up"
   echo ""
   echo "  Your secrets platform is fully operational."
-  echo "  You're ready to store real secrets and integrate with Clawdbot!"
+  echo "  You're ready to store real secrets and wire them into your agent."
 else
   echo -e "  ${RED}⚠️  ROUND-TRIP TEST HAD ISSUES${NC}"
   echo ""

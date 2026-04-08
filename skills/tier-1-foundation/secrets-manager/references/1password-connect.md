@@ -96,7 +96,7 @@ Uses Touch ID instead of typing the master password every time.
 
 1. Go to https://my.1password.com → **Developer** → **Service Accounts**
 2. Click **New Service Account**
-3. Name it (e.g., "clawdbot-agent")
+3. Name it (e.g., "ai-agent")
 4. Grant access to specific vaults
 5. Copy the token
 
@@ -185,7 +185,7 @@ op item delete "my-first-secret" --vault="Shared"
 ### Service Accounts (Recommended for Automation)
 
 1. Go to **Developer** → **Service Accounts** in the web UI
-2. Create a new service account named "clawdbot-agent"
+2. Create a new service account named "ai-agent"
 3. Grant it read-only access to the vault containing your secrets
 4. Copy the service account token
 
@@ -208,7 +208,7 @@ op vault list
 
 ## 6. Gateway Wrapper Script
 
-Create `~/.clawdbot/gateway-wrapper.sh`:
+Create `~/.config/ai-agent/wrapper.sh`:
 
 ```bash
 #!/bin/bash
@@ -225,11 +225,11 @@ export SLACK_BOT_TOKEN=$(fetch_secret "slack-bot-token")
 export SQUARE_ACCESS_TOKEN=$(fetch_secret "square-access-token")
 # Add more as needed...
 
-exec clawdbot gateway start
+exec exec "$@"  # pass-through to your agent command
 ```
 
 ```bash
-chmod +x ~/.clawdbot/gateway-wrapper.sh
+chmod +x ~/.config/ai-agent/wrapper.sh
 ```
 
 > **Tip:** Store the service account token itself in a secure location (e.g., a system keychain or a file with `chmod 600`), not hardcoded in the script.

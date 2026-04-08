@@ -210,8 +210,8 @@ Adjacent positioning prevents the model from routing terminal arrows to wrong st
 
 ### v1 — Generate from scratch
 ```bash
-GEMINI_API_KEY="$(gcloud secrets versions access latest --secret=gemini-api-key)" \
-  python3 ~/.claude/skills/nano-banana/scripts/generate_image.py \
+# Ensure GEMINI_API_KEY is set in your environment (see secrets-manager skill for setup).
+python3 ~/.claude/skills/nano-banana/scripts/generate_image.py \
   "$PROMPT" \
   --output ~/Downloads \
   --filename "PATENT-FIG{N}-V1-{SLUG}.jpg" \
@@ -221,8 +221,8 @@ GEMINI_API_KEY="$(gcloud secrets versions access latest --secret=gemini-api-key)
 
 ### v2+ — Iterate on previous version
 ```bash
-GEMINI_API_KEY="$(gcloud secrets versions access latest --secret=gemini-api-key)" \
-  python3 ~/.claude/skills/nano-banana/scripts/edit_image.py \
+# Ensure GEMINI_API_KEY is set in your environment (see secrets-manager skill for setup).
+python3 ~/.claude/skills/nano-banana/scripts/edit_image.py \
   "$PROMPT" \
   --images "~/Downloads/PATENT-FIG{N}-V{PREV}-{SLUG}.jpg" \
   --output ~/Downloads \

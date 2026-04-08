@@ -1,6 +1,12 @@
 ---
 name: patent-figure
-description: Generate and iteratively refine USPTO-style patent figure drawings from provisional patent application markdown files. Use this skill whenever the user wants to create, generate, draw, or render a patent figure, diagram, or drawing for a provisional patent application. Also use it when the user wants to iterate on or fix an existing patent figure, or when they say things like "generate the figures for my patent", "make a patent drawing", "create FIG. 1", or "fix this arrow in my patent diagram". Requires nano-banana skill (Gemini API).
+version: 1.0.0
+tier: experimental
+description: "Generate and iteratively refine USPTO-style patent figure drawings from provisional patent application markdown files, using nano-banana for v1 generation and targeted single-fix edits for v2+ iteration."
+requires:
+  bins: ["python3"]
+  skills: ["nano-banana"]
+  secrets: ["GEMINI_API_KEY"]
 ---
 
 # Patent Figure Generator
@@ -9,8 +15,8 @@ Generates formal USPTO-style patent figure drawings from provisional patent appl
 
 ## Prerequisites
 
-- nano-banana skill installed (uses its `generate_image.py` and `edit_image.py` scripts)
-- `GEMINI_API_KEY` accessible (check `~/.claude/skills/nano-banana/` for setup)
+- `nano-banana` skill installed (uses its `generate_image.py` and `edit_image.py` scripts)
+- `GEMINI_API_KEY` accessible as an env var (see `secrets-manager` skill for how to wire this from your secret store)
 - `pip3 install google-genai python-dotenv` if not already installed
 
 ## Core Workflow
@@ -67,8 +73,8 @@ Read `references/prompt_engineering.md` for the full template for each section. 
 ## Step 3 — Generate v1
 
 ```bash
-GEMINI_API_KEY="$(gcloud secrets versions access latest --secret=gemini-api-key)" \
-  python3 ~/.claude/skills/nano-banana/scripts/generate_image.py \
+# Ensure GEMINI_API_KEY is set in your environment (see secrets-manager skill for setup).
+python3 ~/.claude/skills/nano-banana/scripts/generate_image.py \
   "$PROMPT" \
   --output ~/Downloads \
   --filename "PATENT-FIG{N}-V1-{FIGURE-NAME}.jpg" \

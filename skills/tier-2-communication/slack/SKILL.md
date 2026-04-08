@@ -6,6 +6,7 @@ description: "Slack team messaging for small businesses. Send messages, manage c
 requires:
   bins: ["curl", "jq"]
   skills: ["secrets-manager", "slack-directory"]
+  secrets: ["slack-bot-token"]
 ---
 
 # Slack
@@ -243,8 +244,8 @@ Post a structured daily standup every morning:
 • Waiting on quote from new packaging vendor
 
 *Action items:*
-• [ ] Follow up with landlord re: lease renewal (Corey)
-• [ ] Submit Q1 tax docs by Friday (Corey)
+• [ ] Follow up with landlord re: lease renewal (Owner)
+• [ ] Submit Q1 tax docs by Friday (Owner)
 ```
 
 ### Shift handoff
