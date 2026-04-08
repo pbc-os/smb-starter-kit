@@ -159,9 +159,17 @@
       "name": "autoresearch",
       "tier": "automation",
       "path": "tier-5-automation/autoresearch",
-      "version": "1.0.0",
-      "description": "Autonomous iterative improvement loop for any measurable system.",
+      "version": "2.0.0",
+      "description": "Autonomous iterative improvement for any measurable system. Three-agent loop (researcher, critic, meta-reviewer) with holdout validation, coverage-driven exploration, and metacognitive self-modification. Extends Karpathy's autoresearch with ideas from HyperAgents.",
       "requires": { "bins": [], "skills": [] }
+    },
+    {
+      "name": "revenue-forecaster",
+      "tier": "automation",
+      "path": "tier-5-automation/revenue-forecaster",
+      "version": "1.0.0",
+      "description": "Weekly revenue forecasting for SMBs with multiple entities. Blends recent trend + seasonal + YoY with per-entity holiday multipliers and week-of-month adjustments. Ships autoresearch-compatible eval and parameters for self-tuning.",
+      "requires": { "bins": ["python3"], "skills": [] }
     },
     {
       "name": "patent-figure",

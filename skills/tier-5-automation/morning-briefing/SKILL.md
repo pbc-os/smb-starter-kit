@@ -53,7 +53,7 @@ The briefing is **composable** — it includes whatever data sources are availab
 
 | Section | Source | What It Shows |
 |---------|--------|--------------|
-| **Forecast** | Revenue forecaster / autoresearch | Today's forecast, confidence, model changes |
+| **Forecast** | `revenue-forecaster` (weekly mode) | This week's point estimate, confidence range, component breakdown |
 | **Ads Performance** | Google Ads skill | Spend, ROAS, anomalies |
 | **Alerts** | Health monitor / anomaly detection | Anything that needs immediate attention |
 

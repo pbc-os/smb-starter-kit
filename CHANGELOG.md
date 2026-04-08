@@ -5,6 +5,38 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] — 2026-04-07
+
+### Added
+
+- **`revenue-forecaster` skill** (Tier 5 — Automation) — Weekly, 13-week, daily, and stress-test revenue forecasting for multi-entity SMBs. Blends recent trend + seasonal + YoY with per-entity holiday multipliers and week-of-month adjustments. Ships with a fixed eval script (`scripts/eval.py`) that the `autoresearch` skill can drive to self-tune the parameters on your own historical data. Pure-Python stdlib implementation, no numpy/pandas dependencies.
+- **`patent-figure` skill** registered in README and `index.json` — previously present on disk but unregistered. Frontmatter brought into spec compliance (added `version`, `tier`, `requires`).
+
+### Changed
+
+- **`autoresearch` skill → v2.0.0** — Upgraded from a single-agent loop to a three-agent pipeline (researcher, critic, meta-reviewer) with holdout validation, coverage-driven exploration, a stepping-stones archive, and metacognitive self-modification. New reference docs: `hyperagents.md` (citing Zhang et al. 2026), `multi-agent-patterns.md` (generator/verifier separation), and the existing Karpathy reference. The v1 file-based loop is preserved — the new agents layer on top of it.
+- **Clawdbot branding scrubbed** from `secrets-manager` skill, reference files, test scripts, and top-level docs. Section 4 of the secrets-manager skill rewritten as a generic "Integration with Your Agent Runtime" pattern that works with any CLI agent.
+- **`smb-pbc/agent-skills-public` install-command URLs** replaced with the correct `pbc-os/agent-skills-public` across README, CONTINUE.md, LLM.txt, and semantic-layer-audit README.
+- **README** rewritten for clarity — consolidated three duplicated install sections into one, removed noisy per-skill install command columns from the skill tables, updated the dependency map, reframed Tier X as "Experimental" instead of "Agent Performance", added Goose to the CLI agent alternatives table.
+
+### Removed
+
+- **`remedy` skill** moved out of the public repo (archived locally) — the Wendy Rhoades / Billions framing was a distraction from its actual substance, and the skill depended on sub-agent infrastructure that wasn't portable across runtimes.
+- **`x402-customer-agent` skill** moved out of the public repo — it was a vertical-specific client for a private commerce API, not a reusable skill. Will live in a separate repo.
+
+### Fixed
+
+- `nano-banana/scripts/make_transparent.py` — removed dead code in the feathering block that was running the same Gaussian blur twice.
+- `google-ads/SKILL.md` — added missing `from google.api_core import protobuf_helpers` import in the `pause_campaigns` and `pause_keywords` code snippets (copy-pasted code would raise NameError without it).
+- `secrets-manager/scripts/verify_access.sh` — fixed six dead error branches where `if [ "$?" -eq 0 ]` after command substitution was always truthy. Rewrote with `if VAR=$(cmd)` pattern.
+- `slack-directory/lookup.sh` — added `.ok` check on the Slack API response so silent auth failures no longer look like "no matches found." Fixed wrong line-number references in SKILL.md and lookup.sh.
+- `google-sheets/SKILL.md` — wired in the previously-orphaned `references/smb-sheet-templates.md`.
+- `gmail/SKILL.md` — linked to `references/email-templates.md` from within the skill body.
+- `playbook-discovery/SKILL.md` — removed dead reference to non-existent `revenue-forecaster` skill (the reference is now live after this release).
+- Stale `2025-01-XX` example dates in tier-2 and tier-3 skills bumped to `2026-01-XX` to match the current year.
+- `slack` and `slack-directory` frontmatter — added missing `requires.secrets: ["slack-bot-token"]`.
+- `brand-identity`, `creative-matrix`, `nano-banana` — genericized example brand names (removed references to real internal projects).
+
 ## [1.1.0] — 2026-03-23
 
 ### Added

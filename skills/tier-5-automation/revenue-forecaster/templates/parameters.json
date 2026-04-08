@@ -1,0 +1,80 @@
+{
+  "_description": "Starter parameters for revenue-forecaster. All values are neutral defaults — copy this file, rename to parameters.json, and tune with autoresearch on your own historical data.",
+  "_last_updated": "2026-04-07",
+
+  "blending": {
+    "_note": "Weights should sum to 1.0. Recent captures current volume, seasonal anchors to same-month history, YoY adds growth.",
+    "recent_weight":   0.82,
+    "seasonal_weight": 0.16,
+    "yoy_weight":      0.02
+  },
+
+  "blending_no_yoy": {
+    "_note": "Used when an entity has no prior-year data (new business, < 12 months of history).",
+    "recent_weight":   1.00,
+    "seasonal_weight": 0.00
+  },
+
+  "lookback": {
+    "recent_weeks":       4,
+    "variability_weeks":  12,
+    "seasonal_min_weeks": 3
+  },
+
+  "exponential_weighting": {
+    "_note": "1.0 = equal weight across recent weeks. < 1.0 = more weight on most-recent weeks. Use 0.95 for fast-changing volume; 1.0 for stable.",
+    "decay_factor": 1.0
+  },
+
+  "outlier_handling": {
+    "_note": "Caps any week at threshold_pct * rolling_median to prevent holiday weeks from inflating the recent average.",
+    "trim_holiday_weeks":   true,
+    "holiday_threshold_pct": 1.30
+  },
+
+  "week_of_month": {
+    "_note": "Some businesses have systematic within-month patterns (pay-week spikes, rent-week dips). Start disabled; enable and tune per-entity if autoresearch finds wins here.",
+    "enabled":    false,
+    "week_1_adj": 0.0,
+    "week_2_adj": 0.0,
+    "week_3_adj": 0.0,
+    "week_4_adj": 0.0
+  },
+
+  "holidays": {
+    "_note": "Multiplicative: 1.0 = no effect, 2.0 = double, 0.5 = half. Start at 1.0 for all holidays and let autoresearch discover which matter for your business. Pre/post variants handle lead-up and hangover effects.",
+    "enabled":                true,
+    "thanksgiving_mult":      1.0,
+    "pre_thanksgiving_mult":  1.0,
+    "post_thanksgiving_mult": 1.0,
+    "pre_christmas_2wk_mult": 1.0,
+    "pre_christmas_mult":     1.0,
+    "christmas_mult":         1.0,
+    "new_years_mult":         1.0,
+    "post_newyears_mult":     1.0,
+    "early_jan_mult":         1.0,
+    "mlk_week_mult":          1.0,
+    "late_jan_mult":          1.0,
+    "easter_passover_mult":   1.0,
+    "memorial_day_mult":      1.0,
+    "july_4th_mult":          1.0,
+    "labor_day_mult":         1.0
+  },
+
+  "growth_adjustment": {
+    "_note": "Number of recent months used to compute the YoY growth rate. Longer = smoother, shorter = more reactive.",
+    "n_months_avg": 6
+  },
+
+  "data_filters": {
+    "_note": "Exclude weeks before data_start_date or below min_weekly_revenue. Useful for excluding opening-ramp weeks that would distort the seasonal baseline.",
+    "global": {
+      "min_weekly_revenue": 0,
+      "data_start_date":    null
+    }
+  },
+
+  "per_entity": {
+    "_note": "Override any field above per entity. Per-entity values win field-by-field. Example: { \"Main Street\": { \"holidays\": { \"christmas_mult\": 2.05 } } } keeps all global holidays except christmas_mult for Main Street."
+  }
+}
