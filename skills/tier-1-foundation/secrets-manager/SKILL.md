@@ -1,10 +1,10 @@
 ---
 name: secrets-manager
-version: 1.0.0
+version: 1.1.0
 tier: foundation
 description: "Set up and configure cloud secrets management for your AI agent. Guides users through platform selection (GCP, AWS, Azure, 1Password, Doppler, HashiCorp Vault), account setup, CLI configuration, and secure credential storage."
 requires:
-  bins: ["gcloud"]
+  bins: []
 ---
 
 # Secrets Manager — Give Your AI Agent Keys to the Kingdom
@@ -133,18 +133,17 @@ Read the selected platform's reference file and walk the user through it step by
 
 ---
 
-## 4. Integration with Clawdbot
+## 4. Integration with Your Agent Runtime
 
-Once the platform is configured, wire secrets into the Clawdbot gateway.
+Once the platform is configured, wire secrets into however your agent starts. The pattern is the same for any runtime (Claude Code, Codex CLI, Gemini CLI, a cron-triggered script, a long-running daemon): **wrap the start command with a script that fetches secrets into env vars first, then execs the agent.** Secrets stay in memory — they never touch disk.
 
-### Step 1: Create the Gateway Wrapper Script
+### Step 1: Create the Startup Wrapper Script
 
-Create `~/.clawdbot/gateway-wrapper.sh`:
+Create `~/.config/ai-agent/wrapper.sh`:
 
 ```bash
 #!/bin/bash
-# gateway-wrapper.sh — Fetch secrets at startup, export as env vars
-# This script wraps the gateway start command.
+# wrapper.sh — Fetch secrets at startup, export as env vars, then launch your agent.
 # Secrets are held in memory only — never written to disk.
 
 set -euo pipefail
@@ -172,18 +171,24 @@ export ANOTHER_SECRET=$(fetch_secret "another-secret")
 # Add more as needed...
 
 # ------------------------------------------------------------------
-# Start the gateway
+# Launch your agent. Replace the line below with your runtime's
+# start command. Examples:
+#   exec claude                         # Claude Code
+#   exec codex                          # Codex CLI
+#   exec gemini                         # Gemini CLI
+#   exec "$@"                           # pass-through (recommended if you alias this script)
 # ------------------------------------------------------------------
-exec clawdbot gateway start
+exec "$@"
 ```
 
 ```bash
-chmod +x ~/.clawdbot/gateway-wrapper.sh
+mkdir -p ~/.config/ai-agent
+chmod +x ~/.config/ai-agent/wrapper.sh
 ```
 
-### Step 2: Reference Secrets in clawdbot.json
+### Step 2: Reference Secrets From Your Agent's Config
 
-Use `${VAR_NAME}` substitution in your gateway config:
+Most agent runtimes support `${VAR_NAME}` substitution in their config files. For example:
 
 ```json
 {
@@ -195,28 +200,34 @@ Use `${VAR_NAME}` substitution in your gateway config:
 }
 ```
 
-The gateway resolves `${VAR_NAME}` from environment variables at startup.
+If your agent doesn't support env-var substitution in its config, your code can read `os.environ["MY_API_KEY"]` (Python), `process.env.MY_API_KEY` (Node), etc.
 
-### Step 3: Restart the Gateway
+### Step 3: Launch Your Agent Through the Wrapper
+
+Instead of running `claude` (or whatever your agent's start command is) directly, run it through the wrapper:
 
 ```bash
-# Stop the current gateway
-clawdbot gateway stop
-
-# Start via wrapper (fetches fresh secrets)
-~/.clawdbot/gateway-wrapper.sh
+~/.config/ai-agent/wrapper.sh claude
 ```
 
-**What you should see:** Gateway starts normally, logs show no errors.
+Or add a shell alias so you don't have to think about it:
+
+```bash
+# ~/.zshrc or ~/.bashrc
+alias claude='~/.config/ai-agent/wrapper.sh claude'
+```
+
+**What you should see:** Your agent starts normally with all the env vars populated from the vault.
 
 ### Step 4: Verify the Integration
 
+From inside your agent session, ask it to echo one of the env vars (not the real secret value — just confirm the variable is set):
+
 ```bash
-# Quick check — can the gateway see the env var?
-clawdbot gateway status
+echo "${MY_API_KEY:+set}"   # prints "set" if populated, nothing otherwise
 ```
 
-If the gateway is running and your integrations work, secrets are flowing correctly.
+If it prints `set`, secrets are flowing correctly.
 
 ---
 
@@ -240,7 +251,7 @@ Run the test script to create, read, and delete a test secret:
 bash scripts/test_secret.sh
 ```
 
-This creates `clawdbot-test-secret`, reads it back, verifies the value, and cleans up after itself.
+This creates `ai-agent-test-secret`, reads it back, verifies the value, and cleans up after itself.
 
 ---
 
@@ -264,8 +275,8 @@ You now have a secure secrets pipeline. Here's what to do with it:
 ```
 1. Store the secret:    <platform-cli> create-secret "secret-name" "secret-value"
 2. Update wrapper:      export SECRET_NAME=$(fetch_secret "secret-name")
-3. Update config:       Add ${SECRET_NAME} to clawdbot.json if needed
-4. Restart gateway:     clawdbot gateway stop && ~/.clawdbot/gateway-wrapper.sh
+3. Update config:       Add ${SECRET_NAME} to your agent's config if needed
+4. Relaunch agent:      ~/.config/ai-agent/wrapper.sh <your-agent-command>
 ```
 
 ### Security Best Practices

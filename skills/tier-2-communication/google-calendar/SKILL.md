@@ -73,8 +73,8 @@ gws calendar +insert
 ```bash
 # Check free/busy for specific people
 gws calendar freebusy query --json '{
-  "timeMin": "2025-01-15T09:00:00-05:00",
-  "timeMax": "2025-01-15T17:00:00-05:00",
+  "timeMin": "2026-01-15T09:00:00-05:00",
+  "timeMax": "2026-01-15T17:00:00-05:00",
   "items": [
     {"id": "person1@example.com"},
     {"id": "person2@example.com"}
@@ -90,8 +90,8 @@ gws calendar freebusy query --json '{
 # Create a recurring weekly team meeting
 gws calendar events insert --params '{"calendarId": "primary"}' --json '{
   "summary": "Weekly Team Standup",
-  "start": {"dateTime": "2025-01-20T09:00:00-05:00", "timeZone": "America/New_York"},
-  "end": {"dateTime": "2025-01-20T09:30:00-05:00", "timeZone": "America/New_York"},
+  "start": {"dateTime": "2026-01-20T09:00:00-05:00", "timeZone": "America/New_York"},
+  "end": {"dateTime": "2026-01-20T09:30:00-05:00", "timeZone": "America/New_York"},
   "recurrence": ["RRULE:FREQ=WEEKLY;BYDAY=MO"],
   "attendees": [
     {"email": "team-member@example.com"}
@@ -106,8 +106,8 @@ gws calendar events insert --params '{"calendarId": "primary"}' --json '{
 gws calendar events insert --params '{"calendarId": "primary"}' --json '{
   "summary": "Meeting with [Customer Name]",
   "description": "Discuss: [agenda items]",
-  "start": {"dateTime": "2025-01-20T14:00:00-05:00", "timeZone": "America/New_York"},
-  "end": {"dateTime": "2025-01-20T15:00:00-05:00", "timeZone": "America/New_York"},
+  "start": {"dateTime": "2026-01-20T14:00:00-05:00", "timeZone": "America/New_York"},
+  "end": {"dateTime": "2026-01-20T15:00:00-05:00", "timeZone": "America/New_York"},
   "attendees": [
     {"email": "customer@example.com"}
   ],
@@ -127,8 +127,8 @@ gws calendar events insert --params '{"calendarId": "primary"}' --json '{
 # Block focus time so meetings don't eat your day
 gws calendar events insert --params '{"calendarId": "primary"}' --json '{
   "summary": "Focus Time — Do Not Schedule",
-  "start": {"dateTime": "2025-01-20T08:00:00-05:00", "timeZone": "America/New_York"},
-  "end": {"dateTime": "2025-01-20T10:00:00-05:00", "timeZone": "America/New_York"},
+  "start": {"dateTime": "2026-01-20T08:00:00-05:00", "timeZone": "America/New_York"},
+  "end": {"dateTime": "2026-01-20T10:00:00-05:00", "timeZone": "America/New_York"},
   "recurrence": ["RRULE:FREQ=WEEKLY;BYDAY=TU,TH"],
   "transparency": "opaque"
 }'
@@ -140,8 +140,8 @@ gws calendar events insert --params '{"calendarId": "primary"}' --json '{
 # Find all events with a specific vendor this month
 gws calendar events list --params '{
   "calendarId": "primary",
-  "timeMin": "2025-01-01T00:00:00Z",
-  "timeMax": "2025-01-31T23:59:59Z",
+  "timeMin": "2026-01-01T00:00:00Z",
+  "timeMax": "2026-01-31T23:59:59Z",
   "q": "vendor name"
 }'
 ```
@@ -153,8 +153,8 @@ gws calendar events list --params '{
 ```bash
 # Update an event's time (need the eventId)
 gws calendar events patch --params '{"calendarId": "primary", "eventId": "EVENT_ID"}' --json '{
-  "start": {"dateTime": "2025-01-21T14:00:00-05:00", "timeZone": "America/New_York"},
-  "end": {"dateTime": "2025-01-21T15:00:00-05:00", "timeZone": "America/New_York"}
+  "start": {"dateTime": "2026-01-21T14:00:00-05:00", "timeZone": "America/New_York"},
+  "end": {"dateTime": "2026-01-21T15:00:00-05:00", "timeZone": "America/New_York"}
 }'
 ```
 

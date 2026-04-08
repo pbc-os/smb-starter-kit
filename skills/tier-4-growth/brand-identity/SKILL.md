@@ -34,9 +34,9 @@ Before generating anything, gather inputs from the user. Present the **Essential
 
 | # | Question | Purpose | Example |
 |---|----------|---------|---------|
-| 1 | **Product/company name** — exact casing as it should appear | Logo, wordmark, all copy | `FoodCourts.ai` |
-| 2 | **What does it do?** — one paragraph, plain language | Strategy, positioning, messaging | "An open food directory that lets AI agents order from any restaurant" |
-| 3 | **One-sentence pitch** | Anchor line for all strategy docs | "The open food directory for AI agents to order from any restaurant" |
+| 1 | **Product/company name** — exact casing as it should appear | Logo, wordmark, all copy | `AcmeCoffee` |
+| 2 | **What does it do?** — one paragraph, plain language | Strategy, positioning, messaging | "A neighborhood roaster that ships single-origin beans direct to subscribers" |
+| 3 | **One-sentence pitch** | Anchor line for all strategy docs | "Single-origin coffee from the roaster next door." |
 | 4 | **Tagline/slogan** — or "generate options for me" | Logo lockups, hero sections, campaigns | "Technology disappears. Dinner arrives." |
 | 5 | **Brand personality** — 3-5 adjectives that describe the brand's character | Visual direction, voice, all creative decisions | Warm, confident, clear, human-first |
 | 6 | **Color direction** — existing hex codes OR mood/feeling description | Entire color system, UI, templates | "Warm earth tones" OR `#5B8C5A, #E8A838, #FAF6F1` |

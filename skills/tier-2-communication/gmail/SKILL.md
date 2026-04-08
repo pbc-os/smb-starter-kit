@@ -205,6 +205,10 @@ Combine with AND/OR:
 gws gmail +triage --query 'is:unread has:attachment newer_than:3d'
 ```
 
+## Email Templates
+
+Ready-to-adapt templates for common SMB emails (customer replies, vendor follow-ups, payment reminders, appointment confirmations) live in [`references/email-templates.md`](references/email-templates.md). Load the file when the user asks for copy, not when they ask for operations.
+
 ## Integration with Other Skills
 
 - **`morning-briefing`** — Email triage is part of the daily briefing

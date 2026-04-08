@@ -24,7 +24,7 @@
 3. Click **+ Create**
 4. Fill in:
    - **Resource group:** Create new or select existing
-   - **Key vault name:** e.g., `clawdbot-vault` (must be globally unique)
+   - **Key vault name:** e.g., `ai-agent-vault` (must be globally unique)
    - **Region:** Select your nearest region
    - **Pricing tier:** Standard
 5. Click **Review + create** → **Create**
@@ -33,8 +33,8 @@
 
 ### Note Your Vault Name
 
-Your vault name is used in every command. Example: `clawdbot-vault`
-The vault URL will be: `https://clawdbot-vault.vault.azure.net/`
+Your vault name is used in every command. Example: `ai-agent-vault`
+The vault URL will be: `https://ai-agent-vault.vault.azure.net/`
 
 ---
 
@@ -110,13 +110,13 @@ Assign the Key Vault role to your account:
 az role assignment create \
   --role "Key Vault Secrets Officer" \
   --assignee "you@example.com" \
-  --scope "/subscriptions/YOUR_SUB_ID/resourceGroups/YOUR_RG/providers/Microsoft.KeyVault/vaults/clawdbot-vault"
+  --scope "/subscriptions/YOUR_SUB_ID/resourceGroups/YOUR_RG/providers/Microsoft.KeyVault/vaults/ai-agent-vault"
 ```
 
 Alternatively, configure the vault's access policy:
 ```bash
 az keyvault set-policy \
-  --name clawdbot-vault \
+  --name ai-agent-vault \
   --upn you@example.com \
   --secret-permissions get list set delete
 ```
@@ -129,7 +129,7 @@ az keyvault set-policy \
 
 ```bash
 az keyvault secret set \
-  --vault-name clawdbot-vault \
+  --vault-name ai-agent-vault \
   --name "my-first-secret" \
   --value "my-super-secret-value"
 ```
@@ -142,7 +142,7 @@ az keyvault secret set \
 
 ```bash
 az keyvault secret show \
-  --vault-name clawdbot-vault \
+  --vault-name ai-agent-vault \
   --name "my-first-secret" \
   --query value \
   -o tsv
@@ -154,7 +154,7 @@ az keyvault secret show \
 
 ```bash
 az keyvault secret set \
-  --vault-name clawdbot-vault \
+  --vault-name ai-agent-vault \
   --name "my-first-secret" \
   --value "updated-value"
 ```
@@ -164,7 +164,7 @@ az keyvault secret set \
 ### List All Secrets
 
 ```bash
-az keyvault secret list --vault-name clawdbot-vault --query "[].name" -o tsv
+az keyvault secret list --vault-name ai-agent-vault --query "[].name" -o tsv
 ```
 
 **What you should see:** A list of secret names, one per line.
@@ -172,14 +172,14 @@ az keyvault secret list --vault-name clawdbot-vault --query "[].name" -o tsv
 ### Delete a Secret
 
 ```bash
-az keyvault secret delete --vault-name clawdbot-vault --name "my-first-secret"
+az keyvault secret delete --vault-name ai-agent-vault --name "my-first-secret"
 ```
 
 **What you should see:** JSON confirming the deletion schedule.
 
 > **Note:** Azure uses soft-delete by default (90-day retention). To permanently purge:
 ```bash
-az keyvault secret purge --vault-name clawdbot-vault --name "my-first-secret"
+az keyvault secret purge --vault-name ai-agent-vault --name "my-first-secret"
 ```
 
 ---
@@ -190,16 +190,16 @@ az keyvault secret purge --vault-name clawdbot-vault --name "my-first-secret"
 
 ```bash
 az ad sp create-for-rbac \
-  --name "clawdbot-agent" \
+  --name "ai-agent" \
   --role "Key Vault Secrets User" \
-  --scopes "/subscriptions/YOUR_SUB_ID/resourceGroups/YOUR_RG/providers/Microsoft.KeyVault/vaults/clawdbot-vault"
+  --scopes "/subscriptions/YOUR_SUB_ID/resourceGroups/YOUR_RG/providers/Microsoft.KeyVault/vaults/ai-agent-vault"
 ```
 
 **What you should see:**
 ```json
 {
   "appId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-  "displayName": "clawdbot-agent",
+  "displayName": "ai-agent",
   "password": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
   "tenant": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 }
@@ -223,7 +223,7 @@ Use Managed Identity instead (no passwords needed):
 2. Grant the managed identity access to the Key Vault:
 ```bash
 az keyvault set-policy \
-  --name clawdbot-vault \
+  --name ai-agent-vault \
   --object-id "VM_MANAGED_IDENTITY_OBJECT_ID" \
   --secret-permissions get list
 ```
@@ -232,13 +232,13 @@ az keyvault set-policy \
 
 ## 6. Gateway Wrapper Script
 
-Create `~/.clawdbot/gateway-wrapper.sh`:
+Create `~/.config/ai-agent/wrapper.sh`:
 
 ```bash
 #!/bin/bash
 set -euo pipefail
 
-VAULT_NAME="clawdbot-vault"
+VAULT_NAME="ai-agent-vault"
 
 fetch_secret() {
   az keyvault secret show \
@@ -252,11 +252,11 @@ export SLACK_BOT_TOKEN=$(fetch_secret "slack-bot-token")
 export SQUARE_ACCESS_TOKEN=$(fetch_secret "square-access-token")
 # Add more as needed...
 
-exec clawdbot gateway start
+exec exec "$@"  # pass-through to your agent command
 ```
 
 ```bash
-chmod +x ~/.clawdbot/gateway-wrapper.sh
+chmod +x ~/.config/ai-agent/wrapper.sh
 ```
 
 ---
@@ -272,13 +272,13 @@ chmod +x ~/.clawdbot/gateway-wrapper.sh
 az role assignment create \
   --role "Key Vault Secrets Officer" \
   --assignee "you@example.com" \
-  --scope "/subscriptions/YOUR_SUB_ID/resourceGroups/YOUR_RG/providers/Microsoft.KeyVault/vaults/clawdbot-vault"
+  --scope "/subscriptions/YOUR_SUB_ID/resourceGroups/YOUR_RG/providers/Microsoft.KeyVault/vaults/ai-agent-vault"
 ```
 
 **Fix (Access Policy):**
 ```bash
 az keyvault set-policy \
-  --name clawdbot-vault \
+  --name ai-agent-vault \
   --upn you@example.com \
   --secret-permissions get list set delete
 ```
@@ -305,10 +305,10 @@ az account set --subscription "CORRECT_SUBSCRIPTION_ID"
 **Fix:**
 ```bash
 # List existing secrets
-az keyvault secret list --vault-name clawdbot-vault --query "[].name" -o tsv
+az keyvault secret list --vault-name ai-agent-vault --query "[].name" -o tsv
 
 # Check soft-deleted secrets
-az keyvault secret list-deleted --vault-name clawdbot-vault
+az keyvault secret list-deleted --vault-name ai-agent-vault
 ```
 
 ### "Vault is in a deleted state"
@@ -316,7 +316,7 @@ az keyvault secret list-deleted --vault-name clawdbot-vault
 **Fix:**
 ```bash
 # Recover a deleted vault
-az keyvault recover --name clawdbot-vault
+az keyvault recover --name ai-agent-vault
 ```
 
 ---

@@ -204,11 +204,6 @@ def make_transparent(input_path, output=None, filename=None, threshold=220,
     if feather > 0:
         try:
             from scipy.ndimage import gaussian_filter
-            # Only feather the edges, not the whole alpha
-            edge = gaussian_filter(alpha.astype(float), sigma=feather)
-            # Keep fully opaque and fully transparent areas, smooth the edges
-            alpha = np.where(alpha == 255, 255, np.where(alpha == 0, 0, edge)).astype(np.uint8)
-            # Actually, better approach: just blur and re-threshold slightly
             alpha_float = gaussian_filter(alpha.astype(float), sigma=feather)
             alpha = np.clip(alpha_float, 0, 255).astype(np.uint8)
             print(f"  Applied {feather}px edge feathering")

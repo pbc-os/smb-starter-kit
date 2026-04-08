@@ -80,7 +80,7 @@ gws drive files export --params '{"fileId": "FILE_ID", "mimeType": "text/csv"}' 
 
 ```bash
 gws drive files create --json '{
-  "name": "2025 Invoices",
+  "name": "2026 Invoices",
   "mimeType": "application/vnd.google-apps.folder",
   "parents": ["PARENT_FOLDER_ID"]
 }'
@@ -120,7 +120,7 @@ gws drive files list --params '{"q": "mimeType=\"application/pdf\""}'
 gws drive files list --params '{"q": "'\''FOLDER_ID'\'' in parents"}'
 
 # Find files modified in last 7 days
-gws drive files list --params '{"q": "modifiedTime > '\''2025-01-08T00:00:00'\''", "orderBy": "modifiedTime desc"}'
+gws drive files list --params '{"q": "modifiedTime > '\''2026-01-08T00:00:00'\''", "orderBy": "modifiedTime desc"}'
 
 # Find shared files
 gws drive files list --params '{"q": "sharedWithMe = true", "pageSize": 10}'
@@ -141,7 +141,7 @@ My Drive/
 │   └── Policies/                # Employee handbook, safety, etc.
 ├── Finance/
 │   ├── Invoices/
-│   │   ├── 2025/
+│   │   ├── 2026/
 │   │   │   ├── January/
 │   │   │   └── February/
 │   │   └── 2024/

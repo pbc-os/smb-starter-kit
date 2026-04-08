@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - **Google Ads** — Restructured as API-first. Browser automation demoted to "fallback, not recommended" with stability warnings. Removed browser mode from the main skill description.
-- **Frontmatter Normalization** — All 19 skills now use a consistent frontmatter schema with `name`, `version`, `tier`, `description`, and `requires` fields. Removed platform-specific `metadata.openclaw` and `metadata.clawdbot` wrappers in favor of the standard schema.
+- **Frontmatter Normalization** — All skills now use a consistent frontmatter schema with `name`, `version`, `tier`, `description`, and `requires` fields. Removed legacy runtime-specific metadata wrappers in favor of the standard schema.
 - **Agent Agnosticism** — Updated language throughout to be agent-agnostic. Skills work with any AI agent (Claude Code, Codex, Gemini CLI, etc.), not just Claude Code.
 - **README** — Added links to Skill Spec, Skills Index, and Changelog. Updated skill count and references.
 

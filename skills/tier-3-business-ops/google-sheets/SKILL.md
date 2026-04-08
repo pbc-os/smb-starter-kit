@@ -73,7 +73,7 @@ gws sheets spreadsheets values append --params '{
   "range": "Sheet1!A:D",
   "valueInputOption": "USER_ENTERED"
 }' --json '{
-  "values": [["2025-01-15", "Widget A", "50", "$12.50"]]
+  "values": [["2026-01-15", "Widget A", "50", "$12.50"]]
 }'
 ```
 
@@ -106,7 +106,7 @@ gws sheets spreadsheets values batchUpdate --params '{
 
 ```bash
 gws sheets spreadsheets create --json '{
-  "properties": {"title": "Q1 2025 Sales Tracker"},
+  "properties": {"title": "Q1 2026 Sales Tracker"},
   "sheets": [
     {"properties": {"title": "Daily Sales"}},
     {"properties": {"title": "Summary"}},
@@ -114,6 +114,10 @@ gws sheets spreadsheets create --json '{
   ]
 }'
 ```
+
+## SMB Spreadsheet Templates
+
+For ready-to-adapt sheet designs — Daily Sales, Inventory, Expense Tracking, Vendor Log, Order Log, and a simple P&L — see [`references/smb-sheet-templates.md`](references/smb-sheet-templates.md). Each template includes a recommended column layout, conditional formatting rules, and SUMIFS/INDEX formulas you can drop in.
 
 ## SMB Spreadsheet Patterns
 
@@ -128,7 +132,7 @@ gws sheets spreadsheets values append --params '{
   "range": "Daily Sales!A:E",
   "valueInputOption": "USER_ENTERED"
 }' --json '{
-  "values": [["2025-01-15", "Store 1", "$2,450", "87 transactions", "Wednesday"]]
+  "values": [["2026-01-15", "Store 1", "$2,450", "87 transactions", "Wednesday"]]
 }'
 ```
 
@@ -138,9 +142,10 @@ gws sheets spreadsheets values append --params '{
 # Read current inventory levels
 gws sheets spreadsheets values get --params '{
   "spreadsheetId": "INVENTORY_SHEET_ID",
-  "range": "Current Stock!A:D"
-}' --format json | jq '.values[] | select(.[2] | tonumber < 10)'
-# Find items with less than 10 units
+  "range": "Current Stock!A2:D"
+}' --format json | jq '.values[] | select(.[2] | try tonumber catch -1) | select(.[2] | tonumber < 10)'
+# Find items with less than 10 units.
+# Note: `A2:D` skips the header row; the `try/catch` guards against non-numeric cells.
 ```
 
 ### Expense Tracking
@@ -152,7 +157,7 @@ gws sheets spreadsheets values append --params '{
   "range": "Expenses!A:E",
   "valueInputOption": "USER_ENTERED"
 }' --json '{
-  "values": [["2025-01-15", "Office Supplies", "Staples", "$47.32", "Receipt in Drive"]]
+  "values": [["2026-01-15", "Office Supplies", "Staples", "$47.32", "Receipt in Drive"]]
 }'
 ```
 

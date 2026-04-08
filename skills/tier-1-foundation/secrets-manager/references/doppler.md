@@ -17,7 +17,7 @@
 
 1. Sign up at https://dashboard.doppler.com/register
 2. Create a **Workplace** (your organization)
-3. Create a **Project** (e.g., `clawdbot`)
+3. Create a **Project** (e.g., `my-ai-agent`)
 
 **What you should see:** The Doppler dashboard with your project listed. Each project has three default environments: Development, Staging, Production.
 
@@ -25,7 +25,7 @@
 
 ```
 Workplace
-└── Project (e.g., "clawdbot")
+└── Project (e.g., "my-ai-agent")
     ├── dev      ← Development config
     ├── stg      ← Staging config
     └── prd      ← Production config
@@ -101,7 +101,7 @@ doppler login
 doppler setup
 ```
 
-**What you should see:** Interactive prompts to select your project and config (environment). Choose your project (e.g., `clawdbot`) and config (e.g., `prd` for production).
+**What you should see:** Interactive prompts to select your project and config (environment). Choose your project (e.g., `my-ai-agent`) and config (e.g., `prd` for production).
 
 ### Verify Authentication
 
@@ -179,13 +179,13 @@ Service tokens are scoped to a specific project + config. Perfect for the agent.
 
 1. Go to https://dashboard.doppler.com → Your project → Config (e.g., `prd`)
 2. Click **Access** → **Service Tokens**
-3. Click **Generate** → Name it "clawdbot-agent"
+3. Click **Generate** → Name it "ai-agent"
 4. Copy the token
 
 Or via CLI:
 ```bash
-doppler configs tokens create clawdbot-agent \
-  --project clawdbot \
+doppler configs tokens create ai-agent \
+  --project my-ai-agent \
   --config prd \
   --plain
 ```
@@ -194,7 +194,7 @@ doppler configs tokens create clawdbot-agent \
 
 ```bash
 # Set the service token (one-time)
-doppler configure set token dp.st.xxxxxxxxxxxx --scope /path/to/clawdbot
+doppler configure set token dp.st.xxxxxxxxxxxx --scope /path/to/my-ai-agent
 ```
 
 Or use it as an environment variable:
@@ -214,7 +214,7 @@ DOPPLER_TOKEN="dp.st.xxxx" doppler secrets
 
 ## 6. Gateway Wrapper Script
 
-Create `~/.clawdbot/gateway-wrapper.sh`:
+Create `~/.config/ai-agent/wrapper.sh`:
 
 ### Option A: Doppler Run (Recommended — Simplest)
 
@@ -227,7 +227,7 @@ set -euo pipefail
 export DOPPLER_TOKEN="dp.st.your-service-token"
 
 # doppler run injects ALL project secrets as env vars, then runs the command
-exec doppler run -- clawdbot gateway start
+exec doppler run -- exec "$@"  # pass-through to your agent command
 ```
 
 No need to `fetch_secret` one by one — Doppler handles it.
@@ -248,11 +248,11 @@ export SLACK_BOT_TOKEN=$(fetch_secret "SLACK_BOT_TOKEN")
 export SQUARE_ACCESS_TOKEN=$(fetch_secret "SQUARE_ACCESS_TOKEN")
 # Add more as needed...
 
-exec clawdbot gateway start
+exec exec "$@"  # pass-through to your agent command
 ```
 
 ```bash
-chmod +x ~/.clawdbot/gateway-wrapper.sh
+chmod +x ~/.config/ai-agent/wrapper.sh
 ```
 
 > **Tip:** Option A (`doppler run`) is the Doppler Way™ — it's simpler, injects everything, and auto-restarts on secret changes if configured.
@@ -268,8 +268,8 @@ chmod +x ~/.clawdbot/gateway-wrapper.sh
 **Fix:**
 ```bash
 # Generate a new service token
-doppler configs tokens create clawdbot-agent-v2 \
-  --project clawdbot --config prd --plain
+doppler configs tokens create ai-agent-v2 \
+  --project my-ai-agent --config prd --plain
 ```
 
 ### "doppler: command not found"
@@ -291,7 +291,7 @@ doppler setup
 
 Or specify inline:
 ```bash
-doppler secrets --project clawdbot --config prd
+doppler secrets --project my-ai-agent --config prd
 ```
 
 ### "Missing required permission"

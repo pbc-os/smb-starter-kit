@@ -196,7 +196,7 @@ The briefing should adapt to the business over time:
 ## Example Briefing
 
 ```
-# Morning Briefing — Wednesday, January 15, 2025
+# Morning Briefing — Wednesday, January 15, 2026
 
 ## Urgent
 - Customer complaint from Sarah Miller (email, 11pm last night) — needs response

@@ -221,8 +221,8 @@ case "$DETECTED_PLATFORM" in
     PROJECT=$(gcloud config get-value project 2>/dev/null)
     if [ -n "$PROJECT" ]; then
       echo -e "  ${INFO} Project: ${PROJECT}"
-      COUNT=$(gcloud secrets list --project="$PROJECT" --format="value(name)" 2>/dev/null | wc -l | tr -d ' ')
-      if [ "$?" -eq 0 ]; then
+      if LIST_OUTPUT=$(gcloud secrets list --project="$PROJECT" --format="value(name)" 2>&1); then
+        COUNT=$(echo "$LIST_OUTPUT" | grep -c . || true)
         echo -e "  ${PASS}  Can list secrets. Found ${COUNT} secret(s)."
       else
         echo -e "  ${FAIL}  Cannot list secrets. Check Secret Manager API is enabled."
@@ -238,8 +238,7 @@ case "$DETECTED_PLATFORM" in
     REGION=$(aws configure get region 2>/dev/null)
     REGION=${REGION:-us-east-1}
     echo -e "  ${INFO} Region: ${REGION}"
-    COUNT=$(aws secretsmanager list-secrets --region "$REGION" --query "length(SecretList)" --output text 2>/dev/null)
-    if [ "$?" -eq 0 ]; then
+    if COUNT=$(aws secretsmanager list-secrets --region "$REGION" --query "length(SecretList)" --output text 2>&1); then
       echo -e "  ${PASS}  Can list secrets. Found ${COUNT} secret(s)."
     else
       echo -e "  ${FAIL}  Cannot list secrets. Check IAM permissions."
@@ -251,8 +250,7 @@ case "$DETECTED_PLATFORM" in
     VAULT=$(az keyvault list --query "[0].name" -o tsv 2>/dev/null)
     if [ -n "$VAULT" ]; then
       echo -e "  ${INFO} Using vault: ${VAULT}"
-      COUNT=$(az keyvault secret list --vault-name "$VAULT" --query "length([])" 2>/dev/null)
-      if [ "$?" -eq 0 ]; then
+      if COUNT=$(az keyvault secret list --vault-name "$VAULT" --query "length([])" 2>&1); then
         echo -e "  ${PASS}  Can list secrets. Found ${COUNT} secret(s)."
       else
         echo -e "  ${FAIL}  Cannot list secrets in vault '${VAULT}'. Check access policies."
@@ -264,8 +262,8 @@ case "$DETECTED_PLATFORM" in
     fi
     ;;
   1password)
-    COUNT=$(op item list --format=json 2>/dev/null | grep -c '"id"' || echo "0")
-    if [ "$?" -eq 0 ]; then
+    if LIST_OUTPUT=$(op item list --format=json 2>&1); then
+      COUNT=$(echo "$LIST_OUTPUT" | grep -c '"id"' || true)
       echo -e "  ${PASS}  Can list items. Found ${COUNT} item(s)."
     else
       echo -e "  ${FAIL}  Cannot list items. Check vault permissions."
@@ -273,8 +271,8 @@ case "$DETECTED_PLATFORM" in
     fi
     ;;
   doppler)
-    COUNT=$(doppler secrets --json 2>/dev/null | grep -c '"raw"' || echo "0")
-    if [ "$?" -eq 0 ]; then
+    if LIST_OUTPUT=$(doppler secrets --json 2>&1); then
+      COUNT=$(echo "$LIST_OUTPUT" | grep -c '"raw"' || true)
       echo -e "  ${PASS}  Can list secrets. Found ${COUNT} secret(s)."
     else
       echo -e "  ${FAIL}  Cannot list secrets. Run: doppler setup"
@@ -282,9 +280,8 @@ case "$DETECTED_PLATFORM" in
     fi
     ;;
   vault)
-    LIST_OUTPUT=$(vault kv list secret/ 2>/dev/null)
-    if [ "$?" -eq 0 ]; then
-      COUNT=$(echo "$LIST_OUTPUT" | grep -c "." || echo "0")
+    if LIST_OUTPUT=$(vault kv list secret/ 2>&1); then
+      COUNT=$(echo "$LIST_OUTPUT" | grep -c . || true)
       echo -e "  ${PASS}  Can list secrets. Found ${COUNT} path(s) under secret/."
     else
       echo -e "  ${FAIL}  Cannot list secrets. Check KV engine is enabled at secret/."
@@ -304,7 +301,7 @@ if [ "$OVERALL_PASS" = true ]; then
   echo -e "  ${GREEN}🎉 ALL CHECKS PASSED${NC}"
   echo ""
   echo "  Your secrets management is configured and accessible."
-  echo "  You're ready to integrate with Clawdbot's gateway."
+  echo "  You're ready to wire secrets into your agent's startup wrapper."
 else
   echo -e "  ${RED}⚠️  SOME CHECKS FAILED${NC}"
   echo ""

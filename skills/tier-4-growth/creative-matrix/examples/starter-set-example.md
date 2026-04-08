@@ -1,22 +1,22 @@
 # Creative Matrix — Starter Set Example
 
-Example output for a **premium butcher shop** using the 6-concept starter set. This shows the expected output format and level of detail for each concept.
+Example output for a **premium butcher shop** using the 6-concept starter set. This shows the expected output format and level of detail for each concept. Names and neighborhoods in this example are fictional.
 
-**Brand:** Prospect Butcher Co (Brooklyn, premium meats, local sourcing)
+**Brand:** Highland Butcher Co (urban neighborhood butcher shop, premium meats, local sourcing)
 **Offer:** Free delivery on first order over $50
-**Audience:** Health-conscious Brooklyn foodies, 28-45, who care about where their food comes from
+**Audience:** Health-conscious urban foodies, 28-45, who care about where their food comes from
 
 ---
 
 ## Concept 1 — TOF x Static x Pain Point
 
 **Hook/Headline:** "You don't know where your grocery store meat comes from. We do."
-**Body Copy:** Every cut at Prospect Butcher is sourced from farms we visit personally. No mystery meat. No middlemen. Just honest beef, pork, and poultry from people we trust.
+**Body Copy:** Every cut at Highland Butcher is sourced from farms we visit personally. No mystery meat. No middlemen. Just honest beef, pork, and poultry from people we trust.
 **CTA:** Shop now — free delivery on your first order over $50.
 **Sub-Angle:** Frustration
 **Triggers:** Loss aversion (what you're missing), embarrassment (not knowing)
 **Format Spec:** 1080x1350 static image. Hero shot of a beautifully marbled ribeye on butcher paper with the farm name written in chalk underneath.
-**Targeting:** Broad — food/cooking interests, Brooklyn geo, ages 25-50
+**Targeting:** Broad — food/cooking interests, local metro geo, ages 25-50
 **Priority:** High
 
 ---
@@ -29,25 +29,25 @@ Example output for a **premium butcher shop** using the 6-concept starter set. T
 **Sub-Angle:** Aspiration
 **Triggers:** Ambition (better cooking), status (elevated food experience)
 **Format Spec:** 1080x1920 vertical video, 15 seconds. Open with close-up sizzle shot (first 3 seconds critical). Quick cuts: butcher wrapping the steak → home kitchen → plated dinner.
-**Targeting:** Broad — cooking enthusiasts, food content viewers, Brooklyn
+**Targeting:** Broad — cooking enthusiasts, food content viewers, local metro
 **Priority:** High
 
 ---
 
 ## Concept 3 — TOF x Carousel x Social Proof
 
-**Hook/Headline:** "Why 2,000+ Brooklyn families stopped buying meat at the grocery store."
+**Hook/Headline:** "Why 2,000+ local families stopped buying meat at the grocery store."
 **Body Copy:**
 - Card 1: "We asked our customers why they switched. Here's what they said."
-- Card 2: "I can actually taste the difference." — Maria, Park Slope
-- Card 3: "My kids eat more vegetables now because the protein is so good it makes the whole plate better." — James, Prospect Heights
-- Card 4: "I spend less because I waste less. Better meat = actually eating it all." — Priya, Crown Heights
+- Card 2: "I can actually taste the difference." — Maria, Oakhill
+- Card 3: "My kids eat more vegetables now because the protein is so good it makes the whole plate better." — James, Riverbend
+- Card 4: "I spend less because I waste less. Better meat = actually eating it all." — Priya, Elmwood
 - Card 5: Free delivery on your first order over $50. Shop now.
 **CTA:** Try it yourself — free delivery on first order.
 **Sub-Angle:** Testimony
 **Triggers:** Trust, social proof, FOMO (everyone else figured it out)
 **Format Spec:** 1080x1080 per card, 5 cards. Clean typography on brand color backgrounds. Customer photos if available, otherwise styled quote cards.
-**Targeting:** Broad — parents, foodies, Brooklyn neighborhoods
+**Targeting:** Broad — parents, foodies, local metro neighborhoods
 **Priority:** High
 
 ---
@@ -97,7 +97,7 @@ Example output for a **premium butcher shop** using the 6-concept starter set. T
 |---|--------|--------|-------|-----------|--------------|----------|
 | 1 | TOF | Static | Pain Point | Frustration | "You don't know where your meat comes from" | High |
 | 2 | TOF | Video | Desire | Aspiration | "This is what dinner looks like" | High |
-| 3 | TOF | Carousel | Social Proof | Testimony | "Why 2,000+ families switched" | High |
+| 3 | TOF | Carousel | Social Proof | Testimony | "Why 2,000+ local families switched" | High |
 | 4 | MOF | Video | Social Proof | Authority | "Watch how we break down a whole animal" | Medium |
 | 5 | MOF | Static | Desire | Freedom | "Your Saturday dinner, elevated" | Medium |
 | 6 | BOF | Static | Pain Point | Regret | "Still thinking about it?" | High |

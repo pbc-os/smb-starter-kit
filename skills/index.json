@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generated": "2025-06-01",
+  "generated": "2026-04-07",
   "description": "Machine-readable index of all skills in agent-skills-public",
   "skills": [
     {
@@ -164,12 +164,12 @@
       "requires": { "bins": [], "skills": [] }
     },
     {
-      "name": "remedy",
+      "name": "patent-figure",
       "tier": "experimental",
-      "path": "tier-x-experimental/remedy",
-      "version": "1.1.0",
-      "description": "Performance coaching for significant agent failures. Wendy Rhoades-style coaching method.",
-      "requires": { "bins": [], "skills": [] }
+      "path": "tier-x-experimental/patent-figure",
+      "version": "1.0.0",
+      "description": "Generate and iteratively refine USPTO-style patent figure drawings from provisional patent markdown files via nano-banana.",
+      "requires": { "bins": ["python3"], "skills": ["nano-banana"], "secrets": ["GEMINI_API_KEY"] }
     }
   ],
   "coming_soon": [

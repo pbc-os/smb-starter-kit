@@ -53,7 +53,7 @@ cat audit-results.json | jq .
 ## Installation
 
 ```bash
-npx skills add smb-pbc/agent-skills-public@semantic-layer-audit -g -y
+npx skills add pbc-os/agent-skills-public@semantic-layer-audit -g -y
 ```
 
 ## Requirements

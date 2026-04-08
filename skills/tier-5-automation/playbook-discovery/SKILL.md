@@ -210,9 +210,9 @@ After presenting playbooks, offer:
 ## Related Skills
 
 - `gmail` — Email data collection
-- `google-calendar` — Calendar data collection  
+- `google-calendar` — Calendar data collection
 - `slack-directory` — Communication pattern analysis
-- `revenue-forecaster` — Business metric integration
+- `autoresearch` — Once a playbook is running, use autoresearch to iteratively improve its output
 
 ---
 
