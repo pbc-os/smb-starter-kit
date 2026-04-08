@@ -270,7 +270,6 @@ This repo is one piece of **[PBC OS](https://github.com/pbc-os)** — open-sourc
 | Repo | What It Does |
 |------|--------------|
 | **[agent-skills-public](https://github.com/pbc-os/agent-skills-public)** | Reusable AI agent skills (this repo) |
-| **[pbc-x402-api](https://github.com/pbc-os/pbc-x402-api)** | Accept payments from AI agents |
 
 **Coming soon: PBC by PBC** — Pre-configured Raspberry Pi 5 hardware (~$100) with everything ready to go. Run your own AI, on your own hardware, for your own business.
 
