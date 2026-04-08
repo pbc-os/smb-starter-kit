@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - **README onboarding flow rewritten.** Default install path is now Claude Desktop (5-minute, no-terminal experience), with CLI agents (Claude Code, Codex, Gemini CLI, Goose) as a power-user fallback. Cut the "paste this URL into ChatGPT first" intro and the npm-based 15-minute install ceremony. Collapsed the three duplicated install sections into one tight Setup section. Reduced the "agents vs skills vs tools" explanation from three metaphors (chef + employee + GitHub Actions) to one (employee). README went from 437 lines / 15 sections to 281 lines / 12 sections.
+- **README emoji-stripped.** All section header emojis removed (8 instances) for a cleaner, more professional render. Skill catalog tables and the rest of the page were already emoji-free.
+- **README copy fixes.** Setup section now references the bundled "Claude chat, Claude Cowork, and Claude Code" framing from claude.com/download (verified live). Fixed brittle in-page anchor link in the developer-skip line — now points to the `./skills/` directory directly.
 
 ### Added
 
