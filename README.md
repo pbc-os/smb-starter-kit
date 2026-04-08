@@ -242,7 +242,7 @@ Start with read-only. Expand later. You're always in control.
 
 ---
 
-## 📦 Available Skills (21 skills)
+## 📦 Available Skills (22 skills)
 
 Each skill is a self-contained `SKILL.md` file (plus optional references, scripts, and templates) that teaches your agent how to do one job well. Skills compose — set up Tier 1 once and everything above it becomes a 5-minute install.
 
@@ -300,8 +300,9 @@ Discover and automate the repeatable work.
 | Skill | What it does |
 |---|---|
 | [morning-briefing](./skills/tier-5-automation/morning-briefing/) | The "killer app" — composable daily digest that pulls email, calendar, tasks, and KPIs from whichever skills you've installed |
+| [revenue-forecaster](./skills/tier-5-automation/revenue-forecaster/) | Weekly / 13-week / daily / stress-test revenue forecasting for multi-entity SMBs, with per-entity holiday and week-of-month tuning. Ships with an autoresearch-compatible eval so you can self-tune on your own history |
 | [playbook-discovery](./skills/tier-5-automation/playbook-discovery/) | Mine 6 months of email, calendar, and files to surface the repeatable workflows hiding in your daily work |
-| [autoresearch](./skills/tier-5-automation/autoresearch/) | Generalizes [Karpathy's autoresearch](https://github.com/karpathy/autoresearch) pattern to any measurable system — hypothesize, change one thing, evaluate, keep wins, discard regressions |
+| [autoresearch](./skills/tier-5-automation/autoresearch/) | Three-agent autonomous optimization loop (researcher + critic + meta-reviewer). Extends [Karpathy's autoresearch](https://github.com/karpathy/autoresearch) with holdout validation, coverage-driven exploration, and metacognitive self-modification ([HyperAgents](https://arxiv.org/abs/2603.19461)) |
 
 ### Tier X — Experimental
 
@@ -326,7 +327,10 @@ google-workspace ─┬── gmail ─────────┐         │
                                                │
 slack-directory ──── slack ────────────────────┤
                                                │
-                  playbook-discovery ──── autoresearch
+                  playbook-discovery            │
+                           │                    │
+                           ▼                    │
+                   revenue-forecaster ◀─── autoresearch
                                                │
 google-ads ────────────────────────────────────┘
 
@@ -338,7 +342,7 @@ nano-banana ──┬── creative-matrix
 ### Coming Soon
 
 - **Tier 3 — Business Ops:** Square POS, QuickBooks, BigQuery analytics
-- **Tier 4 — Growth:** Mailchimp, Instagram, revenue-forecaster
+- **Tier 4 — Growth:** Mailchimp, Instagram
 - **Tier 5 — Automation:** Workflow builder, health monitor, anomaly detection
 
 ---

@@ -212,6 +212,7 @@ After presenting playbooks, offer:
 - `gmail` — Email data collection
 - `google-calendar` — Calendar data collection
 - `slack-directory` — Communication pattern analysis
+- `revenue-forecaster` — If a discovered playbook drives or depends on revenue, feed the forecaster's output into it
 - `autoresearch` — Once a playbook is running, use autoresearch to iteratively improve its output
 
 ---
