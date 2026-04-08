@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] — 2026-04-08
+
+### Changed
+
+- **README onboarding flow rewritten.** Default install path is now Claude Desktop (5-minute, no-terminal experience), with CLI agents (Claude Code, Codex, Gemini CLI, Goose) as a power-user fallback. Cut the "paste this URL into ChatGPT first" intro and the npm-based 15-minute install ceremony. Collapsed the three duplicated install sections into one tight Setup section. Reduced the "agents vs skills vs tools" explanation from three metaphors (chef + employee + GitHub Actions) to one (employee). README went from 437 lines / 15 sections to 281 lines / 12 sections.
+
+### Added
+
+- **`docs/advanced-onboarding.md`** — New page documenting the chatbot-bridge pattern (LLM.txt → handoff packet → CONTINUE.md) as an *advanced* alternative for users who can't or won't install Claude Desktop. The pattern still works and the supporting files (LLM.txt, CONTINUE.md) are preserved unchanged in functionality, but they're now clearly framed as the advanced path rather than the default. Headers added to both LLM.txt and CONTINUE.md pointing readers at Claude Desktop first.
+
 ## [1.2.3] — 2026-04-08
 
 ### Changed
