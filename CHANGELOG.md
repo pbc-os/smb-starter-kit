@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.2] — 2026-04-08
+
+### Changed
+
+- **`morning-briefing` skill → v1.3.0** — Email urgency classification now requires reading the message body with `gws gmail +read`, not just inspecting sender + timing metadata. Promotion to "Urgent" requires at least one explicit escalation signal in the body: direct address, explicit ask, deadline language, decision request, escalation phrasing, or money/risk on the line. Sender being a "key contact" is no longer sufficient on its own. New "False urgency failure mode" section catalogs the patterns that *look* urgent but usually aren't (vendor status replies, two-reply threads, monthly statements, automated "Important" subjects). Calendar and metric urgency rules are unchanged (mechanical, no body to read). Discovered when a real-world test flagged a vendor reply as urgent purely because of sender + timing pattern, with no actual escalation in the body.
+
 ## [1.2.1] — 2026-04-08
 
 ### Changed
