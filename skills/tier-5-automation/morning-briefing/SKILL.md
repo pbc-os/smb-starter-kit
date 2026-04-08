@@ -1,6 +1,6 @@
 ---
 name: morning-briefing
-version: 1.1.0
+version: 1.2.0
 tier: automation
 description: "Automated daily digest for small business owners. Combines email triage, calendar agenda, open tasks, and business KPIs into a single morning briefing. Composable — works with whatever data sources are available."
 requires:
@@ -23,11 +23,53 @@ This is the "killer app" for AI agents — a composable daily digest that pulls 
 - "standup"
 - First interaction of the day with the agent
 
+## Setup Verification
+
+**Run this before composing the briefing.** If any required check fails, route the user to the [`google-workspace`](../../tier-1-foundation/google-workspace/) skill to complete setup, then come back to this skill. Do not silently proceed with a partial briefing on the first run — the user should know what's missing.
+
+### Required checks (must pass to run the briefing)
+
+1. **`gws` CLI is installed.**
+    ```bash
+    which gws && gws --version
+    ```
+    **If not found:** Stop. Route to `google-workspace` skill and ask the user to complete the install step. Do not try to install `gws` from inside this skill.
+
+2. **`gws` is authenticated.**
+    ```bash
+    gws auth status
+    ```
+    **If not authenticated:** Stop. Route to `google-workspace` skill — its setup walkthrough handles the OAuth flow.
+
+3. **At minimum, Gmail + Calendar scopes are present.**
+    ```bash
+    gws auth status | grep -E "(gmail|calendar)"
+    ```
+    **If either scope is missing:** Run `gws auth login -s gmail,calendar` and re-check. If that still fails, route to `google-workspace`.
+
+### Recommended checks (warn but don't block)
+
+4. **Tasks scope** (for the Open Tasks section):
+    ```bash
+    gws auth status | grep tasks
+    ```
+    **If missing:** Note in the briefing that "Tasks scope not authorized — run `gws auth login -s tasks` to enable the Open Tasks section." Continue with the rest of the briefing. Do not block on this.
+
+5. **Drive scope** (for the Recent Activity section):
+    ```bash
+    gws auth status | grep drive
+    ```
+    **If missing:** Skip the Recent Activity section silently. It's optional.
+
+### Cache the result
+
+Once verification has passed for a given session, don't re-check on subsequent runs in the same session — it adds latency for no value. The agent should re-run verification only at the start of a fresh session, after a known auth change, or if a `gws` command returns `PERMISSION_DENIED` mid-run.
+
 ## Prerequisites
 
-- `gws` CLI installed and authenticated (see `google-workspace` skill)
-- At minimum: Gmail + Calendar scopes (`gws auth login -s gmail,calendar`)
-- More data sources = better briefing
+- `gws` CLI installed and authenticated — verified by the Setup Verification step above
+- At minimum: Gmail + Calendar scopes
+- More data sources = better briefing (Tasks, Drive, Chat, Sheets, etc.)
 
 ## What Gets Included
 
@@ -108,14 +150,22 @@ Process the gathered data into priority buckets:
 
 ### Step 3: Compose the briefing
 
-Present in this structure:
+Present in this structure. **Urgent items must include sub-bullets with context AND a link to the source content** (the actual email, calendar event, task, etc.) so the user can click straight through to act on it. A bare one-line urgent item is not acceptable — the briefing's job is to make action one click away.
 
 ```markdown
 # Morning Briefing — [Day, Month Date, Year]
 
 ## Urgent
-- [Anything that needs immediate attention]
-- [If nothing urgent: "Nothing urgent — clear to focus."]
+
+**[Bold one-line headline of the urgent item]** — [link to source]
+- [Sub-bullet: who, when, what context — the "why this is urgent"]
+- [Sub-bullet: the specific action needed and any deadline]
+- [Sub-bullet: anything else the user needs to decide before acting]
+
+**[Next urgent headline]** — [link to source]
+- [Same sub-bullet structure]
+
+If nothing is urgent: "Nothing urgent — clear to focus."
 
 ## Today's Schedule
 | Time | Event | Prep Needed |
@@ -125,8 +175,8 @@ Present in this structure:
 | 2:00 PM | Customer call — Smith Co | Pull order history |
 
 ## Email (X unread)
-- **From [key contact]:** [subject] — [needs response / FYI]
-- **From [vendor]:** [subject] — [action needed / informational]
+- **From [key contact]:** [subject] — [needs response / FYI] — [link]
+- **From [vendor]:** [subject] — [action needed / informational] — [link]
 - [X other unread messages in categories: Y vendors, Z promotions]
 
 ## Open Tasks (X items)
@@ -144,6 +194,22 @@ Present in this structure:
 - [X emails to process]
 - [Any scheduled reports or deliverables]
 ```
+
+### How to build the source links
+
+The agent should produce real URLs the user can click. Use the underlying Google IDs already in the gws JSON output:
+
+| Source | URL pattern | Example |
+|---|---|---|
+| **Gmail message** | `https://mail.google.com/mail/u/0/#inbox/{message_id}` | `https://mail.google.com/mail/u/0/#inbox/19d6d6ef3590984d` |
+| **Gmail thread** | `https://mail.google.com/mail/u/0/#inbox/{thread_id}` | (use the `threadId` from gmail JSON if available) |
+| **Calendar event** | `https://calendar.google.com/calendar/event?eid={base64url(event_id + " " + calendar_id)}` | Or just link to `https://calendar.google.com/calendar/u/0/r/day/{YYYY}/{MM}/{DD}` for the day view if you don't want to compute the eid |
+| **Drive file** | `https://drive.google.com/file/d/{file_id}/view` | From `gws drive files list` JSON |
+| **Google Doc / Sheet / Slide** | The `webViewLink` field returned by `gws drive files list` | Use it directly |
+| **Tasks** | `https://tasks.google.com/embed/list/{task_list_id}` | (Tasks doesn't have per-task deep links) |
+| **External (Bill.com, Stripe, etc.)** | Use the link from the email body if you parsed it | Or skip if there's no canonical URL |
+
+For email links specifically, the message ID from `gws gmail +triage --format json` (the `id` field) plugs directly into the Gmail web URL. No transformation needed.
 
 ### Step 4: Deliver
 
@@ -195,12 +261,20 @@ The briefing should adapt to the business over time:
 
 ## Example Briefing
 
-```
+```markdown
 # Morning Briefing — Wednesday, January 15, 2026
 
 ## Urgent
-- Customer complaint from Sarah Miller (email, 11pm last night) — needs response
-- Cooler #2 temp alert from overnight monitoring
+
+**Customer complaint from Sarah Miller** — [Open in Gmail](https://mail.google.com/mail/u/0/#inbox/19d6d6ef3590984d)
+- Sent 11:14pm last night, subject: "Issue with my order #4521"
+- Order shipped Tuesday, arrived damaged. Sarah is one of our top-10 customers (12 orders YTD).
+- Action: Reply with refund + replacement before 11am vendor call so it doesn't slip.
+
+**Cooler #2 temperature alert** — [Open in Sensor Dashboard](https://sensors.example.com/cooler-2)
+- Tripped at 3:42am, current reading 38°F (target 34°F).
+- Auto-acknowledged but not resolved. Could be a door left open or compressor.
+- Action: Have a staff member check before opening; flag for service if still warm by 9am.
 
 ## Today's Schedule
 | Time | Event | Prep Needed |
@@ -210,9 +284,9 @@ The briefing should adapt to the business over time:
 | 2:30 PM | Staff 1:1 with Mike (30 min) | Check his task completions |
 
 ## Email (23 unread)
-- **Sarah Miller:** "Issue with my order" — needs response (urgent)
-- **Fresh Farms:** "Updated price list for Q1" — review before 11am call
-- **Square:** Daily sales summary — FYI
+- **Sarah Miller:** "Issue with my order" — needs response — [Open](https://mail.google.com/mail/u/0/#inbox/19d6d6ef3590984d)
+- **Fresh Farms:** "Updated price list for Q1" — review before 11am call — [Open](https://mail.google.com/mail/u/0/#inbox/19d6c39a56a7094f)
+- **Square:** Daily sales summary — FYI — [Open](https://mail.google.com/mail/u/0/#inbox/19d6b9d9b14196ea)
 - 20 others: 8 vendor, 5 newsletter, 7 promotions
 
 ## Open Tasks (6 items)
@@ -232,6 +306,13 @@ The briefing should adapt to the business over time:
 - Friday: Vendor delivery — Fresh Farms
 - 3 more meetings scheduled
 ```
+
+Notice how every urgent item has:
+1. A bold one-line headline
+2. A clickable link to the source so the user can act in one click
+3. 2-3 sub-bullets explaining the why, the action, and any deadline
+
+A bare urgent line ("Customer complaint — needs response") forces the user to go hunt for the email. The structured version puts the action one click away.
 
 ## Integration with Other Skills
 

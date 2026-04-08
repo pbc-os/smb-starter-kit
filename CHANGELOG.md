@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.1] — 2026-04-08
+
+### Changed
+
+- **`morning-briefing` skill → v1.2.0** — Added a real Setup Verification section that checks `gws` install, auth, and required scopes (gmail, calendar) before running, and routes the user to the `google-workspace` skill on failure rather than silently producing a partial briefing. Tasks and Drive scopes are now treated as recommended-but-not-blocking. Restructured the briefing format spec to require sub-bullets and clickable source links on every urgent item — a bare one-line urgent item is now non-conformant. New "How to build the source links" reference table covers Gmail / Calendar / Drive / Tasks URL patterns. Example briefing rewritten to demonstrate the new format. Discovered while running the skill end-to-end on a real inbox (NYC butcher shop) and finding that bare urgent lines forced the user to go hunting for the email.
+
 ## [1.2.0] — 2026-04-07
 
 ### Added
