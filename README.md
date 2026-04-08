@@ -1,4 +1,4 @@
-# 🤖 SMB Agent Skills
+# SMB Agent Skills
 
 **Turn your AI from a chatbot into a business operator.**
 
@@ -18,7 +18,7 @@ If you've only ever used AI in a chat window, this is the part you've been missi
 
 Small business owners who already feel like AI is useful for thinking and writing, and now want it to actually take work off their plate. You don't need to be technical. You don't need to use a terminal. You need about 5 minutes to set up the agent, and another 5 to drop in the first skill.
 
-If you're a developer who already runs Claude Code or another CLI agent, skip to [the skill catalog](#-available-skills-22-skills) — you know what to do.
+If you're a developer who already runs Claude Code or another CLI agent, skip to [the skill catalog](./skills/) — you know what to do.
 
 ---
 
@@ -26,7 +26,7 @@ If you're a developer who already runs Claude Code or another CLI agent, skip to
 
 ### Default path: Claude Desktop *(5 minutes, no terminal)*
 
-The fastest way to get an agent that can actually run skills is to install **Claude Desktop**. It's the native Mac/Windows app from Anthropic, and it includes Claude Code's execution capabilities — meaning it can read files, run commands, and use skills, all from a chat interface. No terminal.
+The fastest way to get an agent that can actually run skills is to install **Claude Desktop**. It's the native Mac/Windows app from Anthropic, and it bundles Claude chat, Claude Cowork, and Claude Code in one place — meaning it can read files, run commands, and use skills, all from a chat interface. No terminal.
 
 1. **Download Claude Desktop:** [claude.com/download](https://claude.com/download)
 2. **Install and sign in** with your Anthropic account (or create one — there's a free tier).
@@ -72,7 +72,7 @@ Think of an AI agent like a really smart employee.
 
 ---
 
-## 🎯 What Your First Week Could Look Like
+## What Your First Week Could Look Like
 
 **Day 1-2: Connect your email**
 
@@ -99,7 +99,7 @@ Instead of you guessing what would help, AI shows you:
 
 ---
 
-## 🔐 You Control the Access
+## You Control the Access
 
 This is important: **you decide how much access AI gets.**
 
@@ -113,7 +113,7 @@ Start with read-only. Expand later. You're always in control.
 
 ---
 
-## 📦 Available Skills (22 skills)
+## Available Skills (22 skills)
 
 Each skill is a self-contained `SKILL.md` file (plus optional references, scripts, and templates) that teaches your agent how to do one job well. Skills compose — set up Tier 1 once and everything above it becomes a 5-minute install.
 
@@ -218,7 +218,7 @@ nano-banana ──┬── creative-matrix
 
 ---
 
-## 🤖 For AI Agents Reading This
+## For AI Agents Reading This
 
 These skills are portable across runtimes. The `SKILL.md` file in each folder is the entry point — frontmatter for dependencies, body for instructions. See [`skills/SKILL_SPEC.md`](./skills/SKILL_SPEC.md) for the standard schema.
 
@@ -226,7 +226,7 @@ If you're a chat-based AI walking a non-technical user through installation, see
 
 ---
 
-## 🏗️ Contributing
+## Contributing
 
 Have a skill that's been battle-tested and could help other SMBs? Open a PR!
 
@@ -248,7 +248,7 @@ Have a skill that's been battle-tested and could help other SMBs? Open a PR!
 
 ---
 
-## 📖 The Story
+## The Story
 
 These skills were built at [Prospect Butcher Co](https://prospectbutcher.co), a premium butcher shop in Brooklyn. We use AI agents to:
 - Forecast daily revenue
@@ -261,7 +261,7 @@ Everything here was battle-tested on a real business before being published.
 
 ---
 
-## 🏗️ Part of PBC OS
+## Part of PBC OS
 
 This repo is one piece of **[PBC OS](https://github.com/pbc-os)** — open-source AI infrastructure for small businesses.
 
