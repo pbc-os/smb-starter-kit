@@ -1,6 +1,6 @@
 ---
 name: morning-briefing
-version: 1.3.0
+version: 1.3.1
 tier: automation
 description: "Automated daily digest for small business owners. Combines email triage, calendar agenda, open tasks, and business KPIs into a single morning briefing. Composable — works with whatever data sources are available. Urgent emails require body inspection and explicit escalation signals — never classified from sender/timing metadata alone."
 requires:
@@ -191,7 +191,9 @@ The most common briefing bug is flagging an email as urgent because of the *patt
 - Two participants on one thread replying within an hour of each other (normal business pace)
 - A monthly statement from a vendor that's been monthly for years
 - A "FYI" or "no action needed" that uses an urgent-sounding subject line
-- An automated system message with the word "Important" in the subject (CC of a boilerplate notice)
+- An automated system message with the word "Important" in the subject (CC of a boilerplate notice — e.g., utility "you have a new letter" notifications)
+- A thread between two other people that doesn't address or @-mention the user — it's their conversation, not the user's
+- **A CI / build / deploy failure where the actual deploy step succeeded.** Modern pipelines run non-blocking audit, security-scan, and customer-install jobs alongside the main build. A failure in one of those with `Deploy: succeeded` in the same run means the release went out — this is a code-quality follow-up, not a production incident. Only flag as urgent if the failed job is on the critical path (the build itself, the deploy itself, or a job marked as required for merge). Read the body for the per-job status before classifying.
 
 When in doubt, the agent should **demote** the item from Urgent to Important. Important items still appear in the briefing — they just don't claim the user's attention before everything else. A briefing with no Urgent items and 6 Important items is more useful than a briefing with 6 false-urgent items the user has to triage themselves.
 
