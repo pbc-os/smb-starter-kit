@@ -1,8 +1,8 @@
 ---
 name: morning-briefing
-version: 1.2.0
+version: 1.3.0
 tier: automation
-description: "Automated daily digest for small business owners. Combines email triage, calendar agenda, open tasks, and business KPIs into a single morning briefing. Composable — works with whatever data sources are available."
+description: "Automated daily digest for small business owners. Combines email triage, calendar agenda, open tasks, and business KPIs into a single morning briefing. Composable — works with whatever data sources are available. Urgent emails require body inspection and explicit escalation signals — never classified from sender/timing metadata alone."
 requires:
   bins: ["gws"]
   skills: ["google-workspace"]
@@ -128,25 +128,80 @@ gws drive files list --params '{"pageSize": 5, "orderBy": "modifiedTime desc"}' 
 
 ### Step 2: Analyze and prioritize
 
-Process the gathered data into priority buckets:
+Process the gathered data into priority buckets.
 
 **Urgent (handle before anything else):**
 - Calendar conflicts or meetings starting within 1 hour
-- Emails flagged as urgent or from key contacts (boss, biggest customer, critical vendor)
 - Overdue tasks
 - Anomalous business metrics (revenue down 30%+, ad spend spike, etc.)
+- **Emails — only after the body has been read AND it contains an explicit escalation signal (see below)**
 
 **Important (handle today):**
 - Meetings that need prep
-- Unread emails from known contacts
+- Unread emails from known contacts that don't escalate to "urgent"
 - Tasks due today
 - Business metrics outside normal range
+- Vendor invoices and statements (route to AP)
 
 **Informational (know but don't act yet):**
 - Email volume and categories
 - This week's calendar overview
 - Business metric trends
 - Recently shared documents
+
+### Email urgency rules — read the body, don't guess from metadata
+
+**Sender + timing metadata is not enough to classify an email as urgent.** A vendor replying on a thread, a key contact sending a routine status update, or two replies on one thread within an hour are all common patterns that look urgent from the outside but are usually not. The agent must **open the message body** before flagging anything as urgent and look for an actual escalation signal.
+
+#### How to read the body
+
+```bash
+# Read a single message body (plain text, no HTML noise)
+gws gmail +read --id <MESSAGE_ID>
+
+# Read with headers included
+gws gmail +read --id <MESSAGE_ID> --headers
+
+# JSON output for programmatic checking
+gws gmail +read --id <MESSAGE_ID> --format json
+```
+
+The `gws gmail +read` helper handles HTML→text conversion, base64 decoding, and multipart messages automatically. Use it on any candidate-urgent email before classifying.
+
+#### Required escalation signals
+
+Promote an email to **Urgent** ONLY if its body contains at least one of:
+
+| Signal | What it looks like |
+|---|---|
+| **Direct address** | The recipient's first name in a salutation or mid-sentence ask: "Hey Corey...", "Corey, can you...", "@corey" |
+| **Explicit ask pointed at the recipient** | A direct question or request the recipient is the only one who can answer |
+| **Deadline language** | "by EOD", "before tomorrow", "needs to ship today", "by Friday", a date that's < 24 hours away |
+| **Problem requiring a decision** | "we're stuck on...", "I need your call on...", "blocked on...", "can you approve..." |
+| **Escalation language** | "urgent", "ASAP", "second time asking", "still no response", "this is blocking us" |
+| **Money or risk on the line** | Stated dollar amount + a decision needed, account at risk, contract expiring, customer threatening to leave |
+
+If none of those signals are in the body, the email is **Important** (route to AP, log for follow-up, or surface in the Email section) — not Urgent. The same applies to emails from "key contacts": being from the boss or a top customer doesn't automatically make a message urgent. The body decides.
+
+#### The false-urgency failure mode
+
+The most common briefing bug is flagging an email as urgent because of the *pattern* (key sender, recent reply, active thread) rather than the *content*. This produces noisy briefings that the user learns to distrust. Examples of patterns that look urgent but usually aren't:
+
+- A vendor sending a routine status update or "thanks, will look at this" reply
+- Two participants on one thread replying within an hour of each other (normal business pace)
+- A monthly statement from a vendor that's been monthly for years
+- A "FYI" or "no action needed" that uses an urgent-sounding subject line
+- An automated system message with the word "Important" in the subject (CC of a boilerplate notice)
+
+When in doubt, the agent should **demote** the item from Urgent to Important. Important items still appear in the briefing — they just don't claim the user's attention before everything else. A briefing with no Urgent items and 6 Important items is more useful than a briefing with 6 false-urgent items the user has to triage themselves.
+
+#### Calendar and metric urgency rules (unchanged)
+
+Calendar events and business metrics don't have a body to read, so the urgency rule for those is mechanical:
+- Calendar event starting within 60 minutes → Urgent
+- Calendar event in next 4 hours that needs prep → Important
+- Business metric outside its normal range (e.g., revenue down >30% vs forecast, ROAS halved, error rate spiked) → Urgent
+- Business metric trending in the wrong direction but still in range → Important
 
 ### Step 3: Compose the briefing
 
