@@ -1,13 +1,13 @@
 {
   "version": "1.0.0",
-  "generated": "2026-04-07",
+  "generated": "2026-04-08",
   "description": "Machine-readable index of all skills in agent-skills-public",
   "skills": [
     {
       "name": "secrets-manager",
       "tier": "foundation",
       "path": "tier-1-foundation/secrets-manager",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "description": "Set up secure API key storage across cloud providers (GCP, AWS, Azure, 1Password, Doppler, Vault).",
       "requires": { "bins": ["gcloud"], "skills": [], "secrets": [] }
     },
