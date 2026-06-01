@@ -41,6 +41,8 @@ gws gmail +forward             # Forward a message
 gws gmail +watch               # Stream new emails as NDJSON (real-time)
 ```
 
+> **Sending and filters are consequential.** Draft every outbound email and show it to the user for approval before `+send` / `+reply` / `+forward`. Before creating a filter (which silently diverts or archives future mail), run it with `--dry-run`, show the user what it would match, and get a yes.
+
 ## Daily Triage Workflow
 
 The most valuable email workflow for an SMB owner. Run this every morning.

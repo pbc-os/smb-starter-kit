@@ -600,7 +600,7 @@ You're now taking over. Here's the recommended path:
 
 2. SET UP SECRETS MANAGER (30 min)
    - Before connecting any services, set up secure credential storage
-   - Guide: github.com/pbc-os/agent-skills-public/tree/main/skills/tier-1-foundation/secrets-manager
+   - Guide: github.com/pbc-os/smb-starter-kit/tree/main/skills/tier-1-foundation/secrets-manager
    - This enables everything else
 
 3. CONNECT EMAIL (30 min)
@@ -761,7 +761,7 @@ automate. Check back in a few days and I'll have insights for you."
 The essentials are above. For more skills, detailed guides, and
 reference materials, clone this repo:
 
-git clone https://github.com/pbc-os/agent-skills-public.git
+git clone https://github.com/pbc-os/smb-starter-kit.git
 
 Inside you'll find:
 - skills/tier-1-foundation/secrets-manager/ → Detailed setup for all platforms

@@ -260,7 +260,7 @@ The structure is deliberately verbose — the `components` and `methodology` blo
 
 ## Credits
 
-The forecasting methodology in this skill — blended recent/seasonal/YoY with per-entity holiday multipliers and week-of-month adjustments — was developed at [Prospect Butcher Co](https://prospectbutcher.co) (a two-shop butcher in New York City) and tuned from 22% MAPE down to under 2% through roughly 90 autoresearch experiments across four model versions. The generalizations in this public version (pluggable data adapters, entity-agnostic naming, parameter files decoupled from any specific POS) are a cleanup of that work into something any SMB can point at its own data.
+The forecasting methodology in this skill — blended recent/seasonal/YoY with per-entity holiday multipliers and week-of-month adjustments — was developed at [Prospect Butcher Co](https://prospectbutcher.co) and tuned on real multi-location sales history through many autoresearch iterations, taking forecast error from double digits down to low single-digit MAPE. The generalizations in this public version (pluggable data adapters, entity-agnostic naming, parameter files decoupled from any specific POS) are a cleanup of that work into something any SMB can point at its own data.
 
 If you extend this skill with a new data adapter, a new forecast mode, or a genuinely new parameter that moves accuracy on real data, PRs welcome.
 

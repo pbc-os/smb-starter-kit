@@ -1,6 +1,6 @@
-# SMB Agent Skills
+# SMB Starter Kit
 
-**Turn your AI from a chatbot into a business operator.**
+**Stand up a secure data lake, then turn your AI from a chatbot into a business operator.**
 
 *Part of [PBC OS](https://github.com/pbc-os) — open-source AI infrastructure for small business.*
 
@@ -8,7 +8,12 @@
 
 ## What this is
 
-A collection of **skills** — pre-built instructions that teach an AI agent how to actually run parts of a small business. Read your email. Pull your sales numbers. Pause a wasteful ad. Send a vendor reminder. Generate creative for a campaign. Forecast next week's revenue.
+A **starter kit** that takes a small business from zero to an AI-run backoffice — as a path you climb one step at a time.
+
+It's two things that work together:
+
+1. **A secure data lake you own.** The [data-lake-starter](./skills/tier-1-foundation/data-lake-starter/) skill stands up a hardened BigQuery lake in *your* cloud account — the one secure place all your business data can finally live together. You connect your own sources; nothing is pre-baked, because every credential is a trust decision only you should make.
+2. **Skills that run on it** — pre-built instructions that teach an AI agent to actually do the work. Read your email. Pull your sales numbers. Pause a wasteful ad. Send a vendor reminder. Forecast next week's revenue.
 
 Not "talk about" any of those things. *Do* them.
 
@@ -33,8 +38,8 @@ The fastest way to get an agent that can actually run skills is to install **Cla
 3. **Add a skill.** Skills go in `~/.claude/skills/<skill-name>/` on Mac (`%APPDATA%\Claude\skills\<skill-name>\` on Windows). The easiest way to add one from this repo is to `git clone` the repo and copy the folder for the skill you want, e.g.:
 
    ```bash
-   git clone https://github.com/pbc-os/agent-skills-public.git
-   cp -r agent-skills-public/skills/tier-2-communication/gmail ~/.claude/skills/gmail
+   git clone https://github.com/pbc-os/smb-starter-kit.git
+   cp -r smb-starter-kit/skills/tier-2-communication/gmail ~/.claude/skills/gmail
    ```
 
    *(If you're not comfortable with git, you can also download the repo as a ZIP from the GitHub page and copy the folder manually.)*
@@ -113,7 +118,16 @@ Start with read-only. Expand later. You're always in control.
 
 ---
 
-## Available Skills (22 skills)
+## Available Skills (24 skills)
+
+The kit is a **path**, not just a pile. You start by building your data lake, then climb the tiers — each one reads from and writes to the same lake you own.
+
+```
+data-lake-starter ──► secrets-manager ──► (connect your sources) ──► semantic-layer-audit
+  build the lake       store your keys         fill it                catalog what's in it
+        │
+        └──► then Tier 2 (comms) · Tier 3 (ops) · Tier 4 (growth) · Tier 5 (automation)
+```
 
 Each skill is a self-contained `SKILL.md` file (plus optional references, scripts, and templates) that teaches your agent how to do one job well. Skills compose — set up Tier 1 once and everything above it becomes a 5-minute install.
 
@@ -123,6 +137,7 @@ These enable everything else. Set up once, forget about it.
 
 | Skill | What it does |
 |---|---|
+| [data-lake-starter](./skills/tier-1-foundation/data-lake-starter/) | **Start here.** Build a secure, empty BigQuery data lake in your own cloud — layered datasets, least-privilege identities, no downloadable keys, audit logging, and a budget alert. Agent-guided or Terraform. You connect your own sources |
 | [secrets-manager](./skills/tier-1-foundation/secrets-manager/) | Secure API key storage across GCP, AWS, Azure, 1Password, Doppler, or Vault — with a startup wrapper pattern that keeps secrets in memory only |
 | [google-workspace](./skills/tier-1-foundation/google-workspace/) | Install and authenticate the [gws CLI](https://github.com/googleworkspace/cli) — the gateway to every Google-powered skill in Tier 2 and 3 |
 | [semantic-layer-audit](./skills/tier-1-foundation/semantic-layer-audit/) | Discover and document every data source your agent can touch. A living data catalog with reconciliation notes for the things only humans know |
@@ -174,6 +189,7 @@ Discover and automate the repeatable work.
 | [revenue-forecaster](./skills/tier-5-automation/revenue-forecaster/) | Weekly / 13-week / daily / stress-test revenue forecasting for multi-entity SMBs, with per-entity holiday and week-of-month tuning. Ships with an autoresearch-compatible eval so you can self-tune on your own history |
 | [playbook-discovery](./skills/tier-5-automation/playbook-discovery/) | Mine 6 months of email, calendar, and files to surface the repeatable workflows hiding in your daily work |
 | [autoresearch](./skills/tier-5-automation/autoresearch/) | Three-agent autonomous optimization loop (researcher + critic + meta-reviewer). Extends [Karpathy's autoresearch](https://github.com/karpathy/autoresearch) with holdout validation, coverage-driven exploration, and metacognitive self-modification ([HyperAgents](https://arxiv.org/abs/2603.19461)) |
+| [long-running-agent](./skills/tier-5-automation/long-running-agent/) | Turn a plan or spec into a phase-based task structure for autonomous multi-session execution — orchestrator mode (self-verifies across phases) or phase-checkpoint mode (stops for human review). Built on Anthropic's long-running-agents patterns |
 
 ### Tier X — Experimental
 
@@ -186,7 +202,8 @@ Niche or in-development skills that don't fit the main tiers yet.
 ### Skill Dependency Map
 
 ```
-secrets-manager ───────────────────────────────┐
+data-lake-starter ─┬─► secrets-manager ─────────┐
+                   └─► semantic-layer-audit      │
                                                │
 google-workspace ─┬── gmail ─────────┐         │
                   ├── google-calendar │         │
@@ -250,14 +267,14 @@ Have a skill that's been battle-tested and could help other SMBs? Open a PR!
 
 ## The Story
 
-These skills were built at [Prospect Butcher Co](https://prospectbutcher.co), a premium butcher shop in Brooklyn. We use AI agents to:
+This kit was built at [Prospect Butcher Co](https://prospectbutcher.co), a premium butcher shop in Brooklyn, and it's exactly what the shop runs on: a secure data lake holding millions of rows of its own sales, finance, and marketing data, with AI agents that:
+- Query the whole business in plain English
 - Forecast daily revenue
-- Manage Google Ads ($40/day, fully autonomous)
+- Manage Google Ads fully autonomously on a small daily budget
 - Track inventory across locations
-- Generate product content for Walmart Marketplace
 - Run morning briefings
 
-Everything here was battle-tested on a real business before being published.
+Everything here was battle-tested on a real business before being published — starting with the data lake the rest is built on.
 
 ---
 
@@ -269,7 +286,7 @@ This repo is one piece of **[PBC OS](https://github.com/pbc-os)** — open-sourc
 
 | Repo | What It Does |
 |------|--------------|
-| **[agent-skills-public](https://github.com/pbc-os/agent-skills-public)** | Reusable AI agent skills (this repo) |
+| **smb-starter-kit** | Build a secure data lake, then run your business on agent skills (this repo) |
 
 **Coming soon: PBC by PBC** — Pre-configured Raspberry Pi 5 hardware (~$100) with everything ready to go. Run your own AI, on your own hardware, for your own business.
 

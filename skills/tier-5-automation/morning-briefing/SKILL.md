@@ -174,7 +174,7 @@ Promote an email to **Urgent** ONLY if its body contains at least one of:
 
 | Signal | What it looks like |
 |---|---|
-| **Direct address** | The recipient's first name in a salutation or mid-sentence ask: "Hey Corey...", "Corey, can you...", "@corey" |
+| **Direct address** | The recipient's first name in a salutation or mid-sentence ask: "Hey Sam...", "Sam, can you...", "@sam" |
 | **Explicit ask pointed at the recipient** | A direct question or request the recipient is the only one who can answer |
 | **Deadline language** | "by EOD", "before tomorrow", "needs to ship today", "by Friday", a date that's < 24 hours away |
 | **Problem requiring a decision** | "we're stuck on...", "I need your call on...", "blocked on...", "can you approve..." |

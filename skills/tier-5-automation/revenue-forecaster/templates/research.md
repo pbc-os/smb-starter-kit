@@ -28,8 +28,8 @@ The eval script outputs:
 ## Business Context (fill this in)
 
 ```
-Business type:        [e.g., "premium butcher shop with 2 NYC locations"]
-Revenue source:       [e.g., "Square POS, deposits land Tue-Fri"]
+Business type:        [e.g., "specialty coffee roaster with 2 locations"]
+Revenue source:       [e.g., "Square + Shopify, deposits land daily"]
 Entities:             [list them, e.g., "Main Street, Downtown"]
 Years of history:     [e.g., "Main Street: 8 months, Downtown: 18 months"]
 

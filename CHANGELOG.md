@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] — 2026-06-01
+
+### Added
+
+- **`data-lake-starter` skill (tier-1-foundation) — v1.0.0.** The new "start here" foundation skill: stands up a secure, empty BigQuery data lake in the owner's own GCP project. Builds four layered datasets (raw → clean → marts → archive), three least-privilege service accounts (ingest / transform / agent, where the agent identity reads `marts` only and never raw), Workload Identity Federation for keyless CI (no downloadable service-account keys), BigQuery data-access audit logging, a billing budget + alert, and enables Secret Manager. Ships two paths from one folder — an agent-guided `gcloud`/`bq` walkthrough and a full Terraform scaffold (`templates/terraform/`) — plus three references: the **SMB Data Lake Hardening Standard** (`references/hardening.md`), the manual-boundary guide for connecting your own sources (`references/connecting.md`), and an honest cost breakdown (`references/cost.md`). Connectors are deliberately **not** shipped — connecting sources is a manual trust decision by design.
+
+### Changed
+
+- **README reframed from "skills catalog" to "starter kit with a path."** Retitled to **SMB Starter Kit**. The repo now leads with: stand up a secure data lake, then climb the tiers (each reads/writes the same lake you own). Added the foundation arc (`data-lake-starter → secrets-manager → connect sources → semantic-layer-audit`), listed `data-lake-starter` as the first Tier-1 skill, and refreshed the dependency map to root on it. The Story now centers the data lake the rest is built on.
+- **Skill catalog count corrected to 24** and the previously-unlisted `long-running-agent` skill added to the Tier-5 table to match `index.json`.
+- **`skills/index.json`** — added `data-lake-starter` as the first foundation entry; regenerated date.
+
+### Hardened (pre-publish multi-agent review)
+
+- **`data-lake-starter` now opens with a "How to use this skill" callout** telling owners to clone the kit into an AI agent (Claude Code / Claude Desktop) and let the agent drive setup — the secure on-ramp the skill depends on.
+- **`data-lake-starter` gained a "Working With the User — Transparency & Consent" section** directing the agent to announce consequential actions (enabling billable APIs, creating identities, granting IAM), surface cost/access/reversibility, and pause for explicit approval before each create/enable/grant. Path A and Path B both reference it (`terraform plan` → show user → approve → `apply`).
+- **Consent gates added to consequential skills** — `slack` (posting/DMs/channels), `google-ads` (live-spend mutations), `gmail` (sending + filters), and `secrets-manager` (confirm before create/delete; never echo a secret value).
+- **Terraform hardening** — Workload Identity now pins trust to a branch/ref (`github_ref`), not just the repo; the authorized-view note no longer suggests papering over the conflict with `ignore_changes = [access]`; an empty `billing_account` (no budget alert) is now a loud warning; added ADC auth + `TF_VAR_project_id` guidance and a first-apply API-propagation retry note.
+- **Proprietary scrub** — genericized example identifiers: removed a real internal BigQuery table name from the semantic-layer template, the owner's first name from `morning-briefing` examples, and exact ad-budget / forecast-accuracy / experiment-count figures from `README` and `revenue-forecaster`.
+
 ## [1.3.0] — 2026-04-08
 
 ### Changed
