@@ -43,10 +43,13 @@ resource "google_iam_workload_identity_pool_provider" "github" {
   attribute_mapping = {
     "google.subject"       = "assertion.sub"
     "attribute.repository" = "assertion.repository"
+    "attribute.ref"        = "assertion.ref"
   }
 
-  # Hard-scope the provider to exactly one repo — nothing else can use it.
-  attribute_condition = "assertion.repository == '${var.github_repo}'"
+  # Scoped to this repo AND a single branch/ref. Scoping to the repo alone would
+  # let ANY branch — or a pull_request from a fork — assume these SAs; pinning
+  # the ref closes that gap. Never run this credential on pull_request from forks.
+  attribute_condition = "assertion.repository == '${var.github_repo}' && assertion.ref == '${var.github_ref}'"
 
   oidc {
     issuer_uri = "https://token.actions.githubusercontent.com"

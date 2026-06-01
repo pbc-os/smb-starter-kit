@@ -130,6 +130,8 @@ Read the selected platform's reference file and walk the user through it step by
 - Encourage questions: "Ask me anything about this step."
 - If a step fails, troubleshoot before moving on.
 - Celebrate small wins: "Secret created! You're almost there."
+- **Get a yes before writing or deleting credentials.** Before creating, updating, or deleting any secret in the user's vault, say what you're about to do and confirm. The round-trip test (§5) creates and deletes a throwaway secret — tell the user before running it.
+- **Never print a secret's value** to the conversation — confirm presence only (e.g. `echo "${VAR:+set}"`).
 
 ---
 

@@ -61,8 +61,13 @@ resource "google_bigquery_dataset" "layer" {
 #   }
 # }
 #
-# NOTE: when you use google_bigquery_dataset_access on the raw dataset, add
-#   lifecycle { ignore_changes = [access] }
-# to google_bigquery_dataset.layer["raw"] above to avoid the two resources
-# fighting over the dataset's access list.
+# NOTE: iam.tf already manages raw's access list via google_bigquery_dataset_iam_member.
+# Manage raw's access with ONE mechanism only — do NOT also add a
+# google_bigquery_dataset_access resource to the raw dataset. (Mixing
+# _iam_member and _dataset_access on the same dataset is a documented provider
+# conflict: https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/bigquery_dataset_access )
+# And do NOT silence it with lifecycle { ignore_changes = [access] } — that
+# blinds Terraform to the very access controls this skill exists to enforce.
+# If you want authorized views, move ALL of raw's grants into dataset_access
+# entries here and remove them from iam.tf — never run both.
 # ---------------------------------------------------------------------------

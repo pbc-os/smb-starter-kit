@@ -56,3 +56,9 @@ variable "github_repo" {
     error_message = "github_repo must be in 'owner/repo' form."
   }
 }
+
+variable "github_ref" {
+  type        = string
+  description = "Git ref allowed to assume the SAs when enable_github_wif = true. Pins WIF trust to one branch/tag, not the whole repo (e.g. only main can deploy)."
+  default     = "refs/heads/main"
+}

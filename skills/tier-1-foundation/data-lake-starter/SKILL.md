@@ -13,6 +13,25 @@ requires:
 
 > **Start here.** This is the first skill in the foundation tier. It builds the secure, empty lake that every other skill in this kit reads from and writes to.
 
+## How to use this skill
+
+> **Don't run these steps by hand. Hand them to an AI agent and let it drive.**
+
+This skill is written to be run *by an agent on your behalf* — **Claude Code** or **Claude Desktop** — not copy-pasted into a terminal by you. That's not just easier; it's how the lake gets set up *securely*: the agent runs each `gcloud` / `terraform` command with judgment, explains every security choice as it goes, checks its own work, and never writes a secret to disk.
+
+**Getting started (about 5 minutes):**
+
+1. **Install an agent.** [Claude Desktop](https://claude.com/download) is the no-terminal option; [Claude Code](https://docs.anthropic.com/en/docs/claude-code) is the CLI version.
+2. **Add this skill.** Clone the kit and copy this folder into your agent's skills directory:
+   ```bash
+   git clone https://github.com/pbc-os/smb-starter-kit.git
+   cp -r smb-starter-kit/skills/tier-1-foundation/data-lake-starter ~/.claude/skills/data-lake-starter
+   ```
+   *(Not comfortable with git? Download the repo as a ZIP from GitHub and copy the folder. On Windows the skills directory is `%APPDATA%\Claude\skills\`.)*
+3. **Ask the agent to run it.** Open the agent and say: **"Use the data-lake-starter skill to build my data lake — walk me through it."**
+
+New to all of this? Start with the repo [README](../../../README.md). The rest of this document is written for the agent — you're welcome to read along, but you don't have to run anything yourself.
+
 ## 1. The Vision: You Already Have the Data
 
 Every small business is already generating enterprise amounts of data. Your POS, your accounting, your email tool, your ad accounts, your reviews — each one is quietly piling up thousands of rows about your business. The problem was never *having* the data. It's that the data lives in twenty different tools that don't talk to each other, and stitching it together used to require a data team only big companies could afford.
@@ -88,7 +107,7 @@ Everything follows the **[SMB Data Lake Hardening Standard](./references/hardeni
 | **A — Agent-guided** | Owners who don't live in a terminal | Let the agent run the `gcloud`/`bq` steps in §6, explaining each one |
 | **B — Terraform** | Developers, or anyone who wants it reproducible | `terraform apply` the scaffold in [`templates/terraform/`](./templates/terraform/) |
 
-Both build the **same** architecture and enforce the **same** security standard. Path B is just the codified version of Path A.
+Path A gets you the datasets, identities, and project-level roles by hand; Path B additionally applies the **dataset-scoped data roles and authorized-view wiring** precisely (those are fiddly to do by hand) and is recommended for production. Both enforce the same [hardening standard](./references/hardening.md).
 
 ---
 
@@ -100,8 +119,19 @@ Both build the **same** architecture and enforce the **same** security standard.
   export GCP_PROJECT_ID="your-lake-project-id"
   gcloud config set project "$GCP_PROJECT_ID"
   ```
-- **`gcloud` + `bq` CLIs** authenticated (`gcloud auth login`). Both ship with the [Google Cloud SDK](https://cloud.google.com/sdk/docs/install).
-- For Path B only: **Terraform** ≥ 1.5.
+- **`gcloud` + `bq` CLIs** authenticated. Both ship with the [Google Cloud SDK](https://cloud.google.com/sdk/docs/install). For **Path A** run `gcloud auth login`; for **Path B** also run `gcloud auth application-default login` — Terraform authenticates via Application Default Credentials, which is separate from the gcloud CLI login.
+- For Path B only: **Terraform** ≥ 1.5. Tip: `export TF_VAR_project_id="$GCP_PROJECT_ID"` to reuse the same project value as Path A.
+
+## Working With the User — Transparency & Consent
+
+> Read this before running anything in Path A or Path B. It is not optional.
+
+This skill creates real resources in the user's own cloud project — some of which **cost money** (enabling billable APIs, the budget) or **grant access** (service accounts, IAM). The agent must never make those changes silently.
+
+- **Announce before you act.** Before each group of changes — enabling APIs, creating datasets, creating service accounts, granting IAM, attaching the budget, configuring Workload Identity — tell the user in plain language *what* you're about to create, in *which* project, and *why*. Name the exact resources.
+- **Surface the implications.** *Cost:* enabling APIs and the budget touch billing — point the user at [cost.md](./references/cost.md) and state the expected range. *Access:* each IAM grant hands an identity power — say which service account gets which role on which dataset (and that `lake-agent` stays read-only on `marts`). *Reversibility:* datasets are created empty and protected from deletion, but identities and IAM grants persist until you remove them.
+- **Pause for explicit approval.** After announcing a consequential group, stop and ask the user to confirm before running it. Don't act on an earlier blanket "go ahead" — re-confirm at each create / enable / grant. **Never run a billing-incurring, access-granting, or destructive command silently.**
+- **Prefer dry-runs.** Use `terraform plan` before `apply`, and read-only checks before any create.
 
 ## 5. Setup Verification
 
@@ -119,6 +149,8 @@ If any check fails, fix it before proceeding — don't build half a lake.
 ## 6. Path A — Agent-Guided Build
 
 > These are **guidance, not a rigid script.** Go one step at a time, tell the user what they should see, and adapt commands to their setup. Defaults below: BigQuery location `US`, dataset prefix `lake`.
+
+> **Before each step below**, follow *Working With the User — Transparency & Consent* (above): announce the resources, surface the cost/IAM implications, and get an explicit yes before each create, enable, or grant.
 
 ### Step 1 — Enable the APIs
 ```bash
@@ -178,7 +210,7 @@ If you'll run scheduled ingestion from GitHub Actions or Cloud Run, set up **Wor
 
 ## 7. Path B — Terraform
 
-Everything above, codified and reproducible:
+Everything above, codified and reproducible. **Run `terraform plan` first, show the user the plan, and get explicit approval before `terraform apply`.**
 
 ```bash
 cd templates/terraform

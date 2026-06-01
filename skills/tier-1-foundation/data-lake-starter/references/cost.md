@@ -15,6 +15,8 @@ Short version: at small-business scale, a secured BigQuery data lake usually run
 | **Workload Identity** | Keyless auth | **Free** | Free |
 | **Budget alerts** | The guardrail itself | **Free** | Free |
 
+> Note: the BigQuery storage and query free tiers are per **billing account** (shared across all your projects), not per project — only relevant if you run several projects on one billing account.
+
 ## A realistic SMB month
 
 A two-location shop with several years of POS history, a dozen connected sources, and an agent querying it daily:

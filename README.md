@@ -270,7 +270,7 @@ Have a skill that's been battle-tested and could help other SMBs? Open a PR!
 This kit was built at [Prospect Butcher Co](https://prospectbutcher.co), a premium butcher shop in Brooklyn, and it's exactly what the shop runs on: a secure data lake holding millions of rows of its own sales, finance, and marketing data, with AI agents that:
 - Query the whole business in plain English
 - Forecast daily revenue
-- Manage Google Ads ($40/day, fully autonomous)
+- Manage Google Ads fully autonomously on a small daily budget
 - Track inventory across locations
 - Run morning briefings
 

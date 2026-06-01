@@ -23,6 +23,7 @@ Automation (GitHub Actions, Cloud Run) authenticates via **Workload Identity Fed
 
 - **Why:** A downloaded key is a permanent password sitting in a file, waiting to leak. WIF tokens expire in minutes and can't be exfiltrated.
 - **Verify:** `gcloud iam service-accounts keys list --iam-account=lake-ingest@$GCP_PROJECT_ID.iam.gserviceaccount.com` shows only the Google-managed key (no user-managed keys). Bonus: enforce the `iam.disableServiceAccountKeyCreation` org policy.
+- **Scope the trust narrowly:** a Workload Identity binding should trust a specific repo **and** branch/ref (or deployment environment), not just the repo — otherwise any branch, or a `pull_request` from a fork, can assume the identity. Never run the federated credential on `pull_request` from forks.
 
 ### 4. Read-only consumption via authorized views
 Agents and dashboards read **only the `marts` layer**, through **authorized views** that query `raw`/`clean` on their behalf. The consumer identity is never granted direct access to raw data.

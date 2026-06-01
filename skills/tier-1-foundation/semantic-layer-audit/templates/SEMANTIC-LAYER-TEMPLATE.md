@@ -76,7 +76,7 @@ Views transform raw data into analyst-friendly formats. **Use views instead of c
 
 **When NOT to use:**
 - Need order-level totals only → use `orders`
-- Need pre-aggregated daily data → use `product_sales_daily`
+- Need pre-aggregated daily data → use `daily_summary`
 
 | Column | Type | Description |
 |--------|------|-------------|

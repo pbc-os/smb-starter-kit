@@ -17,6 +17,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Skill catalog count corrected to 24** and the previously-unlisted `long-running-agent` skill added to the Tier-5 table to match `index.json`.
 - **`skills/index.json`** — added `data-lake-starter` as the first foundation entry; regenerated date.
 
+### Hardened (pre-publish multi-agent review)
+
+- **`data-lake-starter` now opens with a "How to use this skill" callout** telling owners to clone the kit into an AI agent (Claude Code / Claude Desktop) and let the agent drive setup — the secure on-ramp the skill depends on.
+- **`data-lake-starter` gained a "Working With the User — Transparency & Consent" section** directing the agent to announce consequential actions (enabling billable APIs, creating identities, granting IAM), surface cost/access/reversibility, and pause for explicit approval before each create/enable/grant. Path A and Path B both reference it (`terraform plan` → show user → approve → `apply`).
+- **Consent gates added to consequential skills** — `slack` (posting/DMs/channels), `google-ads` (live-spend mutations), `gmail` (sending + filters), and `secrets-manager` (confirm before create/delete; never echo a secret value).
+- **Terraform hardening** — Workload Identity now pins trust to a branch/ref (`github_ref`), not just the repo; the authorized-view note no longer suggests papering over the conflict with `ignore_changes = [access]`; an empty `billing_account` (no budget alert) is now a loud warning; added ADC auth + `TF_VAR_project_id` guidance and a first-apply API-propagation retry note.
+- **Proprietary scrub** — genericized example identifiers: removed a real internal BigQuery table name from the semantic-layer template, the owner's first name from `morning-briefing` examples, and exact ad-budget / forecast-accuracy / experiment-count figures from `README` and `revenue-forecaster`.
+
+## [1.3.0] — 2026-04-08
+
 ### Changed
 
 - **README onboarding flow rewritten.** Default install path is now Claude Desktop (5-minute, no-terminal experience), with CLI agents (Claude Code, Codex, Gemini CLI, Goose) as a power-user fallback. Cut the "paste this URL into ChatGPT first" intro and the npm-based 15-minute install ceremony. Collapsed the three duplicated install sections into one tight Setup section. Reduced the "agents vs skills vs tools" explanation from three metaphors (chef + employee + GitHub Actions) to one (employee). README went from 437 lines / 15 sections to 281 lines / 12 sections.

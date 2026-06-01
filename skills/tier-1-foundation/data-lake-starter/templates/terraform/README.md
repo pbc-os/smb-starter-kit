@@ -49,4 +49,5 @@ The `lake-agent` identity — used by your AI agent and dashboards — can read 
 - **Nothing destructive.** Datasets use `delete_contents_on_destroy = false`; a `terraform destroy` won't wipe data you've loaded.
 - **No keys.** There are deliberately no `google_service_account_key` resources. CI uses Workload Identity; humans use their own `gcloud` auth. See the [hardening standard](../../references/hardening.md) §3.
 - **Authorized views** depend on tables that don't exist in an empty lake, so they ship commented in `datasets.tf` — uncomment once you've connected a source. The IAM wall (agent can't read `raw`) holds regardless.
+- **First apply on a brand-new project can transiently fail** while the APIs finish enabling — just run `terraform apply` again; it's idempotent. Path A and Path B enable the same APIs, so running one after the other is safe.
 - This builds the lake. **Connecting sources is your deliberate next step** — see [connecting.md](../../references/connecting.md).
