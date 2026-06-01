@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "generated": "2026-06-01",
-  "description": "Machine-readable index of all skills in agent-skills-public",
+  "description": "Machine-readable index of all skills in smb-starter-kit",
   "skills": [
     {
       "name": "data-lake-starter",

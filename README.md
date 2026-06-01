@@ -38,8 +38,8 @@ The fastest way to get an agent that can actually run skills is to install **Cla
 3. **Add a skill.** Skills go in `~/.claude/skills/<skill-name>/` on Mac (`%APPDATA%\Claude\skills\<skill-name>\` on Windows). The easiest way to add one from this repo is to `git clone` the repo and copy the folder for the skill you want, e.g.:
 
    ```bash
-   git clone https://github.com/pbc-os/agent-skills-public.git
-   cp -r agent-skills-public/skills/tier-2-communication/gmail ~/.claude/skills/gmail
+   git clone https://github.com/pbc-os/smb-starter-kit.git
+   cp -r smb-starter-kit/skills/tier-2-communication/gmail ~/.claude/skills/gmail
    ```
 
    *(If you're not comfortable with git, you can also download the repo as a ZIP from the GitHub page and copy the folder manually.)*
