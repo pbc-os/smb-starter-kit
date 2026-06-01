@@ -25,12 +25,12 @@ locals {
   #   agent     -> reads marts only (never raw)
   # Map key is a stable, unique string so for_each is deterministic.
   dataset_grants = {
-    "ingest-raw"          = { sa = "ingest",    layer = "raw",     role = "roles/bigquery.dataEditor" }
-    "transform-raw"       = { sa = "transform", layer = "raw",     role = "roles/bigquery.dataViewer" }
-    "transform-clean"     = { sa = "transform", layer = "clean",   role = "roles/bigquery.dataEditor" }
-    "transform-marts"     = { sa = "transform", layer = "marts",   role = "roles/bigquery.dataEditor" }
-    "transform-archive"   = { sa = "transform", layer = "archive", role = "roles/bigquery.dataEditor" }
-    "agent-marts"         = { sa = "agent",     layer = "marts",   role = "roles/bigquery.dataViewer" }
+    "ingest-raw"        = { sa = "ingest", layer = "raw", role = "roles/bigquery.dataEditor" }
+    "transform-raw"     = { sa = "transform", layer = "raw", role = "roles/bigquery.dataViewer" }
+    "transform-clean"   = { sa = "transform", layer = "clean", role = "roles/bigquery.dataEditor" }
+    "transform-marts"   = { sa = "transform", layer = "marts", role = "roles/bigquery.dataEditor" }
+    "transform-archive" = { sa = "transform", layer = "archive", role = "roles/bigquery.dataEditor" }
+    "agent-marts"       = { sa = "agent", layer = "marts", role = "roles/bigquery.dataViewer" }
   }
 }
 
