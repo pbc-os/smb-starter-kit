@@ -4,7 +4,7 @@
 
 *Part of [PBC OS](https://github.com/pbc-os) — open-source AI infrastructure for small business.*
 
-*Built and battle-tested by [Prospect Butcher Co](https://prospectbutcher.co), an **Anthropic education partner**.*
+*Built and battle-tested by [Prospect Butcher Co](https://prospectbutcher.co), an **Anthropic education partner** — featured in [AI Fluency for Small Businesses](https://anthropic.skilljar.com/ai-fluency-for-small-businesses).*
 
 ---
 
@@ -271,6 +271,8 @@ This kit was built at [Prospect Butcher Co](https://prospectbutcher.co) — a pr
 - Run morning briefings
 
 Everything here was battle-tested on a real business before being published — starting with the data lake the rest is built on.
+
+Want the bigger picture? Corey covers using AI in a small business in Anthropic's [**AI Fluency for Small Businesses**](https://anthropic.skilljar.com/ai-fluency-for-small-businesses).
 
 ---
 
