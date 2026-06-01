@@ -1,0 +1,19 @@
+# Local Terraform working files — never commit these.
+.terraform/
+.terraform.lock.hcl
+
+# State can contain sensitive values — keep it out of git (use a remote backend).
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+
+# Your real project ID, billing account, and any secrets live here.
+terraform.tfvars
+*.auto.tfvars
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Note: terraform.tfvars.example IS tracked (it ships as the template).
