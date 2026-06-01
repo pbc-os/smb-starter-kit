@@ -4,6 +4,8 @@
 
 *Part of [PBC OS](https://github.com/pbc-os) — open-source AI infrastructure for small business.*
 
+*Built and battle-tested by [Prospect Butcher Co](https://prospectbutcher.co), an **Anthropic education partner**.*
+
 ---
 
 ## What this is
@@ -202,29 +204,23 @@ Niche or in-development skills that don't fit the main tiers yet.
 ### Skill Dependency Map
 
 ```
-data-lake-starter ─┬─► secrets-manager ─────────┐
-                   └─► semantic-layer-audit      │
-                                               │
-google-workspace ─┬── gmail ─────────┐         │
-                  ├── google-calendar │         │
-                  ├── google-chat ────┤         │
-                  ├── google-drive    ├── morning-briefing
-                  ├── google-sheets ──┤         │
-                  ├── google-docs     │         │
-                  └── google-tasks ───┘         │
-                                               │
-slack-directory ──── slack ────────────────────┤
-                                               │
-                  playbook-discovery            │
-                           │                    │
-                           ▼                    │
-                   revenue-forecaster ◀─── autoresearch
-                                               │
-google-ads ────────────────────────────────────┘
+FOUNDATION (Tier 1) — set up once
+  data-lake-starter · secrets-manager · semantic-layer-audit · google-workspace
+
+BUILT ON secrets-manager
+  slack-directory ──▶ slack    ·    google-ads    ·    nano-banana
+
+BUILT ON google-workspace
+  gmail · google-calendar · google-chat · google-drive · google-sheets · google-docs · google-tasks
 
 nano-banana ──┬── creative-matrix
               ├── brand-identity
               └── patent-figure
+
+AUTOMATION — composes the skills above
+  morning-briefing    ◀── gmail · calendar · tasks
+  playbook-discovery  ◀── gmail
+  revenue-forecaster  ◀── autoresearch
 ```
 
 ### Coming Soon
@@ -267,7 +263,7 @@ Have a skill that's been battle-tested and could help other SMBs? Open a PR!
 
 ## The Story
 
-This kit was built at [Prospect Butcher Co](https://prospectbutcher.co), a premium butcher shop in Brooklyn, and it's exactly what the shop runs on: a secure data lake holding millions of rows of its own sales, finance, and marketing data, with AI agents that:
+This kit was built at [Prospect Butcher Co](https://prospectbutcher.co) — a premium butcher shop in Brooklyn and an **Anthropic education partner** — and it's exactly what the shop runs on: a secure data lake holding millions of rows of its own sales, finance, and marketing data, with AI agents that:
 - Query the whole business in plain English
 - Forecast daily revenue
 - Manage Google Ads fully autonomously on a small daily budget
@@ -286,7 +282,7 @@ This repo is one piece of **[PBC OS](https://github.com/pbc-os)** — open-sourc
 
 | Repo | What It Does |
 |------|--------------|
-| **smb-starter-kit** | Build a secure data lake, then run your business on agent skills (this repo) |
+| **[smb-starter-kit](https://github.com/pbc-os/smb-starter-kit)** | Build a secure data lake, then run your business on agent skills (this repo) |
 
 **Coming soon: PBC by PBC** — Pre-configured Raspberry Pi 5 hardware (~$100) with everything ready to go. Run your own AI, on your own hardware, for your own business.
 
