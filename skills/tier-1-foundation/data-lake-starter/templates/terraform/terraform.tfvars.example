@@ -1,0 +1,21 @@
+# Copy to terraform.tfvars and fill in. Do NOT commit terraform.tfvars.
+
+# --- Required ---------------------------------------------------------------
+project_id = "your-lake-project-id"   # a DEDICATED project, not shared with other apps
+
+# --- BigQuery location (pick once — permanent) ------------------------------
+bq_location = "US"                     # or "EU", or a single region like "us-central1"
+lake_prefix = "lake"                   # -> lake_raw, lake_clean, lake_marts, lake_archive
+
+# --- Budget guardrail (STRONGLY RECOMMENDED) --------------------------------
+# Find your billing account: `gcloud billing accounts list`
+# WARNING: leaving billing_account empty creates NO budget alert — and that
+# alert is your only runaway-cost guardrail. Set it unless you already have a
+# budget on this billing account by other means.
+billing_account   = ""                 # e.g. "000000-AAAAAA-BBBBBB"
+budget_amount_usd = 50
+
+# --- Keyless CI with Workload Identity (optional) ---------------------------
+enable_github_wif = false
+github_repo       = ""                 # e.g. "your-org/your-ingestion-repo" (required if enabled)
+github_ref        = "refs/heads/main"  # pin WIF trust to ONE branch, not the whole repo

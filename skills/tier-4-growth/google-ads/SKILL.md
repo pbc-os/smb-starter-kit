@@ -215,6 +215,8 @@ query = """
 
 ## Common Mutations (API Mode)
 
+> **Mutations change live ad spend.** Before running any mutation (pause, budget change, status flip, negative keyword), show the user the exact campaigns or keywords and the change you're about to make, and get explicit approval. Run a read query first to confirm you're targeting the right resources.
+
 ### Pause Campaigns
 
 ```python

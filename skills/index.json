@@ -1,8 +1,25 @@
 {
   "version": "1.0.0",
-  "generated": "2026-05-06",
-  "description": "Machine-readable index of all skills in agent-skills-public",
+  "generated": "2026-06-01",
+  "description": "Machine-readable index of all skills in smb-starter-kit",
   "skills": [
+    {
+      "name": "data-lake-starter",
+      "tier": "foundation",
+      "path": "tier-1-foundation/data-lake-starter",
+      "version": "1.0.0",
+      "description": "Stand up a secure, empty BigQuery data lake on GCP — layered datasets, least-privilege service accounts, Workload Identity (no downloadable keys), read-only authorized views, audit logging, and a budget alert. Agent-guided or Terraform; you connect your own sources afterward.",
+      "requires": {
+        "bins": [
+          "gcloud",
+          "bq"
+        ],
+        "skills": [],
+        "env": [
+          "GCP_PROJECT_ID"
+        ]
+      }
+    },
     {
       "name": "secrets-manager",
       "tier": "foundation",

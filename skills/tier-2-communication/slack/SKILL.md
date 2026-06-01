@@ -73,6 +73,8 @@ TOKEN=$(gcloud secrets versions access latest --secret="slack-bot-token")
 TOKEN="$SLACK_BOT_TOKEN"
 ```
 
+> **Every message and channel change is visible to your team and hard to fully unsend.** Before the agent posts a message, sends a DM, creates or archives a channel, or uploads a file, show the user the exact text and target and get explicit approval — unless they've pre-approved a specific recurring automation (e.g. a daily briefing to a named channel), in which case state that standing approval the first time and stay within its scope.
+
 ## Core Operations
 
 ### Send a message to a channel

@@ -113,7 +113,7 @@ Once they're ready for real setup:
 ```
 1. SECRETS MANAGER (30 min)
    → Set up secure storage for API keys
-   → Read: https://github.com/pbc-os/agent-skills-public/tree/main/skills/tier-1-foundation/secrets-manager
+   → Read: https://github.com/pbc-os/smb-starter-kit/tree/main/skills/tier-1-foundation/secrets-manager
 
 2. EMAIL CONNECTION (30 min)  
    → Connect Gmail so you can read their inbox
@@ -171,9 +171,9 @@ Never blame them. Never make them feel stupid.
 ## THE FULL GUIDE
 
 For complete onboarding documentation:
-- Repository: https://github.com/pbc-os/agent-skills-public
-- LLM instructions: https://github.com/pbc-os/agent-skills-public/blob/main/LLM.txt
-- Skills available: https://github.com/pbc-os/agent-skills-public/tree/main/skills
+- Repository: https://github.com/pbc-os/smb-starter-kit
+- LLM instructions: https://github.com/pbc-os/smb-starter-kit/blob/main/LLM.txt
+- Skills available: https://github.com/pbc-os/smb-starter-kit/tree/main/skills
 
 ---
 
